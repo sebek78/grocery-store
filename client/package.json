@@ -3,10 +3,10 @@
   "version": "0.0.1",
   "description": "",
   "scripts": {
-    "start": "webpack serve --config webpack.config.dev.js --port 3000",
+    "start": "webpack serve --config webpack.config.dev.ts --port 3000",
     "prebuild": "rimraf dist",
-    "build": "webpack --config webpack.config.prod.js",
-    "serve": "webpack serve --config webpack.config.prod.js ",
+    "build": "webpack --config webpack.config.prod.ts",
+    "serve": "webpack serve --config webpack.config.prod.ts ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -21,6 +21,10 @@
     "@babel/core": "^7.14.6",
     "@babel/preset-env": "^7.14.7",
     "@babel/preset-react": "^7.14.5",
+    "@babel/preset-typescript": "^7.14.5",
+    "@types/node": "^16.0.0",
+    "@types/react": "^17.0.13",
+    "@types/react-dom": "^17.0.8",
     "@typescript-eslint/eslint-plugin": "^4.28.1",
     "@typescript-eslint/parser": "^4.28.1",
     "babel-loader": "^8.2.2",
@@ -37,6 +41,8 @@
     "sass": "^1.35.1",
     "sass-loader": "^12.1.0",
     "style-loader": "^3.0.0",
+    "ts-loader": "^9.2.3",
+    "typescript": "^4.3.5",
     "webpack": "^5.42.0",
     "webpack-cli": "^4.7.2",
     "webpack-dev-server": "^3.11.2"

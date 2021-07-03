@@ -3,7 +3,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 
 module.exports = {
-    entry: './src/index.js',
+    entry: './src/index.tsx',
     output: {
         filename: 'main.js',
         path: path.resolve(__dirname, 'dist'),
@@ -13,6 +13,13 @@ module.exports = {
         contentBase: path.join(__dirname, 'dist'),
         compress: true,
         port: 9000,
+    },
+    resolve: {
+        extensions: ['.tsx', '.ts', '.js'],
+        alias: {
+            '@pages': path.resolve(__dirname, 'src/pages'),
+            '@components': path.resolve(__dirname, 'src/components'),
+        },
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -26,6 +33,11 @@ module.exports = {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
                 use: ['babel-loader'],
+            },
+            {
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/,
             },
             {
                 test: /\.s[ac]ss$/i,
