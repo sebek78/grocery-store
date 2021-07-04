@@ -9,6 +9,7 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
     },
     mode: 'production',
+    devtool: 'source-map',
     devServer: {
         contentBase: path.join(__dirname, 'dist'),
         compress: true,
@@ -19,11 +20,26 @@ module.exports = {
         alias: {
             '@pages': path.resolve(__dirname, 'src/pages'),
             '@components': path.resolve(__dirname, 'src/components'),
+            '@assets': path.resolve(__dirname, 'src/assets'),
         },
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: 'src/index.html',
+            favicon: 'src/assets/favicon.svg',
+            minify: {
+                // see https://github.com/kangax/html-minifier#options-quick-reference
+                collapseWhitespace: true,
+                keepClosingSlash: true,
+                minifyJS: true,
+                minifyCSS: true,
+                minifyURLs: true,
+                removeComments: true,
+                removeEmptyAttributes: true,
+                removeRedundantAttributes: true,
+                removeStyleLinkTypeAttributes: true,
+                useShortDoctype: true,
+            },
         }),
         new MiniCssExtractPlugin(),
     ],
@@ -42,6 +58,17 @@ module.exports = {
             {
                 test: /\.s[ac]ss$/i,
                 use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+            },
+            {
+                test: /\.(png|jpe?g|gif)$/i,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: 'img/[name].[ext]',
+                        },
+                    },
+                ],
             },
         ],
     },

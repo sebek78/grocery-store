@@ -9,6 +9,7 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
     },
     mode: 'development',
+    devtool: 'cheap-module-source-map',
     devServer: {
         hot: true,
         stats: 'minimal',
@@ -18,11 +19,13 @@ module.exports = {
         alias: {
             '@pages': path.resolve(__dirname, 'src/pages'),
             '@components': path.resolve(__dirname, 'src/components'),
+            '@assets': path.resolve(__dirname, 'src/assets'),
         },
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: 'src/index.html',
+            favicon: 'src/assets/favicon.svg',
         }),
         new MiniCssExtractPlugin(),
     ],
@@ -41,6 +44,14 @@ module.exports = {
             {
                 test: /\.s[ac]ss$/i,
                 use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+            },
+            {
+                test: /\.(png|jpe?g|gif)$/i,
+                use: [
+                    {
+                        loader: 'file-loader',
+                    },
+                ],
             },
         ],
     },
