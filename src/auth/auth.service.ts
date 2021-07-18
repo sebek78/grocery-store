@@ -4,12 +4,15 @@ import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from '@shared/users.dto';
 import { PostgresErrorCode } from 'src/database/postgresErrorCodes.enum';
+import { ConfigService } from '@nestjs/config';
+import { TokenPayload } from './auth.interface';
 
 @Injectable()
 export class AuthService {
     constructor(
         private usersService: UsersService,
         private jwtService: JwtService,
+        private configService: ConfigService,
     ) {}
 
     async validateUser(username: string, plainTextPassword: string) {
@@ -19,12 +22,9 @@ export class AuthService {
             user.password = undefined;
             const payload = {
                 username: user.username,
-                sub: user.user_id,
+                userId: user.user_id,
             };
-            return {
-                access_token: this.jwtService.sign(payload),
-                username: user.username,
-            };
+            return payload;
         } catch (error) {
             throw new HttpException(
                 'Wrong credentials provided',
@@ -72,5 +72,16 @@ export class AuthService {
                 HttpStatus.INTERNAL_SERVER_ERROR,
             );
         }
+    }
+
+    getCookieWithJwtToken(userPayload: TokenPayload) {
+        const token = this.jwtService.sign(userPayload);
+        return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get(
+            'JWT_EXPIRATION_TIME',
+        )}`;
+    }
+
+    getCookieForLogOut() {
+        return `Authentication=; HttpOnly; Path=/; Max-Age=0`;
     }
 }
