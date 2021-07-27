@@ -82,6 +82,25 @@ export class AuthService {
     }
 
     getCookieForLogOut() {
-        return `Authentication=; HttpOnly; Path=/; Max-Age=0`;
+        return [
+            `Authentication=; HttpOnly; Path=/; Max-Age=0`,
+            `Refresh=; HttpOnly; Path=/; Max-Age=0`,
+        ];
+    }
+
+    getCookieWithJwtRefreshToken(userPayload: TokenPayload) {
+        const refreshToken = this.jwtService.sign(userPayload, {
+            secret: this.configService.get('JWT_REFRESH_TOKEN_SECRET'),
+            expiresIn: `${this.configService.get(
+                'JWT_REFRESH_TOKEN_EXPIRATION_TIME',
+            )}s`,
+        });
+        const cookie = `Refresh=${refreshToken}; HttpOnly; Path=/; Max-Age=${this.configService.get(
+            'JWT_REFRESH_TOKEN_EXPIRATION_TIME',
+        )}`;
+        return {
+            cookie,
+            refreshToken,
+        };
     }
 }
