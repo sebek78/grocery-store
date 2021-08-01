@@ -90,4 +90,9 @@ export class UsersService {
             password: hashedNewPassword,
         });
     }
+
+    async updateLastLogin(user_id: number) {
+        const time = new Date().toISOString();
+        return this.usersRepository.update(user_id, { last_login: time });
+    }
 }

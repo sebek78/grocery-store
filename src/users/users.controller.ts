@@ -20,6 +20,7 @@ export class UsersController {
     @UseGuards(JwtAuthGuard)
     @Get('profile')
     async getProfile(@Req() req: RequestWithTokenPayload) {
+        delete req.user.userId;
         return req.user;
     }
 

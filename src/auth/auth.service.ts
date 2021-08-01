@@ -59,7 +59,8 @@ export class AuthService {
                 created_on: time,
             });
             createdUser.password = undefined;
-            return createdUser;
+            const { username } = createdUser;
+            return { username };
         } catch (error) {
             if (error?.code === PostgresErrorCode.UniqueViolation) {
                 throw new HttpException(
