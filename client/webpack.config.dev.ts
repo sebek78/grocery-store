@@ -13,6 +13,7 @@ module.exports = {
     devServer: {
         hot: true,
         stats: 'minimal',
+        port: 3001,
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
@@ -20,6 +21,7 @@ module.exports = {
             '@pages': path.resolve(__dirname, 'src/pages'),
             '@components': path.resolve(__dirname, 'src/components'),
             '@assets': path.resolve(__dirname, 'src/assets'),
+            '@utils': path.resolve(__dirname, 'src/utils'),
         },
     },
     plugins: [

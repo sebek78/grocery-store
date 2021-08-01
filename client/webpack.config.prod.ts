@@ -21,12 +21,14 @@ module.exports = {
             '@pages': path.resolve(__dirname, 'src/pages'),
             '@components': path.resolve(__dirname, 'src/components'),
             '@assets': path.resolve(__dirname, 'src/assets'),
+            '@utils': path.resolve(__dirname, 'src/utils'),
         },
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: 'src/index.html',
             favicon: 'src/assets/favicon.svg',
+            inject: 'body',
             minify: {
                 // see https://github.com/kangax/html-minifier#options-quick-reference
                 collapseWhitespace: true,
