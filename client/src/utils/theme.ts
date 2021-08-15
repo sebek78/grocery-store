@@ -20,6 +20,9 @@ export type ColorKeys =
 
 export const theme = createTheme({
     palette: {
+        background: {
+            default: '#ddd',
+        },
         primary: {
             main: '#317302', // green
             contrastText: '#FFF',
