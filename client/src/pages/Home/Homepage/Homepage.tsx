@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import LoginDialog from '../LoginDialog/LoginDialog';
-import RegisterDialog from '../RegisterDialog/RegisterDialog';
-import Header from '../Header/Header';
-import Menu from '../Menu/Menu';
+import LoginDialog from '../LoginDialog';
+import RegisterDialog from '../RegisterDialog';
+import Header from '../Header';
+import Menu from '../Menu';
 
 const Homepage = () => {
     const [menuOpen, setMenu] = useState(false);

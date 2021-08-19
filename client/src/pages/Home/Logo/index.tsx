@@ -31,9 +31,14 @@ const LogoText = styled.div`
 
 const Logo = () => {
     return (
-        <LogoBackground container justifyContent="center" alignItems="center" direction="column">
-           <InnerLogo>Skelpikarz</InnerLogo>
-           <LogoText>Gra edukacyjna</LogoText>
+        <LogoBackground
+            container
+            justifyContent="center"
+            alignItems="center"
+            direction="column"
+        >
+            <InnerLogo>Skelpikarz</InnerLogo>
+            <LogoText>Gra edukacyjna</LogoText>
         </LogoBackground>
     );
 };

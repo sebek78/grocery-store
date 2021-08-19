@@ -1,9 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { theme } from '@utils';
-import { AppBar, Button, Grid, IconButton, Toolbar } from '@material-ui/core';
+import { Grid, IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/menu';
-import Logo from '../Logo/Logo';
+import Logo from '../Logo';
 
 type MenuAndLogoProps = {
     toggleMenu: () => void;
