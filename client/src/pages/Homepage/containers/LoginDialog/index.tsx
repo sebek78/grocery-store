@@ -1,4 +1,7 @@
 import React from 'react';
+import { RootState } from 'src/store/store';
+import { useSelector, useDispatch } from 'react-redux';
+import { setIsRequesting } from '../../../../store/slices/userSlice';
 import {
     Dialog,
     DialogTitle,
@@ -15,6 +18,16 @@ type LoginDialogProps = {
 };
 
 const LoginDialog = ({ open, handleClose }: LoginDialogProps) => {
+    const isRequesting = useSelector(
+        (state: RootState) => state.user.isRequesting
+    );
+    const dispatch = useDispatch();
+
+    const handleSubmit = () => {
+        dispatch(setIsRequesting());
+        handleClose('login');
+    };
+
     return (
         <Dialog
             open={open}
@@ -47,10 +60,7 @@ const LoginDialog = ({ open, handleClose }: LoginDialogProps) => {
                 >
                     Anuluj
                 </ColorButton>
-                <ColorButton
-                    onClick={() => handleClose('login')}
-                    btnColor="primary"
-                >
+                <ColorButton onClick={handleSubmit} btnColor="primary">
                     Zaloguj
                 </ColorButton>
             </DialogActions>
