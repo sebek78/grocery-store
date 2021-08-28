@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import LoginDialog from '../LoginDialog';
-import RegisterDialog from '../RegisterDialog';
-import Header from '../Header';
-import Menu from '../Menu';
+import LoginDialog from '../containers/LoginDialog';
+import RegisterDialog from '../containers/RegisterDialog';
+import Header from '../containers/Header';
+import Menu from '../containers/Menu';
 import { About, Manual } from '@pages';
 
 const Homepage = () => {

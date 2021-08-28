@@ -2,8 +2,8 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Grid, Toolbar } from '@material-ui/core';
 import { theme } from '@utils';
-import MenuAndLogo from '../MenuAndLogo';
-import UserButtons from '../UserButtons';
+import MenuAndLogo from './components/MenuAndLogo';
+import UserButtons from './components/UserButtons';
 
 type HeaderProps = {
     toggleMenu: () => void;
