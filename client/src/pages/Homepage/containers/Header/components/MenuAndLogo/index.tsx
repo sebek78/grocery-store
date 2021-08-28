@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { theme } from '@utils';
-import { Grid, IconButton } from '@material-ui/core';
+import { Grid, Hidden, IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/menu';
 import Logo from '../Logo';
 
@@ -38,17 +38,19 @@ const MenuAndLogo = ({ toggleMenu }: MenuAndLogoProps) => {
                 justifyContent="flex-start"
                 alignItems="center"
             >
-                <Grid item>
-                    <IconButton
-                        edge="start"
-                        className={classes.menuButton}
-                        color="inherit"
-                        aria-label="menu"
-                        onClick={toggleMenu}
-                    >
-                        <MenuIcon fontSize="large" />
-                    </IconButton>
-                </Grid>
+                <Hidden lgUp>
+                    <Grid item>
+                        <IconButton
+                            edge="start"
+                            className={classes.menuButton}
+                            color="inherit"
+                            aria-label="menu"
+                            onClick={toggleMenu}
+                        >
+                            <MenuIcon fontSize="large" />
+                        </IconButton>
+                    </Grid>
+                </Hidden>
                 <Grid item className={classes.logo}>
                     <Logo />
                 </Grid>

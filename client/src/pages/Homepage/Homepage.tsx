@@ -1,12 +1,27 @@
 import React, { useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import LoginDialog from '../containers/LoginDialog';
-import RegisterDialog from '../containers/RegisterDialog';
-import Header from '../containers/Header';
-import Menu from '../containers/Menu';
-import { About, Manual } from '@pages';
+import { makeStyles } from '@material-ui/core/styles';
+import LoginDialog from './containers/LoginDialog';
+import RegisterDialog from './containers/RegisterDialog';
+import Header from './containers/Header';
+import Menu from './containers/Menu';
+import { About, Home, Manual } from '@pages';
+import { Box } from '@material-ui/core';
+import { theme } from '@utils';
+import { drawerWidth } from './constants';
+
+const useStyles = makeStyles({
+    contentArea: {
+        [theme.breakpoints.up('lg')]: {
+            width: `calc(100% - ${drawerWidth}px)`,
+            marginLeft: drawerWidth,
+        },
+    },
+});
 
 const Homepage = () => {
+    const classes = useStyles();
+
     const [menuOpen, setMenu] = useState(false);
     const [loginDialogOpen, setLoginDialogOpen] = useState(false);
     const [registerDialogOpen, setRegisterDialogOpen] = useState(false);
@@ -27,14 +42,19 @@ const Homepage = () => {
                 toggleMenu={toggleMenu}
                 handleDialogOpen={handleDialogOpen}
             />
-            <Switch>
-                <Route path="/manual">
-                    <Manual />
-                </Route>
-                <Route path="/about">
-                    <About />
-                </Route>
-            </Switch>
+            <Box className={classes.contentArea}>
+                <Switch>
+                    <Route path="/manual">
+                        <Manual />
+                    </Route>
+                    <Route path="/about">
+                        <About />
+                    </Route>
+                    <Route path="/">
+                        <Home />
+                    </Route>
+                </Switch>
+            </Box>
             <Menu menuOpen={menuOpen} toggleMenu={toggleMenu} />
             <LoginDialog
                 open={loginDialogOpen}

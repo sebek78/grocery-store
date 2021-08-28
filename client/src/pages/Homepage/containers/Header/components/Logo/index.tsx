@@ -2,11 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { Grid } from '@material-ui/core';
 import { theme } from '@utils';
+import { appBarHeight } from '../../../../constants';
 
 const LogoBackground = styled(Grid)`
     background-color: ${theme.palette.success.main};
     width: 220px;
-    height: 80px;
+    height: ${appBarHeight}px;
 `;
 
 const InnerLogo = styled.div`
