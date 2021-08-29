@@ -1,7 +1,7 @@
 import React from 'react';
 import { RootState } from 'src/store/store';
 import { useSelector, useDispatch } from 'react-redux';
-import { setIsRequesting } from '../../../../store/slices/userSlice';
+import { userLoginRequest } from '../../../../store/slices/userSlice';
 import {
     Dialog,
     DialogTitle,
@@ -18,13 +18,15 @@ type LoginDialogProps = {
 };
 
 const LoginDialog = ({ open, handleClose }: LoginDialogProps) => {
+    // TODO: loader
     const isRequesting = useSelector(
         (state: RootState) => state.user.isRequesting
     );
+    console.log(isRequesting);
     const dispatch = useDispatch();
 
     const handleSubmit = () => {
-        dispatch(setIsRequesting());
+        dispatch(userLoginRequest());
         handleClose('login');
     };
 
