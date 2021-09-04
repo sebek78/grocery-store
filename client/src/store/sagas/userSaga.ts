@@ -16,8 +16,6 @@ function* loginUserSaga(action: PayloadAction) {
     console.log(action.payload);
     const data: Response = yield call(api.post, '/auth/login', action.payload);
 
-    yield delay(3000);
-
     if (data.statusCode >= 400) {
         yield put(userLoginFailed(data.message));
     } else {

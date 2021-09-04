@@ -1,55 +1,42 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { RootState } from 'src/store/store';
 import { useSelector, useDispatch } from 'react-redux';
 import { userLoginRequest } from '../../../../store/slices/userSlice';
-import {
-    CircularProgress,
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    DialogContentText,
-    Grid,
-    TextField,
-    DialogActions,
-} from '@material-ui/core';
-import { CloseIconButton, ColorButton } from '@components';
-import { theme } from '@utils';
+import { Dialog, DialogTitle, DialogContent, Grid } from '@material-ui/core';
+import { CloseIconButton, TextInput } from '@components';
+import { UserLoginDto } from '../../../../utils/sharedTypes';
+import ErrorWrapper from './components/ErrorWrapper';
+import { loginSchema } from './loginSchema';
+import DialogSubmitButton from './components/DialogSubmitButton';
 
 type LoginDialogProps = {
     open: boolean;
     handleClose: (dialog: string) => void;
 };
 
-const useStyles = makeStyles({
-    wrapper: {
-        position: 'relative',
-        paddingRight: 16,
-    },
-    buttonProgress: {
-        color: theme.palette.warning.main,
-        position: 'absolute',
-        top: '50%',
-        right: 48,
-        marginTop: -16,
-        marginLeft: -16,
-    },
-});
-
 const LoginDialog = ({ open, handleClose }: LoginDialogProps) => {
-    const classes = useStyles();
+    const dispatch = useDispatch();
+
     const isRequesting = useSelector(
         (state: RootState) => state.user.isRequesting
     );
-    const error = useSelector((state: RootState) => state.user.error);
-    const dispatch = useDispatch();
+    const apiError = useSelector((state: RootState) => state.user.error);
 
-    const handleSubmit = () => {
-        // TODO: form
+    const {
+        control,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<UserLoginDto>({
+        resolver: yupResolver(loginSchema),
+    });
+
+    const onSubmit: SubmitHandler<UserLoginDto> = ({ username, password }) => {
         dispatch(
             userLoginRequest({
-                username: 'tester01',
-                password: 'tester01',
+                username,
+                password,
             })
         );
     };
@@ -70,43 +57,22 @@ const LoginDialog = ({ open, handleClose }: LoginDialogProps) => {
                     <CloseIconButton handleClose={handleClose} />
                 </Grid>
             </DialogTitle>
-            <DialogContent>
-                {/* TODO: error label component */}
-                <DialogContentText>Logowanie do serwisu.</DialogContentText>
-                {error.length > 0 && (
-                    <DialogContentText>{error}</DialogContentText>
-                )}
-                <TextField
-                    autoFocus
-                    margin="dense"
-                    id="login"
-                    label="Login"
-                    type="text"
-                    fullWidth
-                />
-                <TextField
-                    margin="dense"
-                    id="password"
-                    label="Hasło"
-                    type="password"
-                    fullWidth
-                />
-            </DialogContent>
-            <DialogActions className={classes.wrapper}>
-                <ColorButton
-                    onClick={handleSubmit}
-                    btnColor="primary"
-                    disabled={isRequesting}
-                >
-                    Zaloguj
-                </ColorButton>
-                {isRequesting && (
-                    <CircularProgress
-                        size={32}
-                        className={classes.buttonProgress}
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <DialogContent>
+                    <ErrorWrapper errors={errors} apiError={apiError} />
+                    <TextInput
+                        label="Login"
+                        name="username"
+                        control={control}
                     />
-                )}
-            </DialogActions>
+                    <TextInput
+                        label="Hasło"
+                        name="password"
+                        control={control}
+                    />
+                </DialogContent>
+                <DialogSubmitButton isRequesting={isRequesting} />
+            </form>
         </Dialog>
     );
 };

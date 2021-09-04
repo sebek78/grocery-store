@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { UserLoginDto } from '../../utils/sharedTypes';
 
 interface UserState {
     username: string;
@@ -14,11 +15,6 @@ const initialState: UserState = {
     error: '',
 };
 
-interface UserLoginData {
-    username: string;
-    password: string;
-}
-
 interface UserLoginSuccess {
     username: string;
 }
@@ -27,7 +23,7 @@ export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        userLoginRequest: (state, action: PayloadAction<UserLoginData>) => {
+        userLoginRequest: (state, action: PayloadAction<UserLoginDto>) => {
             state.isRequesting = true;
             state.error = '';
         },
