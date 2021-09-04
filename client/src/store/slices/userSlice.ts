@@ -34,6 +34,7 @@ export const userSlice = createSlice({
         userLoginSuccess: (state, action: PayloadAction<UserLoginSuccess>) => {
             state.username = action.payload.username;
             state.authenticated = true;
+            state.isRequesting = false;
             state.error = '';
         },
         userLoginFailed: (state, action: PayloadAction<string>) => {

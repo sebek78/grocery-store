@@ -1,24 +1,43 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import { RootState } from 'src/store/store';
 import { useSelector, useDispatch } from 'react-redux';
 import { userLoginRequest } from '../../../../store/slices/userSlice';
 import {
+    CircularProgress,
     Dialog,
     DialogTitle,
     DialogContent,
     DialogContentText,
+    Grid,
     TextField,
     DialogActions,
 } from '@material-ui/core';
-import { ColorButton } from '@components';
+import { CloseIconButton, ColorButton } from '@components';
+import { theme } from '@utils';
 
 type LoginDialogProps = {
     open: boolean;
     handleClose: (dialog: string) => void;
 };
 
+const useStyles = makeStyles({
+    wrapper: {
+        position: 'relative',
+        paddingRight: 16,
+    },
+    buttonProgress: {
+        color: theme.palette.warning.main,
+        position: 'absolute',
+        top: '50%',
+        right: 48,
+        marginTop: -16,
+        marginLeft: -16,
+    },
+});
+
 const LoginDialog = ({ open, handleClose }: LoginDialogProps) => {
-    // TODO: loader
+    const classes = useStyles();
     const isRequesting = useSelector(
         (state: RootState) => state.user.isRequesting
     );
@@ -41,7 +60,16 @@ const LoginDialog = ({ open, handleClose }: LoginDialogProps) => {
             onClose={handleClose}
             aria-labelledby="form-dialog-title"
         >
-            <DialogTitle id="form-dialog-title">Logowanie</DialogTitle>
+            <DialogTitle id="form-dialog-title">
+                <Grid
+                    container
+                    justifyContent="space-between"
+                    alignItems="center"
+                >
+                    <Grid item>Logowanie</Grid>
+                    <CloseIconButton handleClose={handleClose} />
+                </Grid>
+            </DialogTitle>
             <DialogContent>
                 {/* TODO: error label component */}
                 <DialogContentText>Logowanie do serwisu.</DialogContentText>
@@ -64,16 +92,20 @@ const LoginDialog = ({ open, handleClose }: LoginDialogProps) => {
                     fullWidth
                 />
             </DialogContent>
-            <DialogActions>
+            <DialogActions className={classes.wrapper}>
                 <ColorButton
-                    onClick={() => handleClose('login')}
-                    btnColor="success"
+                    onClick={handleSubmit}
+                    btnColor="primary"
+                    disabled={isRequesting}
                 >
-                    Anuluj
-                </ColorButton>
-                <ColorButton onClick={handleSubmit} btnColor="primary">
                     Zaloguj
                 </ColorButton>
+                {isRequesting && (
+                    <CircularProgress
+                        size={32}
+                        className={classes.buttonProgress}
+                    />
+                )}
             </DialogActions>
         </Dialog>
     );
