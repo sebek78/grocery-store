@@ -22,12 +22,17 @@ const LoginDialog = ({ open, handleClose }: LoginDialogProps) => {
     const isRequesting = useSelector(
         (state: RootState) => state.user.isRequesting
     );
-    console.log(isRequesting);
+    const error = useSelector((state: RootState) => state.user.error);
     const dispatch = useDispatch();
 
     const handleSubmit = () => {
-        dispatch(userLoginRequest());
-        handleClose('login');
+        // TODO: form
+        dispatch(
+            userLoginRequest({
+                username: 'tester01',
+                password: 'tester01',
+            })
+        );
     };
 
     return (
@@ -38,7 +43,11 @@ const LoginDialog = ({ open, handleClose }: LoginDialogProps) => {
         >
             <DialogTitle id="form-dialog-title">Logowanie</DialogTitle>
             <DialogContent>
+                {/* TODO: error label component */}
                 <DialogContentText>Logowanie do serwisu.</DialogContentText>
+                {error.length > 0 && (
+                    <DialogContentText>{error}</DialogContentText>
+                )}
                 <TextField
                     autoFocus
                     margin="dense"

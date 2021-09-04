@@ -14,16 +14,27 @@ const initialState: UserState = {
     error: '',
 };
 
+interface UserLoginData {
+    username: string;
+    password: string;
+}
+
+interface UserLoginSuccess {
+    username: string;
+}
+
 export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        userLoginRequest: (state) => {
+        userLoginRequest: (state, action: PayloadAction<UserLoginData>) => {
             state.isRequesting = true;
+            state.error = '';
         },
-        userLoginSuccess: (state, action: PayloadAction<string>) => {
-            state.username = action.payload;
+        userLoginSuccess: (state, action: PayloadAction<UserLoginSuccess>) => {
+            state.username = action.payload.username;
             state.authenticated = true;
+            state.error = '';
         },
         userLoginFailed: (state, action: PayloadAction<string>) => {
             state.isRequesting = false;
