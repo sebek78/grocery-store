@@ -1,21 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { Button, Divider } from '@material-ui/core';
+import { closeMenu } from '../../../../../../store/slices/viewsSlice';
 
 type MenuLinkProps = {
     label: string;
     to: string;
-    toggleMenu: () => void;
 };
 
-const MenuLink = ({ label, to, toggleMenu }: MenuLinkProps) => {
+const MenuLink = ({ label, to }: MenuLinkProps) => {
+    const dispatch = useDispatch();
+
     return (
         <>
             <Button
                 color="primary"
                 component={Link}
                 to={to}
-                onClick={toggleMenu}
+                onClick={() => dispatch(closeMenu())}
             >
                 {label}
             </Button>

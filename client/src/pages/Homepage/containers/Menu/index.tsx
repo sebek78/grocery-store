@@ -4,13 +4,10 @@ import { Divider, Drawer, Grid, Hidden, IconButton } from '@material-ui/core';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuLinks from './components/MenuLinks';
-import { theme } from '@utils';
+import { RootState } from 'src/store/store';
+import { useSelector, useDispatch } from 'react-redux';
 import { appBarHeight, drawerWidth } from '../../constants';
-
-type MenuProps = {
-    menuOpen: boolean;
-    toggleMenu: () => void;
-};
+import { closeMenu } from '../../../../store/slices/viewsSlice';
 
 const StyledDrawer = styled(Drawer)`
     & .MuiDrawer-paper {
@@ -25,8 +22,13 @@ const useStyles = makeStyles({
     },
 });
 
-const Menu = ({ menuOpen, toggleMenu }: MenuProps) => {
+const Menu = () => {
     const classes = useStyles();
+    const dispatch = useDispatch();
+
+    const menuOpen = useSelector((state: RootState) => state.views.menuOpen);
+
+    const handleOnCloseMenu = () => dispatch(closeMenu());
 
     return (
         <nav>
@@ -34,7 +36,7 @@ const Menu = ({ menuOpen, toggleMenu }: MenuProps) => {
                 <Drawer
                     anchor="left"
                     open={menuOpen}
-                    onClose={toggleMenu}
+                    onClose={handleOnCloseMenu}
                     variant="temporary"
                 >
                     <Grid
@@ -42,18 +44,18 @@ const Menu = ({ menuOpen, toggleMenu }: MenuProps) => {
                         justifyContent="flex-end"
                         className={classes.drawer}
                     >
-                        <IconButton onClick={toggleMenu}>
+                        <IconButton onClick={handleOnCloseMenu}>
                             <ChevronLeftIcon fontSize="large" color="primary" />
                         </IconButton>
                     </Grid>
                     <Divider />
-                    <MenuLinks toggleMenu={toggleMenu} />
+                    <MenuLinks />
                 </Drawer>
             </Hidden>
             <Hidden mdDown>
                 <StyledDrawer anchor="left" open variant="permanent">
                     <Divider />
-                    <MenuLinks toggleMenu={toggleMenu} />
+                    <MenuLinks />
                 </StyledDrawer>
             </Hidden>
         </nav>

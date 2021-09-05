@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Grid } from '@material-ui/core';
 import { theme } from '@utils';
-import { appBarHeight } from '../../../../constants';
+import { appBarHeight } from '../../../../pages/Homepage/constants';
 
 const LogoBackground = styled(Grid)`
     background-color: ${theme.palette.success.main};

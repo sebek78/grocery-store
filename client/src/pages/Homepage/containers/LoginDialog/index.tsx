@@ -10,19 +10,20 @@ import { UserLoginDto } from '../../../../utils/sharedTypes';
 import ErrorWrapper from './components/ErrorWrapper';
 import { loginSchema } from './loginSchema';
 import DialogSubmitButton from './components/DialogSubmitButton';
+import { closeDialog } from '../../../../store/slices/viewsSlice';
 
-type LoginDialogProps = {
-    open: boolean;
-    handleClose: (dialog: string) => void;
-};
-
-const LoginDialog = ({ open, handleClose }: LoginDialogProps) => {
+const LoginDialog = () => {
     const dispatch = useDispatch();
 
     const isRequesting = useSelector(
         (state: RootState) => state.user.isRequesting
     );
     const apiError = useSelector((state: RootState) => state.user.error);
+    const open = useSelector(
+        (state: RootState) => state.views.homepage.loginDialogOpen
+    );
+
+    const handleCloseDialog = () => dispatch(closeDialog('login'));
 
     const {
         control,
@@ -44,7 +45,7 @@ const LoginDialog = ({ open, handleClose }: LoginDialogProps) => {
     return (
         <Dialog
             open={open}
-            onClose={handleClose}
+            onClose={handleCloseDialog}
             aria-labelledby="form-dialog-title"
         >
             <DialogTitle id="form-dialog-title">
@@ -54,7 +55,7 @@ const LoginDialog = ({ open, handleClose }: LoginDialogProps) => {
                     alignItems="center"
                 >
                     <Grid item>Logowanie</Grid>
-                    <CloseIconButton handleClose={handleClose} />
+                    <CloseIconButton handleClose={handleCloseDialog} />
                 </Grid>
             </DialogTitle>
             <form onSubmit={handleSubmit(onSubmit)}>

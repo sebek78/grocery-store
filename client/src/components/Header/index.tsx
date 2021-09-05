@@ -1,14 +1,11 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Grid, Toolbar } from '@material-ui/core';
 import { theme } from '@utils';
 import MenuAndLogo from './components/MenuAndLogo';
 import UserButtons from './components/UserButtons';
-
-type HeaderProps = {
-    toggleMenu: () => void;
-    handleDialogOpen: (dialog: string) => void;
-};
+import { openMenu } from '../../store/slices/viewsSlice';
 
 const useStyles = makeStyles({
     root: {
@@ -17,8 +14,11 @@ const useStyles = makeStyles({
     },
 });
 
-const Header = ({ toggleMenu, handleDialogOpen }: HeaderProps) => {
+const Header = () => {
     const classes = useStyles();
+    const dispatch = useDispatch();
+
+    const handleMenuIconClick = () => dispatch(openMenu());
 
     return (
         <AppBar position="static" className={classes.root}>
@@ -30,8 +30,8 @@ const Header = ({ toggleMenu, handleDialogOpen }: HeaderProps) => {
                     alignItems="center"
                     wrap="wrap"
                 >
-                    <MenuAndLogo toggleMenu={toggleMenu} />
-                    <UserButtons handleDialogOpen={handleDialogOpen} />
+                    <MenuAndLogo toggleMenu={handleMenuIconClick} />
+                    <UserButtons />
                 </Grid>
             </Toolbar>
         </AppBar>

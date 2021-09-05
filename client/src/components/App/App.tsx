@@ -6,6 +6,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import { theme } from '@utils';
 import { store } from '../../store/store';
 import { Provider } from 'react-redux';
+import Header from '../Header';
 
 const App = () => {
     return (
@@ -13,6 +14,7 @@ const App = () => {
             <Provider store={store}>
                 <CssBaseline />
                 <ThemeProvider theme={theme}>
+                    <Header />
                     <Router>
                         <Switch>
                             <Route path="/">

@@ -1,16 +1,12 @@
 import React from 'react';
 import MenuLink from '../MenuLink';
 
-type MenuLinksProps = {
-    toggleMenu: () => void;
-};
-
-const MenuLinks = ({ toggleMenu }: MenuLinksProps) => {
+const MenuLinks = () => {
     return (
         <>
-            <MenuLink to="/" label="Strona główna" toggleMenu={toggleMenu} />
-            <MenuLink to="/manual" label="Podręcznik" toggleMenu={toggleMenu} />
-            <MenuLink to="/about" label="O projekcie" toggleMenu={toggleMenu} />
+            <MenuLink to="/" label="Strona główna" />
+            <MenuLink to="/manual" label="Podręcznik" />
+            <MenuLink to="/about" label="O projekcie" />
         </>
     );
 };

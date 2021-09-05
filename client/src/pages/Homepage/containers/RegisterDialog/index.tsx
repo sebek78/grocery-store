@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from 'src/store/store';
 import {
     Dialog,
     DialogTitle,
@@ -8,17 +10,20 @@ import {
     DialogActions,
 } from '@material-ui/core';
 import { ColorButton } from '@components';
+import { closeDialog } from '../../../../store/slices/viewsSlice';
 
-type RegisterDialogProps = {
-    open: boolean;
-    handleClose: (dialog: string) => void;
-};
+const RegisterDialog = () => {
+    const dispatch = useDispatch();
 
-const RegisterDialog = ({ open, handleClose }: RegisterDialogProps) => {
+    const open = useSelector(
+        (state: RootState) => state.views.homepage.registerDialogOpen
+    );
+    const handleCloseDialog = () => dispatch(closeDialog('register'));
+
     return (
         <Dialog
             open={open}
-            onClose={handleClose}
+            onClose={handleCloseDialog}
             aria-labelledby="form-dialog-title"
         >
             <DialogTitle id="form-dialog-title">Rejestracja</DialogTitle>
@@ -50,16 +55,10 @@ const RegisterDialog = ({ open, handleClose }: RegisterDialogProps) => {
                 />
             </DialogContent>
             <DialogActions>
-                <ColorButton
-                    onClick={() => handleClose('register')}
-                    btnColor="success"
-                >
+                <ColorButton onClick={handleCloseDialog} btnColor="success">
                     Anuluj
                 </ColorButton>
-                <ColorButton
-                    onClick={() => handleClose('register')}
-                    btnColor="primary"
-                >
+                <ColorButton onClick={handleCloseDialog} btnColor="primary">
                     Zarejestruj
                 </ColorButton>
             </DialogActions>
