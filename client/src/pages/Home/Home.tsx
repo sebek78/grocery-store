@@ -1,9 +1,8 @@
 import React from 'react';
-import { RootState } from 'src/store/store';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@store';
 
 const Home = () => {
-    const username = useSelector((state: RootState) => state.user.username);
+    const username = useAppSelector(({ user }) => user.username);
     return <div>Home {username}</div>;
 };
 

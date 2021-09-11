@@ -22,6 +22,15 @@ module.exports = {
             '@components': path.resolve(__dirname, 'src/components'),
             '@assets': path.resolve(__dirname, 'src/assets'),
             '@utils': path.resolve(__dirname, 'src/utils'),
+            '@store': path.resolve(__dirname, 'src/store'),
+            '@userSlice': path.resolve(
+                __dirname,
+                'src/store/slices/userSlice.ts'
+            ),
+            '@viewsSlice': path.resolve(
+                __dirname,
+                'src/store/slices/viewsSlice.ts'
+            ),
         },
     },
     plugins: [

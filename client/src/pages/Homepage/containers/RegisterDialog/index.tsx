@@ -1,6 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from 'src/store/store';
+import { useAppSelector, useAppDispatch } from '@store';
 import {
     Dialog,
     DialogTitle,
@@ -10,13 +9,12 @@ import {
     DialogActions,
 } from '@material-ui/core';
 import { ColorButton } from '@components';
-import { closeDialog } from '../../../../store/slices/viewsSlice';
+import { closeDialog } from '@viewsSlice';
 
 const RegisterDialog = () => {
-    const dispatch = useDispatch();
-
-    const open = useSelector(
-        (state: RootState) => state.views.homepage.registerDialogOpen
+    const dispatch = useAppDispatch();
+    const open = useAppSelector(
+        ({ views }) => views.homepage.registerDialogOpen
     );
     const handleCloseDialog = () => dispatch(closeDialog('register'));
 

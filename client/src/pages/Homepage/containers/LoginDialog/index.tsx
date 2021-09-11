@@ -1,27 +1,21 @@
 import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { RootState } from 'src/store/store';
-import { useSelector, useDispatch } from 'react-redux';
-import { userLoginRequest } from '../../../../store/slices/userSlice';
+import { useAppSelector, useAppDispatch } from '@store';
+import { userLoginRequest } from '@userSlice';
 import { Dialog, DialogTitle, DialogContent, Grid } from '@material-ui/core';
 import { CloseIconButton, TextInput } from '@components';
 import { UserLoginDto } from '../../../../utils/sharedTypes';
 import ErrorWrapper from './components/ErrorWrapper';
 import { loginSchema } from './loginSchema';
 import DialogSubmitButton from './components/DialogSubmitButton';
-import { closeDialog } from '../../../../store/slices/viewsSlice';
+import { closeDialog } from '@viewsSlice';
 
 const LoginDialog = () => {
-    const dispatch = useDispatch();
-
-    const isRequesting = useSelector(
-        (state: RootState) => state.user.isRequesting
-    );
-    const apiError = useSelector((state: RootState) => state.user.error);
-    const open = useSelector(
-        (state: RootState) => state.views.homepage.loginDialogOpen
-    );
+    const dispatch = useAppDispatch();
+    const isRequesting = useAppSelector(({ user }) => user.isRequesting);
+    const apiError = useAppSelector(({ user }) => user.error);
+    const open = useAppSelector(({ views }) => views.homepage.loginDialogOpen);
 
     const handleCloseDialog = () => dispatch(closeDialog('login'));
 

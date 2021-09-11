@@ -4,10 +4,9 @@ import { Divider, Drawer, Grid, Hidden, IconButton } from '@material-ui/core';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuLinks from './components/MenuLinks';
-import { RootState } from 'src/store/store';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppSelector, useAppDispatch } from '@store';
 import { appBarHeight, drawerWidth } from '../../constants';
-import { closeMenu } from '../../../../store/slices/viewsSlice';
+import { closeMenu } from '@viewsSlice';
 
 const StyledDrawer = styled(Drawer)`
     & .MuiDrawer-paper {
@@ -24,9 +23,8 @@ const useStyles = makeStyles({
 
 const Menu = () => {
     const classes = useStyles();
-    const dispatch = useDispatch();
-
-    const menuOpen = useSelector((state: RootState) => state.views.menuOpen);
+    const dispatch = useAppDispatch();
+    const menuOpen = useAppSelector(({ views }) => views.menuOpen);
 
     const handleOnCloseMenu = () => dispatch(closeMenu());
 
