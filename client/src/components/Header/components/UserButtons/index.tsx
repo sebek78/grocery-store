@@ -5,6 +5,8 @@ import { theme } from '@utils';
 import { Button, Grid } from '@material-ui/core';
 import { ColorButton } from '@components';
 import { openDialog } from '../../../../store/slices/viewsSlice';
+import { useAppDispatch, useAppSelector } from '@store';
+import { userLogoutRequest } from '@userSlice';
 
 const useStyles = makeStyles({
     root: {
@@ -25,22 +27,36 @@ const useStyles = makeStyles({
 
 const UserButtons = () => {
     const classes = useStyles();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
+    const authenticated = useAppSelector(({ user }) => user.authenticated);
 
     return (
         <Grid item className={classes.userButtons}>
-            <Button
-                className={classes.registerButton}
-                onClick={() => dispatch(openDialog('register'))}
-            >
-                Rejestracja
-            </Button>
-            <ColorButton
-                btnColor="primary"
-                onClick={() => dispatch(openDialog('login'))}
-            >
-                Zaloguj
-            </ColorButton>
+            {authenticated ? (
+                <>
+                    <Button
+                        className={classes.registerButton}
+                        onClick={() => dispatch(userLogoutRequest())}
+                    >
+                        Wyloguj
+                    </Button>
+                </>
+            ) : (
+                <>
+                    <Button
+                        className={classes.registerButton}
+                        onClick={() => dispatch(openDialog('register'))}
+                    >
+                        Rejestracja
+                    </Button>
+                    <ColorButton
+                        btnColor="primary"
+                        onClick={() => dispatch(openDialog('login'))}
+                    >
+                        Zaloguj
+                    </ColorButton>
+                </>
+            )}
         </Grid>
     );
 };

@@ -17,7 +17,7 @@ const fetchData = async <T>(
         options.headers = {
             'Content-Type': 'application/json;charset=UTF-8',
         };
-        options.body = JSON.stringify(data);
+        if (data) options.body = JSON.stringify(data);
     }
 
     const response = await fetch(dataUrl, options);

@@ -66,8 +66,9 @@ export class AuthController {
         @Res() response: Response,
     ) {
         await this.userService.removeRefreshToken(request.user.userId);
-        response.setHeader('Set-Cookie', this.authService.getCookieForLogOut());
-        return response.sendStatus(200);
+        response.set('Set-Cookie', this.authService.getCookieForLogOut());
+        response.status(200);
+        response.send({ success: true });
     }
 
     @Post('register')

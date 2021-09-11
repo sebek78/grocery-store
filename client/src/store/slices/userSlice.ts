@@ -37,9 +37,30 @@ export const userSlice = createSlice({
             state.isRequesting = false;
             state.error = action.payload;
         },
+        userLogoutRequest: (state) => {
+            state.isRequesting = true;
+            state.error = '';
+        },
+        userLogoutSuccess: (state) => {
+            state.username = '';
+            state.authenticated = false;
+            state.isRequesting = false;
+            state.error = '';
+        },
+        userLogoutFailed: (state, action: PayloadAction<string>) => {
+            state.isRequesting = false;
+            state.error = action.payload;
+        },
     },
 });
 
-export const { userLoginRequest, userLoginSuccess, userLoginFailed } =
-    userSlice.actions;
+export const {
+    userLoginRequest,
+    userLoginSuccess,
+    userLoginFailed,
+    userLogoutRequest,
+    userLogoutSuccess,
+    userLogoutFailed,
+} = userSlice.actions;
+
 export default userSlice.reducer;

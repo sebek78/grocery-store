@@ -63,6 +63,7 @@ const LoginDialog = () => {
                     <TextInput
                         label="Hasło"
                         name="password"
+                        type="password"
                         control={control}
                     />
                 </DialogContent>

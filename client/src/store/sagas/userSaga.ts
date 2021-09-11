@@ -1,7 +1,13 @@
-import { call, put, takeLatest, delay } from 'redux-saga/effects';
+import { all, call, put, takeLatest } from 'redux-saga/effects';
 import { PayloadAction } from '@reduxjs/toolkit';
-import { userLoginSuccess, userLoginFailed } from '../slices/userSlice';
+import {
+    userLoginSuccess,
+    userLoginFailed,
+    userLogoutSuccess,
+    userLogoutFailed,
+} from '@userSlice';
 import { api } from '@utils';
+import { closeDialog } from '@viewsSlice';
 
 interface Error {
     statusCode: number;
@@ -13,21 +19,30 @@ interface Response extends Error {
 }
 
 function* loginUserSaga(action: PayloadAction) {
-    console.log(action.payload);
     const data: Response = yield call(api.post, '/auth/login', action.payload);
 
     if (data.statusCode >= 400) {
         yield put(userLoginFailed(data.message));
     } else {
-        console.log('success');
-        console.log(data);
-        // TODO: close login dialog
+        yield put(closeDialog('login'));
         yield put(userLoginSuccess(data));
     }
 }
 
+function* logoutUserSaga() {
+    const data: Response = yield call(api.post, '/auth/logout', null);
+    if (data.statusCode >= 400) {
+        yield put(userLogoutFailed(data.message));
+    } else {
+        yield put(userLogoutSuccess());
+    }
+}
+
 function* userSaga() {
-    yield takeLatest('user/userLoginRequest', loginUserSaga);
+    yield all([
+        takeLatest('user/userLoginRequest', loginUserSaga),
+        takeLatest('user/userLogoutRequest', logoutUserSaga),
+    ]);
 }
 
 export default userSaga;
