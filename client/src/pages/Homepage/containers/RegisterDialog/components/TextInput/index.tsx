@@ -1,16 +1,21 @@
 import React from 'react';
 import { Controller, Control } from 'react-hook-form';
 import { TextField } from '@material-ui/core';
-import { UserLoginDto } from 'src/utils/sharedTypes';
+import { RegisterUserDto } from '../../../../../../utils/sharedTypes';
 
-type TextInputProps = {
+type TextInputProps<T> = {
     label: string;
-    name: keyof UserLoginDto;
-    control: Control<UserLoginDto, object>;
+    name: keyof T;
+    control: Control<T, object>;
     type?: string;
 };
 
-const TextInput = ({ label, type = 'text', name, control }: TextInputProps) => {
+const TextInput = ({
+    label,
+    type = 'text',
+    name,
+    control,
+}: TextInputProps<RegisterUserDto>) => {
     return (
         <Controller
             name={name}

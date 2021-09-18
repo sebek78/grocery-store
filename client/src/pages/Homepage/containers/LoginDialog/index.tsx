@@ -4,12 +4,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useAppSelector, useAppDispatch } from '@store';
 import { userLoginRequest } from '@userSlice';
 import { Dialog, DialogTitle, DialogContent, Grid } from '@material-ui/core';
-import { CloseIconButton, TextInput } from '@components';
+import { CloseIconButton } from '@components';
 import { UserLoginDto } from '../../../../utils/sharedTypes';
-import ErrorWrapper from './components/ErrorWrapper';
 import { loginSchema } from './loginSchema';
-import DialogSubmitButton from './components/DialogSubmitButton';
+import DialogSubmitButton from '../LoginDialog/components/DialogSubmitButton';
 import { closeDialog } from '@viewsSlice';
+import ErrorWrapper from './components/ErrorWrapper';
+import TextInput from './components/TextInput';
 
 const LoginDialog = () => {
     const dispatch = useAppDispatch();

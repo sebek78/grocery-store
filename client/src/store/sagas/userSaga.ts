@@ -5,6 +5,8 @@ import {
     userLoginFailed,
     userLogoutSuccess,
     userLogoutFailed,
+    registerUserSuccess,
+    registerUserFailed,
 } from '@userSlice';
 import { api } from '@utils';
 import { closeDialog } from '@viewsSlice';
@@ -38,10 +40,26 @@ function* logoutUserSaga() {
     }
 }
 
+function* registerUserSaga(action: PayloadAction) {
+    const data: Response = yield call(
+        api.post,
+        '/auth/register',
+        action.payload
+    );
+
+    if (data.statusCode >= 400) {
+        yield put(registerUserFailed(data.message));
+    } else {
+        yield put(closeDialog('register'));
+        yield put(registerUserSuccess(data));
+    }
+}
+
 function* userSaga() {
     yield all([
         takeLatest('user/userLoginRequest', loginUserSaga),
         takeLatest('user/userLogoutRequest', logoutUserSaga),
+        takeLatest('user/registerUserRequest', registerUserSaga),
     ]);
 }
 

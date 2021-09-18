@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { UserLoginDto } from '../../utils/sharedTypes';
+import { RegisterUserDto, UserLoginDto } from '../../utils/sharedTypes';
 
 interface UserState {
     username: string;
@@ -15,7 +15,7 @@ const initialState: UserState = {
     error: '',
 };
 
-interface UserLoginSuccess {
+interface UserAuthSuccess {
     username: string;
 }
 
@@ -27,7 +27,7 @@ export const userSlice = createSlice({
             state.isRequesting = true;
             state.error = '';
         },
-        userLoginSuccess: (state, action: PayloadAction<UserLoginSuccess>) => {
+        userLoginSuccess: (state, action: PayloadAction<UserAuthSuccess>) => {
             state.username = action.payload.username;
             state.authenticated = true;
             state.isRequesting = false;
@@ -51,6 +51,25 @@ export const userSlice = createSlice({
             state.isRequesting = false;
             state.error = action.payload;
         },
+        registerUserRequest: (
+            state,
+            action: PayloadAction<RegisterUserDto>
+        ) => {
+            state.isRequesting = true;
+            state.error = '';
+        },
+        registerUserSuccess: (
+            state,
+            action: PayloadAction<UserAuthSuccess>
+        ) => {
+            // TODO: notification, action.payload.username
+            state.isRequesting = false;
+            state.error = '';
+        },
+        registerUserFailed: (state, action: PayloadAction<string>) => {
+            state.isRequesting = false;
+            state.error = action.payload;
+        },
     },
 });
 
@@ -61,6 +80,9 @@ export const {
     userLogoutRequest,
     userLogoutSuccess,
     userLogoutFailed,
+    registerUserRequest,
+    registerUserSuccess,
+    registerUserFailed,
 } = userSlice.actions;
 
 export default userSlice.reducer;
