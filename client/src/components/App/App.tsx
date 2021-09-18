@@ -1,12 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Homepage } from '@pages';
+import { GameView, Homepage } from '@pages';
 import { CssBaseline } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { theme } from '@utils';
 import { store } from '../../store/store';
 import { Provider } from 'react-redux';
-import Header from '../Header';
+import { AuthenticatedRoute, Header } from '@components';
 
 const App = () => {
     return (
@@ -17,6 +17,9 @@ const App = () => {
                     <Header />
                     <Router>
                         <Switch>
+                            <AuthenticatedRoute path="/game">
+                                <GameView />
+                            </AuthenticatedRoute>
                             <Route path="/">
                                 <Homepage />
                             </Route>

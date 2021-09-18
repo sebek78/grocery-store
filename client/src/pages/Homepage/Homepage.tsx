@@ -1,5 +1,6 @@
-import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Switch, Route, useHistory } from 'react-router-dom';
+import { useAppSelector, useAppDispatch } from '@store';
 import { makeStyles } from '@material-ui/core/styles';
 import LoginDialog from './containers/LoginDialog';
 import RegisterDialog from './containers/RegisterDialog';
@@ -20,6 +21,12 @@ const useStyles = makeStyles({
 
 const Homepage = () => {
     const classes = useStyles();
+    const authenticated = useAppSelector(({ user }) => user.authenticated);
+    let history = useHistory();
+
+    useEffect(() => {
+        if (authenticated) history.push('/game');
+    }, [authenticated]);
 
     return (
         <>
