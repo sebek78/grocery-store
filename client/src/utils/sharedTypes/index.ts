@@ -1,3 +1,8 @@
+export interface IMenuLink {
+    to: string;
+    label: string;
+}
+
 export type UserLoginDto = {
     username: string;
     password: string;

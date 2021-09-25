@@ -1,2 +1,7 @@
-export const drawerWidth = 240;
-export const appBarHeight = 80;
+import { IMenuLink } from '@sharedTypes';
+
+export const homepageMenuLinks: IMenuLink[] = [
+    { to: '/', label: 'Strona główna' },
+    { to: '/manual', label: 'Podręcznik' },
+    { to: '/about', label: 'O projekcie' },
+];

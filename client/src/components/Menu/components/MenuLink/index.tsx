@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Button, Divider } from '@material-ui/core';
-import { closeMenu } from '../../../../../../store/slices/viewsSlice';
+import { closeMenu } from '@viewsSlice';
 
 type MenuLinkProps = {
     label: string;

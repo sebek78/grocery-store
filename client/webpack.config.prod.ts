@@ -31,6 +31,8 @@ module.exports = {
                 __dirname,
                 'src/store/slices/viewsSlice.ts'
             ),
+            '@sharedTypes': path.resolve(__dirname, 'src/utils/sharedTypes'),
+            '@constants': path.resolve(__dirname, 'src/utils/constants'),
         },
     },
     plugins: [

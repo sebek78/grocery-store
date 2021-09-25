@@ -5,7 +5,7 @@ import { useAppSelector, useAppDispatch } from '@store';
 import { Dialog, DialogTitle, DialogContent, Grid } from '@material-ui/core';
 import { CloseIconButton } from '@components';
 import { closeDialog } from '@viewsSlice';
-import { RegisterUserDto } from '../../../../utils/sharedTypes';
+import { RegisterUserDto } from '@sharedTypes';
 import { registerUserRequest } from '@userSlice';
 import DialogSubmitButton from '../LoginDialog/components/DialogSubmitButton';
 import { registerSchema } from './registerSchema';

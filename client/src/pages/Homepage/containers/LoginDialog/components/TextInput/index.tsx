@@ -1,7 +1,7 @@
 import React from 'react';
 import { Controller, Control } from 'react-hook-form';
 import { TextField } from '@material-ui/core';
-import { UserLoginDto } from '../../../../../../utils/sharedTypes';
+import { UserLoginDto } from '@sharedTypes';
 
 type TextInputProps<T> = {
     label: string;

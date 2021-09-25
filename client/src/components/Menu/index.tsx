@@ -5,23 +5,28 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuLinks from './components/MenuLinks';
 import { useAppSelector, useAppDispatch } from '@store';
-import { appBarHeight, drawerWidth } from '../../constants';
+import { APP_BAR_HEIGHT, DRAWER_WIDTH } from '@constants';
 import { closeMenu } from '@viewsSlice';
+import { IMenuLink } from '@sharedTypes';
+
+type MenuProps = {
+    links: IMenuLink[];
+};
 
 const StyledDrawer = styled(Drawer)`
     & .MuiDrawer-paper {
-        top: ${appBarHeight + 1}px;
-        width: ${drawerWidth}px;
+        top: ${APP_BAR_HEIGHT + 1}px;
+        width: ${DRAWER_WIDTH}px;
     }
 `;
 
 const useStyles = makeStyles({
     drawer: {
-        width: drawerWidth,
+        width: DRAWER_WIDTH,
     },
 });
 
-const Menu = () => {
+const Menu = ({ links }: MenuProps) => {
     const classes = useStyles();
     const dispatch = useAppDispatch();
     const menuOpen = useAppSelector(({ views }) => views.menuOpen);
@@ -47,13 +52,13 @@ const Menu = () => {
                         </IconButton>
                     </Grid>
                     <Divider />
-                    <MenuLinks />
+                    <MenuLinks links={links} />
                 </Drawer>
             </Hidden>
             <Hidden mdDown>
                 <StyledDrawer anchor="left" open variant="permanent">
                     <Divider />
-                    <MenuLinks />
+                    <MenuLinks links={links} />
                 </StyledDrawer>
             </Hidden>
         </nav>

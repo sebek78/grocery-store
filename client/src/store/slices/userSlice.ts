@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RegisterUserDto, UserLoginDto } from '../../utils/sharedTypes';
+import { RegisterUserDto, UserLoginDto } from '@sharedTypes';
 
 interface UserState {
     username: string;
