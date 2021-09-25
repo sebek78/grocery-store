@@ -1,6 +1,7 @@
 export interface IMenuLink {
-    to: string;
     label: string;
+    to?: string;
+    action?: Function;
 }
 
 export type UserLoginDto = {

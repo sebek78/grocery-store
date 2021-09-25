@@ -10,7 +10,12 @@ const MenuLinks = ({ links }: MenuLinksProps) => {
     return (
         <>
             {links.map((link) => (
-                <MenuLink key={link.to} to={link.to} label={link.label} />
+                <MenuLink
+                    key={link.label}
+                    to={link.to}
+                    label={link.label}
+                    action={link.action}
+                />
             ))}
         </>
     );

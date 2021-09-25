@@ -6,19 +6,25 @@ import { closeMenu } from '@viewsSlice';
 
 type MenuLinkProps = {
     label: string;
-    to: string;
+    to?: string;
+    action?: Function;
 };
 
-const MenuLink = ({ label, to }: MenuLinkProps) => {
+const MenuLink = ({ label, to, action }: MenuLinkProps) => {
     const dispatch = useDispatch();
+
+    const handleClick = () => {
+        dispatch(closeMenu());
+        if (action) dispatch(action());
+    };
 
     return (
         <>
             <Button
                 color="primary"
                 component={Link}
-                to={to}
-                onClick={() => dispatch(closeMenu())}
+                to={to || ''}
+                onClick={handleClick}
             >
                 {label}
             </Button>
