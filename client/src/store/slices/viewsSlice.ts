@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { SnackbarData } from '@sharedTypes';
 
 interface ViewState {
     menuOpen: boolean;
@@ -6,6 +7,10 @@ interface ViewState {
         loginDialogOpen: boolean;
         registerDialogOpen: boolean;
     };
+    snackbar: {
+        open: boolean;
+    };
+    snackbarMessage: SnackbarData;
 }
 
 const initialState: ViewState = {
@@ -13,6 +18,13 @@ const initialState: ViewState = {
     homepage: {
         loginDialogOpen: false,
         registerDialogOpen: false,
+    },
+    snackbar: {
+        open: false,
+    },
+    snackbarMessage: {
+        message: '',
+        severity: 'error',
     },
 };
 
@@ -42,9 +54,25 @@ export const viewsSlice = createSlice({
                 state.homepage.registerDialogOpen = false;
             }
         },
+        closeSnackbar: (state) => {
+            state.snackbar.open = false;
+            state.snackbarMessage.message = '';
+            state.snackbarMessage.severity = 'info';
+        },
+        showSnackbar: (state, action: PayloadAction<SnackbarData>) => {
+            state.snackbar.open = true;
+            state.snackbarMessage.message = action.payload.message;
+            state.snackbarMessage.severity = action.payload.severity;
+        },
     },
 });
 
-export const { closeMenu, openMenu, openDialog, closeDialog } =
-    viewsSlice.actions;
+export const {
+    closeMenu,
+    openMenu,
+    openDialog,
+    closeDialog,
+    closeSnackbar,
+    showSnackbar,
+} = viewsSlice.actions;
 export default viewsSlice.reducer;

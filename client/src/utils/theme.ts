@@ -44,8 +44,8 @@ export const theme = createTheme({
             contrastText: '#000',
         },
         info: {
-            main: '#74BF04', // olive
-            contrastText: '#000',
+            main: '#2196F3', // light blue
+            contrastText: '#FFF',
         },
         customColor: {
             main: '#F2B705', // customColor

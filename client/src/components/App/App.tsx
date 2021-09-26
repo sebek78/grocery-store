@@ -6,7 +6,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import { theme } from '@utils';
 import { store } from '../../store/store';
 import { Provider } from 'react-redux';
-import { AuthenticatedRoute, Header } from '@components';
+import { AuthenticatedRoute, Header, SnackbarProvider } from '@components';
 
 const App = () => {
     return (
@@ -14,6 +14,7 @@ const App = () => {
             <Provider store={store}>
                 <CssBaseline />
                 <ThemeProvider theme={theme}>
+                    <SnackbarProvider />
                     <Header />
                     <Router>
                         <Switch>

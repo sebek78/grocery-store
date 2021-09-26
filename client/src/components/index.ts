@@ -4,5 +4,14 @@ import CloseIconButton from './CloseIconButton';
 import ColorButton from './ColorButton/ColorButton';
 import Header from './Header';
 import Menu from './Menu';
+import SnackbarProvider from './SnackbarProvider';
 
-export { App, AuthenticatedRoute, CloseIconButton, ColorButton, Header, Menu };
+export {
+    App,
+    AuthenticatedRoute,
+    CloseIconButton,
+    ColorButton,
+    Header,
+    Menu,
+    SnackbarProvider,
+};

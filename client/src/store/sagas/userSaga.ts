@@ -9,7 +9,7 @@ import {
     registerUserFailed,
 } from '@userSlice';
 import { api } from '@utils';
-import { closeDialog } from '@viewsSlice';
+import { closeDialog, showSnackbar } from '@viewsSlice';
 
 interface Error {
     statusCode: number;
@@ -52,6 +52,12 @@ function* registerUserSaga(action: PayloadAction) {
     } else {
         yield put(closeDialog('register'));
         yield put(registerUserSuccess(data));
+        yield put(
+            showSnackbar({
+                severity: 'success',
+                message: 'Zarejestrowane. Możesz zalogować się.',
+            })
+        );
     }
 }
 

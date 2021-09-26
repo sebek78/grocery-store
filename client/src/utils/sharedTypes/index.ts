@@ -4,6 +4,13 @@ export interface IMenuLink {
     action?: Function;
 }
 
+export type SnackbarSeverity = 'error' | 'warning' | 'info' | 'success';
+
+export type SnackbarData = {
+    message: string;
+    severity: SnackbarSeverity;
+};
+
 export type UserLoginDto = {
     username: string;
     password: string;
