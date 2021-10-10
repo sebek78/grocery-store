@@ -30,6 +30,9 @@ import { Users } from 'src/users/users.entity';
                         port: Number.parseInt(credentials[3].split('/')[0]),
                         database: credentials[3].split('/')[1],
                         entities: [Users],
+                        ssl: {
+                            rejectUnauthorized: false,
+                        },
                     };
                 }
             },
