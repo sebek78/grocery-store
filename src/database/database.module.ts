@@ -20,9 +20,16 @@ import { Users } from 'src/users/users.entity';
                         entities: [Users],
                     };
                 } else {
+                    const credentials: string[] =
+                        process.env.DATABASE_URL.split(' ');
                     return {
-                        url: process.env.DATABASE_URL,
-                        ssl: { rejectUnauthorized: false },
+                        type: 'postgres',
+                        host: credentials[1].split('=')[1],
+                        port: Number.parseInt(credentials[2].split('=')[1]),
+                        username: credentials[3].split('=')[1],
+                        password: credentials[4].split('=')[1],
+                        database: credentials[0].split('=')[1],
+                        entities: [Users],
                     };
                 }
             },
