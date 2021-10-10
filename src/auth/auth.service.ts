@@ -7,6 +7,8 @@ import { PostgresErrorCode } from 'src/database/postgresErrorCodes.enum';
 import { ConfigService } from '@nestjs/config';
 import { TokenPayload } from './auth.interface';
 
+const USERS_LIMIT = 100;
+
 @Injectable()
 export class AuthService {
     constructor(
@@ -50,6 +52,14 @@ export class AuthService {
     }
 
     async register(registrationData: CreateUserDto) {
+        const usersNumber = await this.usersService.getUserLimit();
+        if (usersNumber >= USERS_LIMIT) {
+            throw new HttpException(
+                'Users limit reached.',
+                HttpStatus.FORBIDDEN,
+            );
+        }
+
         const hashedPassword = await bcrypt.hash(registrationData.password, 10);
         try {
             const time = new Date().toISOString();

@@ -95,4 +95,8 @@ export class UsersService {
         const time = new Date().toISOString();
         return this.usersRepository.update(user_id, { last_login: time });
     }
+
+    async getUserLimit() {
+        return this.usersRepository.count();
+    }
 }
