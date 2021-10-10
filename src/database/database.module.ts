@@ -21,14 +21,14 @@ import { Users } from 'src/users/users.entity';
                     };
                 } else {
                     const credentials: string[] =
-                        process.env.DATABASE_URL.split(' ');
+                        process.env.DATABASE_URL.split(':');
                     return {
                         type: 'postgres',
-                        host: credentials[1].split('=')[1],
-                        port: Number.parseInt(credentials[2].split('=')[1]),
-                        username: credentials[3].split('=')[1],
-                        password: credentials[4].split('=')[1],
-                        database: credentials[0].split('=')[1],
+                        username: credentials[1].substring(2),
+                        password: credentials[2].split('@')[0],
+                        host: credentials[2].split('@')[1],
+                        port: Number.parseInt(credentials[3].split('/')[0]),
+                        database: credentials[3].split('/')[1],
                         entities: [Users],
                     };
                 }
