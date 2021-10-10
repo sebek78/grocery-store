@@ -8,8 +8,8 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
-    "copyClient": "rimraf public && cp -r ./client/dist ./public",
-    "copyClientForDev": "rimraf dist/public && cp -r ./client/dist ./dist/public",
+    "copyClient": "rimraf dist && cp -r ./client/dist ./dist",
+    "copyClientForDev": "rimraf dist && cp -r ./client/dist ./dist",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
