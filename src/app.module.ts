@@ -13,7 +13,7 @@ import { UsersModule } from './users/users.module';
     imports: [
         ConfigModule.forRoot(),
         ServeStaticModule.forRoot({
-            rootPath: join(__dirname, '..', 'dist'),
+            rootPath: join(__dirname, '..', 'public'),
             exclude: ['/api*'],
         }),
         DatabaseModule,
