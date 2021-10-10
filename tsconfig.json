@@ -1,5 +1,8 @@
 {
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*",
+    "shared/**/*"
+  ],
   "compilerOptions": {
     "module": "commonjs",
     "declaration": true,
@@ -11,6 +14,9 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
-    "incremental": true
+    "incremental": true,
+    "paths": {
+      "@shared/*": ["shared/*"],
+    },
   }
 }

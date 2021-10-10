@@ -4,7 +4,7 @@ It's a simple economic game when you manage a small grocery store.
 
 ## Features
 
-- (under construction) User accounts
+-   (under construction) User accounts
 
 ## Live version
 
@@ -16,8 +16,11 @@ The content language is Polish.
 
 ## Techonology stack
 
-- [React](https://reactjs.org/), [TypeScript](https://www.typescriptlang.org/)
-- [Nest.js](https://nestjs.com/)
+-   [TypeScript](https://www.typescriptlang.org/)
+-   [React](https://reactjs.org/),
+-   [Nest.js](https://nestjs.com/)
+-   [PostgreSQL](https://www.postgresql.org/)
+-   [Webpack](https://webpack.js.org/)
 
 ## Project status
 
