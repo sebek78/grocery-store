@@ -4,7 +4,7 @@ import { Box } from '@material-ui/core';
 import { useContentAreaStyles } from '@constants';
 import { Menu } from '@components';
 import { gameViewMenuLinks } from './constants';
-import { Account, Game, Manual } from '@pages';
+import { Account, Game, Manual, NewGameForm } from '@pages';
 
 const GameView = () => {
     const classes = useContentAreaStyles();
@@ -18,6 +18,9 @@ const GameView = () => {
                     </Route>
                     <Route path="/game/manual">
                         <Manual />
+                    </Route>
+                    <Route path="/game/new">
+                        <NewGameForm />
                     </Route>
                     <Route path="/game">
                         <Game />

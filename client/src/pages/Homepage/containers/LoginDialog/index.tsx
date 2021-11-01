@@ -68,7 +68,10 @@ const LoginDialog = () => {
                         control={control}
                     />
                 </DialogContent>
-                <DialogSubmitButton isRequesting={isRequesting} />
+                <DialogSubmitButton
+                    isRequesting={isRequesting}
+                    label="Zaloguj"
+                />
             </form>
         </Dialog>
     );

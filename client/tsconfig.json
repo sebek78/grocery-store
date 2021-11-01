@@ -50,6 +50,7 @@
       "@assets/*": ["src/assets/*"],
       "@utils": ["src/utils/index.ts"],
       "@store": ["src/store/index.ts"],
+      "@gameSlice": ["src/store/slices/gameSlice.ts"],
       "@userSlice": ["src/store/slices/userSlice.ts"],
       "@viewsSlice": ["src/store/slices/viewsSlice.ts"],
       "@sharedTypes": ["src/utils/sharedTypes/index.ts"],

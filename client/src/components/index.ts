@@ -4,7 +4,9 @@ import CloseIconButton from './CloseIconButton';
 import ColorButton from './ColorButton/ColorButton';
 import Header from './Header';
 import Menu from './Menu';
+import ProgressButton from './ProgressButton';
 import SnackbarProvider from './SnackbarProvider';
+import StyledLink from './StyledLink';
 
 export {
     App,
@@ -13,5 +15,7 @@ export {
     ColorButton,
     Header,
     Menu,
+    ProgressButton,
     SnackbarProvider,
+    StyledLink,
 };

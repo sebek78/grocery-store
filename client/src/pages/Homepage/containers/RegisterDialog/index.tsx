@@ -81,7 +81,10 @@ const RegisterDialog = () => {
                         control={control}
                     />
                 </DialogContent>
-                <DialogSubmitButton isRequesting={isRequesting} />
+                <DialogSubmitButton
+                    isRequesting={isRequesting}
+                    label="string"
+                />
             </form>
         </Dialog>
     );

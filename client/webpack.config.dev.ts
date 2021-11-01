@@ -31,6 +31,10 @@ module.exports = {
                 __dirname,
                 'src/store/slices/viewsSlice.ts'
             ),
+            '@gameSlice': path.resolve(
+                __dirname,
+                'src/store/slices/gameSlice.ts'
+            ),
             '@sharedTypes': path.resolve(__dirname, 'src/utils/sharedTypes'),
             '@constants': path.resolve(__dirname, 'src/utils/constants'),
         },
