@@ -6,13 +6,9 @@ import { newGameRequest } from '@gameSlice';
 import { ProgressButton, TextInput } from '@components';
 import { NewGame, NewGameDTO } from '@sharedTypes';
 import { newGameSchema } from './newGame.schema';
-import {
-    FormControl,
-    FormControlLabel,
-    FormLabel,
-    Radio,
-    RadioGroup,
-} from '@material-ui/core';
+import StyledForm from './components/StyledForm';
+import DifficultyLevel from './components/DifficultyLevel';
+import { GameDifficulty } from '@constants';
 
 const NewGameForm = () => {
     const dispatch = useAppDispatch();
@@ -39,7 +35,7 @@ const NewGameForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <StyledForm onSubmit={handleSubmit(onSubmit)}>
             {errors.storeName && <div>{errors.storeName.message}</div>}
             {apiError && <div>{apiError}</div>}
             <TextInput
@@ -48,39 +44,18 @@ const NewGameForm = () => {
                 control={control}
                 defaultValue=""
             />
-            <FormControl component="fieldset">
-                <FormLabel component="legend">poziom trudności gry</FormLabel>
-                <Controller
-                    name="difficulty"
-                    control={control}
-                    defaultValue="easy"
-                    render={({ field }) => (
-                        <RadioGroup {...field}>
-                            <FormControlLabel
-                                value="easy"
-                                control={<Radio />}
-                                label="łatwy"
-                            />
-                            <FormControlLabel
-                                value="medium"
-                                control={<Radio />}
-                                label="średni"
-                            />
-                            <FormControlLabel
-                                value="hard"
-                                control={<Radio />}
-                                label="trudny"
-                            />
-                        </RadioGroup>
-                    )}
-                />
-            </FormControl>
+            <DifficultyLevel
+                legend="Poziom trudności gry"
+                name="difficulty"
+                control={control}
+                defaultValue={GameDifficulty.Easy}
+            />
             <ProgressButton
                 isRequesting={isRequesting}
                 label="Start"
                 type="submit"
             />
-        </form>
+        </StyledForm>
     );
 };
 
