@@ -3,10 +3,9 @@ import { useAppSelector, useAppDispatch } from '@store';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { newGameRequest } from '@gameSlice';
-import { ProgressButton } from '@components';
+import { ProgressButton, TextInput } from '@components';
 import { NewGame, NewGameDTO } from '@sharedTypes';
 import { newGameSchema } from './newGame.schema';
-import TextInput from './components/TextInput';
 import {
     FormControl,
     FormControlLabel,
@@ -47,6 +46,7 @@ const NewGameForm = () => {
                 label="Nazwa sklepu"
                 name="storeName"
                 control={control}
+                defaultValue=""
             />
             <FormControl component="fieldset">
                 <FormLabel component="legend">poziom trudności gry</FormLabel>

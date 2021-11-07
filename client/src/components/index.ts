@@ -7,6 +7,7 @@ import Menu from './Menu';
 import ProgressButton from './ProgressButton';
 import SnackbarProvider from './SnackbarProvider';
 import StyledLink from './StyledLink';
+import TextInput from './TextInput';
 
 export {
     App,
@@ -18,4 +19,5 @@ export {
     ProgressButton,
     SnackbarProvider,
     StyledLink,
+    TextInput,
 };

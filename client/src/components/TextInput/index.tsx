@@ -1,26 +1,33 @@
 import React from 'react';
-import { Controller, Control } from 'react-hook-form';
+import {
+    Controller,
+    Control,
+    Path,
+    UnpackNestedValue,
+    PathValue,
+} from 'react-hook-form';
 import { TextField } from '@material-ui/core';
-import { UserLoginDto } from '@sharedTypes';
 
 type TextInputProps<T> = {
     label: string;
-    name: keyof T;
+    name: Path<T>;
     control: Control<T, object>;
+    defaultValue: UnpackNestedValue<PathValue<T, Path<T>>>;
     type?: string;
 };
 
-const TextInput = ({
+const TextInput = <T,>({
     label,
     type = 'text',
     name,
     control,
-}: TextInputProps<UserLoginDto>) => {
+    defaultValue,
+}: TextInputProps<T>) => {
     return (
         <Controller
             name={name}
             control={control}
-            defaultValue=""
+            defaultValue={defaultValue}
             render={({ field }) => (
                 <TextField
                     margin="dense"
