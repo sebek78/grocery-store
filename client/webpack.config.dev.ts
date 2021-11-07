@@ -1,6 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
     entry: './src/index.tsx',
@@ -12,7 +13,7 @@ module.exports = {
     devtool: 'cheap-module-source-map',
     devServer: {
         hot: true,
-        stats: 'minimal',
+        contentBase: path.resolve(__dirname, 'dist'),
         port: 3001,
     },
     resolve: {
@@ -45,6 +46,7 @@ module.exports = {
             favicon: 'src/assets/favicon.svg',
         }),
         new MiniCssExtractPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
     ],
     module: {
         rules: [
