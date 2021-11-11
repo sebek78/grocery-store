@@ -8,7 +8,7 @@ import { NewGame, NewGameDTO } from '@sharedTypes';
 import { newGameSchema } from './newGame.schema';
 import StyledForm from './components/StyledForm';
 import DifficultyLevel from './components/DifficultyLevel';
-import { GameDifficulty } from '@constants';
+import { GameDifficulty } from '@sharedTypes';
 
 const NewGameForm = () => {
     const dispatch = useAppDispatch();

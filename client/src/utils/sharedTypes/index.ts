@@ -1,5 +1,3 @@
-import { GameDifficulty } from '@constants';
-
 export interface IMenuLink {
     label: string;
     to?: string;
@@ -23,6 +21,12 @@ export type RegisterUserDto = {
     password: string;
     password2: string;
 };
+
+export enum GameDifficulty {
+    Easy = 'easy',
+    Medium = 'medium',
+    Hard = 'hard',
+}
 
 export interface NewGame {
     storeName: string;

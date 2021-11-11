@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { UsersModule } from './users/users.module';
+import { GamesModule } from './games/games.module';
 
 @Module({
     imports: [
@@ -19,6 +20,7 @@ import { UsersModule } from './users/users.module';
         DatabaseModule,
         UsersModule,
         AuthModule,
+        GamesModule,
     ],
     controllers: [AppController],
     providers: [AppService],

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { GameDifficulty } from '@constants';
+import { GameDifficulty } from '@sharedTypes';
 import {
     FormControl,
     FormLabel,

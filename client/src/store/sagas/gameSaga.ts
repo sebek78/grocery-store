@@ -13,7 +13,7 @@ interface Response extends Error {
 
 function* newGameSaga(action: PayloadAction) {
     console.log(action.payload);
-    const data: Response = yield call(api.post, '/game/new', action.payload);
+    const data: Response = yield call(api.post, '/games', action.payload);
     console.log(data);
     if (data.statusCode >= 400) {
         // yield put(newGameFailed(data.message));
