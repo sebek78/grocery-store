@@ -1,20 +1,26 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { api } from '@utils';
+import { getGamesSuccess } from '../slices/gameSlice';
+import { Game } from '@sharedTypes';
 
 interface Error {
     statusCode: number;
     message: string;
 }
 
-interface Response extends Error {
-    username: string;
+interface NewGameResponse extends Error {}
+
+interface GamesResponse extends Error {
+    games: Game[];
 }
 
 function* newGameSaga(action: PayloadAction) {
-    console.log(action.payload);
-    const data: Response = yield call(api.post, '/games', action.payload);
-    console.log(data);
+    const data: NewGameResponse = yield call(
+        api.post,
+        '/games',
+        action.payload
+    );
     if (data.statusCode >= 400) {
         // yield put(newGameFailed(data.message));
     } else {
@@ -23,8 +29,22 @@ function* newGameSaga(action: PayloadAction) {
     }
 }
 
+function* getGamesSaga(action: PayloadAction) {
+    const data: GamesResponse = yield call(api.get, '/games');
+
+    if (data.statusCode >= 400) {
+        // TODO: errors
+        // yield put(newGameFailed(data.message));
+    } else {
+        if (data.games) yield put(getGamesSuccess(data.games));
+    }
+}
+
 function* gameSaga() {
-    yield all([takeLatest('game/newGameRequest', newGameSaga)]);
+    yield all([
+        takeLatest('game/newGameRequest', newGameSaga),
+        takeLatest('game/getGamesList', getGamesSaga),
+    ]);
 }
 
 export default gameSaga;

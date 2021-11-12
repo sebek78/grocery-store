@@ -38,3 +38,11 @@ export type NewGameDTO = {
     storeName: string;
     difficulty: GameDifficulty;
 };
+
+export interface Game extends NewGame {
+    cash: number;
+    gameId: number;
+    isRunning: boolean;
+    phase: number;
+    turn: number;
+}

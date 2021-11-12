@@ -5,6 +5,7 @@ import { Games } from './entities/games.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Users } from '../users/users.entity';
+import { snakeToCamel } from '@shared/functions';
 // import { UpdateGamesDto } from './dto/update-games.dto';
 
 @Injectable()
@@ -24,11 +25,27 @@ export class GamesService {
         await this.gamesRepository.save(newGame);
         return newGame;
     }
-    /*
-    findAll() {
-        return `This action returns all game`;
+
+    async findAllByUserId(user_id: number) {
+        const games = await this.gamesRepository.find({
+            where: {
+                player_id: user_id,
+            },
+        });
+
+        const res = games
+            .map((game) => ({ ...game, player_id: undefined }))
+            .map((game) => {
+                const parsed = {};
+                for (const property in game) {
+                    parsed[snakeToCamel(property)] = game[property];
+                }
+                return parsed;
+            });
+        return { games: res };
     }
 
+    /*
     findOne(id: number) {
         return `This action returns a #${id} game`;
     }

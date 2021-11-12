@@ -4,7 +4,8 @@ It's a simple economic game when you manage a small grocery store.
 
 ## Features
 
--   (under construction) User accounts
+-   User accounts
+-   initial game state (under construction)
 
 ## Live version
 

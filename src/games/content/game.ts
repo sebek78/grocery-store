@@ -16,7 +16,7 @@ export class Game {
         this.difficulty = difficultyLevel;
     }
 
-    setCash(difficultyLevel: GameDifficulty) {
+    private setCash(difficultyLevel: GameDifficulty) {
         switch (difficultyLevel) {
             case GameDifficulty.Easy:
                 this.cash = 30;

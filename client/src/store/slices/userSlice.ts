@@ -19,9 +19,20 @@ interface UserAuthSuccess {
     username: string;
 }
 
+function setInitialState() {
+    const user = localStorage.getItem('gs');
+    if (!user) return initialState;
+
+    return {
+        ...initialState,
+        username: user,
+        authenticated: true,
+    };
+}
+
 export const userSlice = createSlice({
     name: 'user',
-    initialState,
+    initialState: setInitialState(),
     reducers: {
         userLoginRequest: (state, action: PayloadAction<UserLoginDto>) => {
             state.isRequesting = true;
@@ -32,6 +43,7 @@ export const userSlice = createSlice({
             state.authenticated = true;
             state.isRequesting = false;
             state.error = '';
+            localStorage.setItem('gs', `${action.payload.username}`);
         },
         userLoginFailed: (state, action: PayloadAction<string>) => {
             state.isRequesting = false;
@@ -46,10 +58,12 @@ export const userSlice = createSlice({
             state.authenticated = false;
             state.isRequesting = false;
             state.error = '';
+            localStorage.removeItem('gs');
         },
         userLogoutFailed: (state, action: PayloadAction<string>) => {
             state.isRequesting = false;
             state.error = action.payload;
+            localStorage.removeItem('gs');
         },
         registerUserRequest: (
             state,
