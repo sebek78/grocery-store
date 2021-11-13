@@ -3,6 +3,7 @@ import AuthenticatedRoute from './AuthenticatedRoute';
 import CloseIconButton from './CloseIconButton';
 import ColorButton from './ColorButton/ColorButton';
 import Header from './Header';
+import Loader from './Loader';
 import Menu from './Menu';
 import ProgressButton from './ProgressButton';
 import SnackbarProvider from './SnackbarProvider';
@@ -15,6 +16,7 @@ export {
     CloseIconButton,
     ColorButton,
     Header,
+    Loader,
     Menu,
     ProgressButton,
     SnackbarProvider,
