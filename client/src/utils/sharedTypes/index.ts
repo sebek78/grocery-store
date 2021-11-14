@@ -4,12 +4,21 @@ export interface IMenuLink {
     action?: Function;
 }
 
+export interface ApiError {
+    statusCode: number;
+    message: string;
+}
+
+/* Snackbar */
+
 export type SnackbarSeverity = 'error' | 'warning' | 'info' | 'success';
 
 export type SnackbarData = {
     message: string;
     severity: SnackbarSeverity;
 };
+
+/* User */
 
 export type UserLoginDto = {
     username: string;
@@ -21,6 +30,8 @@ export type RegisterUserDto = {
     password: string;
     password2: string;
 };
+
+/* Game */
 
 export enum GameDifficulty {
     Easy = 'easy',

@@ -84,6 +84,13 @@ export const userSlice = createSlice({
             state.isRequesting = false;
             state.error = action.payload;
         },
+        unauthorized: (state) => {
+            state.username = '';
+            state.authenticated = false;
+            state.isRequesting = false;
+            state.error = 'Niezalogowany'; // TODO: unused
+            localStorage.removeItem('gs');
+        },
     },
 });
 
@@ -97,6 +104,7 @@ export const {
     registerUserRequest,
     registerUserSuccess,
     registerUserFailed,
+    unauthorized,
 } = userSlice.actions;
 
 export default userSlice.reducer;

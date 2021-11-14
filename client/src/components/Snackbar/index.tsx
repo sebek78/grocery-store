@@ -1,13 +1,14 @@
 import React from 'react';
-import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { Snackbar as MUI_Snackbar } from '@material-ui/core';
-import CheckIcon from '@material-ui/icons/Check';
-import ErrorOutline from '@material-ui/icons/ErrorOutline';
+import { useTheme } from '@mui/material/styles';
+import { Alert, Snackbar as MuiSnackbar, useMediaQuery } from '@mui/material';
+import {
+    Check as CheckIcon,
+    ErrorOutline as ErrorOutlineIcon,
+} from '@mui/icons-material';
 import { closeSnackbar } from '@viewsSlice';
 import { SnackbarSeverity } from '@sharedTypes';
-import { theme } from '@utils';
-import StyledAlert from '../Alert';
+import { APP_BAR_HEIGHT, AUTO_HIDE_DURATION } from '@constants';
 
 type ToastProps = {
     open: boolean;
@@ -15,46 +16,46 @@ type ToastProps = {
     severity: SnackbarSeverity;
 };
 
-const StyledSnackbar = styled(MUI_Snackbar)`
-    & {
-        top: ${theme.spacing(12)}px;
-
-        ${theme.breakpoints.down('xs')} {
-            top: ${theme.spacing(20)}px;
-        }
-    }
-`;
-
 const Snackbar = ({ open, message, severity }: ToastProps) => {
     const dispatch = useDispatch();
+    const theme = useTheme();
+    const matches = useMediaQuery(theme.breakpoints.down('sm'));
 
     const handleClose = () => {
         dispatch(closeSnackbar());
     };
 
     return (
-        <StyledSnackbar
+        <MuiSnackbar
             anchorOrigin={{
                 vertical: 'top',
                 horizontal: 'center',
             }}
             open={open}
-            autoHideDuration={5000}
+            autoHideDuration={AUTO_HIDE_DURATION}
             onClose={handleClose}
             key={message}
+            message={message}
+            sx={{
+                top: {
+                    xs: 80,
+                    sm: APP_BAR_HEIGHT / 2 - 24,
+                },
+            }}
         >
-            <StyledAlert
+            <Alert
                 onClose={handleClose}
                 severity={severity}
                 iconMapping={{
                     success: <CheckIcon fontSize="inherit" />,
+                    error: <ErrorOutlineIcon fontSize="inherit" />,
                     info: <></>,
                 }}
                 variant="filled"
             >
                 {message}
-            </StyledAlert>
-        </StyledSnackbar>
+            </Alert>
+        </MuiSnackbar>
     );
 };
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAppSelector } from '@store';
-import Snackbar from './components/Snackbar';
+import Snackbar from '../Snackbar';
 
 const SnackbarProvider = () => {
     const { open } = useAppSelector(({ views }) => views.snackbar);
