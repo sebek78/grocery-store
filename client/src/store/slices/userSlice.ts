@@ -61,6 +61,7 @@ export const userSlice = createSlice({
             localStorage.removeItem('gs');
         },
         userLogoutFailed: (state, action: PayloadAction<string>) => {
+            state.authenticated = false;
             state.isRequesting = false;
             state.error = action.payload;
             localStorage.removeItem('gs');
@@ -88,7 +89,7 @@ export const userSlice = createSlice({
             state.username = '';
             state.authenticated = false;
             state.isRequesting = false;
-            state.error = 'Niezalogowany'; // TODO: unused
+            state.error = '';
             localStorage.removeItem('gs');
         },
     },

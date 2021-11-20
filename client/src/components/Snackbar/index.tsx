@@ -8,18 +8,23 @@ import {
 } from '@mui/icons-material';
 import { closeSnackbar } from '@viewsSlice';
 import { SnackbarSeverity } from '@sharedTypes';
-import { APP_BAR_HEIGHT, AUTO_HIDE_DURATION } from '@constants';
+import { APP_BAR_HEIGHT } from '@constants';
 
 type ToastProps = {
     open: boolean;
     message: string;
     severity: SnackbarSeverity;
+    autoHideDuration: number | null;
 };
 
-const Snackbar = ({ open, message, severity }: ToastProps) => {
+const Snackbar = ({
+    open,
+    message,
+    severity,
+    autoHideDuration,
+}: ToastProps) => {
     const dispatch = useDispatch();
     const theme = useTheme();
-    const matches = useMediaQuery(theme.breakpoints.down('sm'));
 
     const handleClose = () => {
         dispatch(closeSnackbar());
@@ -32,7 +37,7 @@ const Snackbar = ({ open, message, severity }: ToastProps) => {
                 horizontal: 'center',
             }}
             open={open}
-            autoHideDuration={AUTO_HIDE_DURATION}
+            autoHideDuration={autoHideDuration}
             onClose={handleClose}
             key={message}
             message={message}

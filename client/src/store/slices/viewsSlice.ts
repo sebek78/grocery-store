@@ -1,3 +1,4 @@
+import { AUTO_HIDE_DURATION } from '@constants';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SnackbarData } from '@sharedTypes';
 
@@ -9,6 +10,7 @@ interface ViewState {
     };
     snackbar: {
         open: boolean;
+        autoHideDuration: number | null;
     };
     snackbarMessage: SnackbarData;
 }
@@ -21,6 +23,7 @@ const initialState: ViewState = {
     },
     snackbar: {
         open: false,
+        autoHideDuration: AUTO_HIDE_DURATION,
     },
     snackbarMessage: {
         message: '',
@@ -63,6 +66,10 @@ export const viewsSlice = createSlice({
             state.snackbar.open = true;
             state.snackbarMessage.message = action.payload.message;
             state.snackbarMessage.severity = action.payload.severity;
+            state.snackbar.autoHideDuration =
+                action.payload.autoHideDuration !== undefined
+                    ? action.payload.autoHideDuration
+                    : AUTO_HIDE_DURATION;
         },
     },
 });

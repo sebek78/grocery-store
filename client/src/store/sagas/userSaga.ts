@@ -10,6 +10,7 @@ import {
 } from '@userSlice';
 import { api } from '@utils';
 import { closeDialog, showSnackbar } from '@viewsSlice';
+import { apiErrorSaga } from './apiErrorSaga';
 
 interface Error {
     statusCode: number;
@@ -24,6 +25,7 @@ function* loginUserSaga(action: PayloadAction) {
     const data: Response = yield call(api.post, '/auth/login', action.payload);
 
     if (data.statusCode >= 400) {
+        yield call(apiErrorSaga, data);
         yield put(userLoginFailed(data.message));
     } else {
         yield put(closeDialog('login'));
@@ -48,6 +50,7 @@ function* registerUserSaga(action: PayloadAction) {
     );
 
     if (data.statusCode >= 400) {
+        yield call(apiErrorSaga, data);
         yield put(registerUserFailed(data.message));
     } else {
         yield put(closeDialog('register'));

@@ -16,6 +16,7 @@ export type SnackbarSeverity = 'error' | 'warning' | 'info' | 'success';
 export type SnackbarData = {
     message: string;
     severity: SnackbarSeverity;
+    autoHideDuration?: number | null;
 };
 
 /* User */
