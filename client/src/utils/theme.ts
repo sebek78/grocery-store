@@ -1,11 +1,17 @@
-import { createTheme } from '@material-ui/core/styles';
+import { createTheme } from '@mui/material/styles';
 
-declare module '@material-ui/core/styles/createPalette' {
+declare module '@mui/material/styles' {
     interface Palette {
-        customColor: SimplePaletteColorOptions;
+        customColor: {
+            main: string;
+            contrastText: string;
+        };
     }
     interface PaletteOptions {
-        customColor: SimplePaletteColorOptions;
+        customColor: {
+            main: string;
+            contrastText: string;
+        };
     }
 }
 

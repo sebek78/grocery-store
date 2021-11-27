@@ -47,14 +47,19 @@ const GameRow: React.FC<GameRowProps> = ({
                             disabled={game.turn === 7}
                             onClick={(e) => handlePlay(e, game.gameId)}
                             sx={{ marginRight: 4 }}
+                            edge="end"
                         >
                             {game.turn !== 7 ? (
-                                <PlayArrow />
+                                <>
+                                    <ListItemText primary={'Kontynuuj'} />
+                                    <PlayArrow />
+                                </>
                             ) : (
                                 <NotInterested />
                             )}
                         </IconButton>
                     </ListItemAvatar>
+
                     <ListItemText
                         primary={game.storeName}
                         secondary={
