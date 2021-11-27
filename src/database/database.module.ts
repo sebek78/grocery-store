@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Users } from 'src/users/users.entity';
 import { Games } from 'src/games/entities/games.entity';
+import { DistributionCenter } from 'src/distribution-center/entities/distribution-center.entity';
 
 @Module({
     imports: [
@@ -18,7 +19,7 @@ import { Games } from 'src/games/entities/games.entity';
                         username: configService.get('DB_USERNAME'),
                         password: configService.get('DB_PASSWORD'),
                         database: configService.get('DB_DATABASE'),
-                        entities: [Users, Games],
+                        entities: [Users, Games, DistributionCenter],
                     };
                 } else {
                     const credentials: string[] =
@@ -30,7 +31,7 @@ import { Games } from 'src/games/entities/games.entity';
                         host: credentials[2].split('@')[1],
                         port: Number.parseInt(credentials[3].split('/')[0]),
                         database: credentials[3].split('/')[1],
-                        entities: [Users, Games],
+                        entities: [Users, Games, DistributionCenter],
                         ssl: {
                             rejectUnauthorized: false,
                         },

@@ -9,6 +9,7 @@ import { DatabaseModule } from './database/database.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { UsersModule } from './users/users.module';
 import { GamesModule } from './games/games.module';
+import { DistributionCenterModule } from './distribution-center/distribution-center.module';
 
 @Module({
     imports: [
@@ -21,6 +22,7 @@ import { GamesModule } from './games/games.module';
         UsersModule,
         AuthModule,
         GamesModule,
+        DistributionCenterModule,
     ],
     controllers: [AppController],
     providers: [AppService],

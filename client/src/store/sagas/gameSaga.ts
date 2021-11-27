@@ -8,7 +8,8 @@ import { history } from '../../components/App/App';
 
 interface NewGameResponse extends ApiError {
     game: Game;
-    store: any;
+    store: any; // TODO types
+    distributionCenter: any;
 }
 
 interface GamesResponse extends ApiError {
@@ -24,8 +25,16 @@ function* newGameSaga(action: PayloadAction) {
     if (data.statusCode >= 400) {
         if (data.statusCode >= 400) yield call(apiErrorSaga, data);
     } else {
-        yield put(newGameSuccess({ game: data.game, store: data.store }));
-        yield call(history.push, `/game/store/${data.store.storeId}`);
+        console.log(data);
+        yield put(
+            newGameSuccess({
+                game: data.game,
+                store: data.store || {},
+                distributionCenter: data.distributionCenter || {},
+            })
+        );
+        // TODO storeId
+        yield call(history.push, `/game/store/${data.store?.storeId || 1}`);
     }
 }
 

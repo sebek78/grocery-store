@@ -11,3 +11,11 @@ export enum GamePhase {
     Customer,
     Waste,
 }
+
+export enum ProductType {
+    Produce = 'Warzywa i owoce',
+    Bakery = 'Pieczywo',
+    Dairy = 'Nabiał',
+    DryGoods = 'Produkty suche',
+    Frozen = 'Mrożonki',
+}

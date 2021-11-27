@@ -8,6 +8,7 @@ interface GameState {
     gameListError: string;
     games: Game[];
     stores: any[]; // TODO Store type
+    distributionCenters: any[]; //TODO center type
 }
 
 const initialState: GameState = {
@@ -17,6 +18,7 @@ const initialState: GameState = {
     gameListError: '',
     games: [],
     stores: [],
+    distributionCenters: [],
 };
 
 export const gameSlice = createSlice({
@@ -29,11 +31,16 @@ export const gameSlice = createSlice({
         },
         newGameSuccess: (
             state,
-            action: PayloadAction<{ game: Game; store: any }>
+            action: PayloadAction<{
+                game: Game;
+                store: any;
+                distributionCenter: any;
+            }>
         ) => {
             state.isRequesting = false;
             state.games.push(action.payload.game);
             state.stores.push(action.payload.store);
+            state.distributionCenters.push(action.payload.distributionCenter);
             state.error = '';
         },
         getGamesList: (state) => {

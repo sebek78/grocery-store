@@ -4,26 +4,41 @@ import { Game } from './content/game';
 import { Games } from './entities/games.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Users } from '../users/users.entity';
 import { snakeToCamel } from '@shared/functions';
+import { DistributionCenterService } from 'src/distribution-center/distribution-center.service';
+import { UsersService } from 'src/users/users.service';
 // import { UpdateGamesDto } from './dto/update-games.dto';
 
 @Injectable()
 export class GamesService {
     constructor(
-        @InjectRepository(Users)
-        private usersRepository: Repository<Users>,
         @InjectRepository(Games)
         private gamesRepository: Repository<Games>,
+        private distributionCenterService: DistributionCenterService,
+        private usersService: UsersService,
     ) {}
     async create(createGamesDto: CreateGamesDto) {
         const { username, storeName, difficulty } = createGamesDto;
-        const { user_id } = await this.usersRepository.findOne({ username });
-        const game = new Game(user_id, storeName, difficulty);
+        const { user_id } = await this.usersService.findOne(username);
 
+        const game = new Game(user_id, storeName, difficulty);
         const newGame = this.gamesRepository.create(game);
         await this.gamesRepository.save(newGame);
-        return { game: newGame };
+
+        const { game_id } = await this.gamesRepository.findOne({
+            where: [{ player_id: user_id }],
+            order: { game_id: 'DESC' },
+        });
+        const distributionCenter = await this.distributionCenterService.create(
+            user_id,
+            game_id,
+        );
+        const center = {
+            centerId: distributionCenter.center_id,
+            costs: distributionCenter.costs[0],
+        };
+
+        return { game: newGame, distributionCenter: center };
     }
 
     async findAllByUserId(user_id: number) {
