@@ -7,6 +7,7 @@ interface GameState {
     error: string;
     gameListError: string;
     games: Game[];
+    stores: any[]; // TODO Store type
 }
 
 const initialState: GameState = {
@@ -15,6 +16,7 @@ const initialState: GameState = {
     error: '',
     gameListError: '',
     games: [],
+    stores: [],
 };
 
 export const gameSlice = createSlice({
@@ -23,6 +25,15 @@ export const gameSlice = createSlice({
     reducers: {
         newGameRequest: (state, action: PayloadAction<NewGameDTO>) => {
             state.isRequesting = true;
+            state.error = '';
+        },
+        newGameSuccess: (
+            state,
+            action: PayloadAction<{ game: Game; store: any }>
+        ) => {
+            state.isRequesting = false;
+            state.games.push(action.payload.game);
+            state.stores.push(action.payload.store);
             state.error = '';
         },
         getGamesList: (state) => {
@@ -35,14 +46,19 @@ export const gameSlice = createSlice({
             state.games = action.payload;
         },
         getGamesFailed: (state, action: PayloadAction<string>) => {
-            state.isRequesting = false;
+            state.isGettingGames = false;
             state.error = action.payload;
             // TODO: notification or error message
         },
     },
 });
 
-export const { newGameRequest, getGamesList, getGamesSuccess, getGamesFailed } =
-    gameSlice.actions;
+export const {
+    newGameRequest,
+    newGameSuccess,
+    getGamesList,
+    getGamesSuccess,
+    getGamesFailed,
+} = gameSlice.actions;
 
 export default gameSlice.reducer;

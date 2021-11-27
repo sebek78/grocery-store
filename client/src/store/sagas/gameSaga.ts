@@ -1,11 +1,15 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { api } from '@utils';
-import { getGamesSuccess } from '../slices/gameSlice';
+import { getGamesSuccess, newGameSuccess } from '../slices/gameSlice';
 import { Game, ApiError } from '@sharedTypes';
 import { apiErrorSaga } from './apiErrorSaga';
+import { history } from '../../components/App/App';
 
-interface NewGameResponse extends ApiError {}
+interface NewGameResponse extends ApiError {
+    game: Game;
+    store: any;
+}
 
 interface GamesResponse extends ApiError {
     games: Game[];
@@ -18,10 +22,10 @@ function* newGameSaga(action: PayloadAction) {
         action.payload
     );
     if (data.statusCode >= 400) {
-        // yield put(newGameFailed(data.message));
+        if (data.statusCode >= 400) yield call(apiErrorSaga, data);
     } else {
-        // yield put(); history.push to game view
-        // yield put(newGameSuccess(data));
+        yield put(newGameSuccess({ game: data.game, store: data.store }));
+        yield call(history.push, `/game/store/${data.store.storeId}`);
     }
 }
 

@@ -23,7 +23,7 @@ export class GamesService {
 
         const newGame = this.gamesRepository.create(game);
         await this.gamesRepository.save(newGame);
-        return newGame;
+        return { game: newGame };
     }
 
     async findAllByUserId(user_id: number) {

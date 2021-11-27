@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { ColorButton, Loader, StyledLink } from '@components';
 import { getGamesList } from '@gameSlice';
 import { useAppDispatch, useAppSelector } from '@store';
 import { Divider, List } from '@mui/material';
 import { Game } from '@sharedTypes';
 import GameRow from './components/GamesList';
+import { Box } from '@mui/system';
 
 const generate = (
     games: Game[],
@@ -26,6 +28,7 @@ const generate = (
 
 const Game = () => {
     const dispatch = useAppDispatch();
+    let history = useHistory();
     const games = useAppSelector(({ game }) => game.games);
     const isGettingGames = useAppSelector(({ game }) => game.isGettingGames);
 
@@ -33,8 +36,8 @@ const Game = () => {
         dispatch(getGamesList());
     }, []);
 
-    const handlePlay = (id: number) => {
-        console.log('Play', id);
+    const handlePlay = (storeId: number) => {
+        history.push(`/game/store/${storeId}`);
     };
 
     const handleDelete = (id: number) => {
@@ -43,15 +46,20 @@ const Game = () => {
 
     return (
         <>
-            <StyledLink to="/game/new">
-                <ColorButton btnColor="primary">Nowa gra</ColorButton>
-            </StyledLink>
+            <Box sx={{ padding: 1 }}>
+                <StyledLink to="/game/new">
+                    <ColorButton btnColor="primary">Nowa gra</ColorButton>
+                </StyledLink>
+            </Box>
             <Divider />
             {isGettingGames && <Loader color="info" />}
             {!isGettingGames && (
                 <List dense={true}>
                     {generate(games, handlePlay, handleDelete)}
                 </List>
+            )}
+            {!isGettingGames && games.length === 0 && (
+                <Box sx={{ padding: 1 }}>Lista gier jest pusta.</Box>
             )}
         </>
     );
