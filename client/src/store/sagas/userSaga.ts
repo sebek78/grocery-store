@@ -7,6 +7,8 @@ import {
     userLogoutFailed,
     registerUserSuccess,
     registerUserFailed,
+    refreshTokenSuccess,
+    refreshTokenFailed,
 } from '@userSlice';
 import { api } from '@utils';
 import { closeDialog, showSnackbar } from '@viewsSlice';
@@ -64,11 +66,21 @@ function* registerUserSaga(action: PayloadAction) {
     }
 }
 
+function* refreshTokenSaga() {
+    const data: Response = yield call(api.get, '/auth/refresh');
+    if (data.statusCode >= 400) {
+        yield call(apiErrorSaga, data);
+    } else {
+        yield put(refreshTokenSuccess());
+    }
+}
+
 function* userSaga() {
     yield all([
         takeLatest('user/userLoginRequest', loginUserSaga),
         takeLatest('user/userLogoutRequest', logoutUserSaga),
         takeLatest('user/registerUserRequest', registerUserSaga),
+        takeLatest('user/requestRefreshToken', refreshTokenSaga),
     ]);
 }
 

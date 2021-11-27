@@ -5,6 +5,8 @@ interface UserState {
     username: string;
     authenticated: boolean;
     isRequesting: boolean;
+    lastUpdateTime: number;
+    pageReloaded: boolean;
     error: string;
 }
 
@@ -12,6 +14,8 @@ const initialState: UserState = {
     username: '',
     authenticated: false,
     isRequesting: false,
+    lastUpdateTime: 0,
+    pageReloaded: true,
     error: '',
 };
 
@@ -39,15 +43,19 @@ export const userSlice = createSlice({
             state.error = '';
         },
         userLoginSuccess: (state, action: PayloadAction<UserAuthSuccess>) => {
+            const lastUpdateTime = Date.now();
             state.username = action.payload.username;
             state.authenticated = true;
             state.isRequesting = false;
             state.error = '';
+            state.lastUpdateTime = lastUpdateTime;
+            state.pageReloaded = false;
             localStorage.setItem('gs', `${action.payload.username}`);
         },
         userLoginFailed: (state, action: PayloadAction<string>) => {
             state.isRequesting = false;
             state.error = action.payload;
+            state.lastUpdateTime = 0;
         },
         userLogoutRequest: (state) => {
             state.isRequesting = true;
@@ -58,12 +66,14 @@ export const userSlice = createSlice({
             state.authenticated = false;
             state.isRequesting = false;
             state.error = '';
+            state.lastUpdateTime = 0;
             localStorage.removeItem('gs');
         },
         userLogoutFailed: (state, action: PayloadAction<string>) => {
             state.authenticated = false;
             state.isRequesting = false;
             state.error = action.payload;
+            state.lastUpdateTime = 0;
             localStorage.removeItem('gs');
         },
         registerUserRequest: (
@@ -90,8 +100,16 @@ export const userSlice = createSlice({
             state.authenticated = false;
             state.isRequesting = false;
             state.error = '';
+            state.lastUpdateTime = 0;
             localStorage.removeItem('gs');
         },
+        requestRefreshToken: () => {},
+        refreshTokenSuccess: (state) => {
+            const lastUpdateTime = Date.now();
+            state.lastUpdateTime = lastUpdateTime;
+            state.pageReloaded = false;
+        },
+        refreshTokenFailed: () => {},
     },
 });
 
@@ -106,6 +124,9 @@ export const {
     registerUserSuccess,
     registerUserFailed,
     unauthorized,
+    requestRefreshToken,
+    refreshTokenSuccess,
+    refreshTokenFailed,
 } = userSlice.actions;
 
 export default userSlice.reducer;
