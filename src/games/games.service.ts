@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { snakeToCamel } from '@shared/functions';
 import { DistributionCenterService } from 'src/distribution-center/distribution-center.service';
 import { UsersService } from 'src/users/users.service';
+import { StoresService } from 'src/stores/stores.service';
 // import { UpdateGamesDto } from './dto/update-games.dto';
 
 @Injectable()
@@ -16,6 +17,7 @@ export class GamesService {
         private gamesRepository: Repository<Games>,
         private distributionCenterService: DistributionCenterService,
         private usersService: UsersService,
+        private storesService: StoresService,
     ) {}
     async create(createGamesDto: CreateGamesDto) {
         const { username, storeName, difficulty } = createGamesDto;
@@ -29,16 +31,27 @@ export class GamesService {
             where: [{ player_id: user_id }],
             order: { game_id: 'DESC' },
         });
+        const center = await this.createDistributionCenter(game_id);
+        const store = await this.createStore(game_id);
+
+        return { game: newGame, distributionCenter: center, store };
+    }
+
+    async createDistributionCenter(game_id: number) {
         const distributionCenter = await this.distributionCenterService.create(
-            user_id,
             game_id,
         );
         const center = {
             centerId: distributionCenter.center_id,
             costs: distributionCenter.costs[0],
+            gameId: distributionCenter.game_id,
         };
+        return center;
+    }
 
-        return { game: newGame, distributionCenter: center };
+    async createStore(game_id: number) {
+        const store = await this.storesService.create(game_id);
+        return store;
     }
 
     async findAllByUserId(user_id: number) {

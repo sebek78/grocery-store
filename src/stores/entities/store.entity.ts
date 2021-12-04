@@ -1,5 +1,4 @@
 import { Games } from 'src/games/entities/games.entity';
-import { Users } from 'src/users/users.entity';
 import {
     Entity,
     Column,
@@ -9,14 +8,17 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class DistributionCenter {
+export class Stores {
     @PrimaryGeneratedColumn()
-    center_id: number;
+    store_id: number;
 
     @OneToOne(() => Games, (game) => game.game_id)
     @JoinColumn({ name: 'game_id' })
     game_id: number;
 
-    @Column('varchar', { array: true })
-    costs: string[];
+    @Column()
+    store: string;
+
+    @Column()
+    stock_room: string;
 }

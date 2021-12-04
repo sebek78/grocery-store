@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Users } from 'src/users/users.entity';
+import {
+    Entity,
+    Column,
+    PrimaryGeneratedColumn,
+    JoinColumn,
+    OneToOne,
+} from 'typeorm';
 
 @Entity()
 export class Games {
@@ -17,6 +24,8 @@ export class Games {
     @Column()
     is_running: boolean;
 
+    @OneToOne(() => Users, (user) => user.user_id)
+    @JoinColumn({ name: 'player_id' })
     @Column()
     player_id: number;
 

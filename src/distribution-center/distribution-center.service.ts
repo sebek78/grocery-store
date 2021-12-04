@@ -12,12 +12,8 @@ export class DistributionCenterService {
         @InjectRepository(DistributionCenter)
         private distributionCenterRepository: Repository<DistributionCenter>,
     ) {}
-    async create(userId: number, gameId: number) {
-        const distributionCenter = new DistributionCenterFactory(
-            userId,
-            gameId,
-        );
-
+    async create(gameId: number) {
+        const distributionCenter = new DistributionCenterFactory(gameId);
         const newCenter =
             this.distributionCenterRepository.create(distributionCenter);
         await this.distributionCenterRepository.save(newCenter);

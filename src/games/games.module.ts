@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Games } from './entities/games.entity';
 import { DistributionCenterModule } from 'src/distribution-center/distribution-center.module';
 import { UsersModule } from 'src/users/users.module';
+import { StoresModule } from 'src/stores/stores.module';
 
 @Module({
     controllers: [GamesController],
@@ -13,6 +14,7 @@ import { UsersModule } from 'src/users/users.module';
         TypeOrmModule.forFeature([Games]),
         DistributionCenterModule,
         UsersModule,
+        StoresModule,
     ],
 })
 export class GamesModule {}

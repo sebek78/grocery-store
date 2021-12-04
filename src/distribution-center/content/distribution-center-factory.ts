@@ -1,6 +1,6 @@
 import { shuffle } from '@shared/functions';
 
-/* [produce, bakery, dairy, dry goods, frozen] buying cost, (ProductType) */
+/* [produce, bakery, dairy, dry goods, frozen], buying costs, ProductType */
 const costs = [
     '2,3,1,3,3',
     '1,3,2,5,3',
@@ -13,7 +13,7 @@ const costs = [
 export class DistributionCenterFactory {
     costs: string[];
 
-    constructor(public player_id: number, public game_id: number) {
+    constructor(public game_id: number) {
         this.costs = shuffle(costs);
     }
 }

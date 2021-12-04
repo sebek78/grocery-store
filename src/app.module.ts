@@ -10,6 +10,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { UsersModule } from './users/users.module';
 import { GamesModule } from './games/games.module';
 import { DistributionCenterModule } from './distribution-center/distribution-center.module';
+import { StoresModule } from './stores/stores.module';
 
 @Module({
     imports: [
@@ -23,6 +24,7 @@ import { DistributionCenterModule } from './distribution-center/distribution-cen
         AuthModule,
         GamesModule,
         DistributionCenterModule,
+        StoresModule,
     ],
     controllers: [AppController],
     providers: [AppService],

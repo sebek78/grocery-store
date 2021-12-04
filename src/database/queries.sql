@@ -1,3 +1,5 @@
+-- PostgresSQL version: 12.3
+
 CREATE TABLE users (
 	user_id serial4 NOT NULL,
 	username varchar(32) NOT NULL,
@@ -22,4 +24,25 @@ create TABLE games (
 	constraint fk_player
 		foreign key (player_id)
 			references users(user_id)
-)
+);
+
+create TABLE distribution_center (
+	center_id serial4 NOT NULL,
+	game_id int not null,
+	costs varchar[6] not null,
+	primary key(center_id),
+	constraint fk_game
+		foreign key (game_id)
+			references games(game_id)
+);
+
+create TABLE stores (
+	store_id serial4 NOT NULL,
+	game_id int not null,
+	store text, 
+	stock_room text,
+	primary key(store_id),
+	constraint fk_game
+		foreign key (game_id)
+			references games(game_id)
+);
