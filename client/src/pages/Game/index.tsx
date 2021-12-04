@@ -5,7 +5,7 @@ import { getGamesList } from '@gameSlice';
 import { useAppDispatch, useAppSelector } from '@store';
 import { Divider, List } from '@mui/material';
 import { Game } from '@sharedTypes';
-import GameRow from './components/GamesList';
+import GamesListItem from './components/GamesListItem';
 import { Box } from '@mui/system';
 
 const generate = (
@@ -15,7 +15,7 @@ const generate = (
 ) =>
     games.map((game) =>
         React.cloneElement(
-            <GameRow
+            <GamesListItem
                 game={game}
                 onClick={onClick}
                 secondaryAction={secondaryAction}
@@ -36,8 +36,8 @@ const Game = () => {
         dispatch(getGamesList());
     }, []);
 
-    const handlePlay = (storeId: number) => {
-        history.push(`/game/store/${storeId}`);
+    const handlePlay = (gameId: number) => {
+        history.push(`/game/${gameId}`);
     };
 
     const handleDelete = (id: number) => {

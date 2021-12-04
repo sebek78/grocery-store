@@ -16,13 +16,13 @@ import {
 } from '@mui/icons-material';
 import { Game } from '@sharedTypes';
 
-interface GameRowProps {
+interface GamesListItemProps {
     game: Game;
     onClick: Function;
     secondaryAction: Function;
 }
 
-const GameRow: React.FC<GameRowProps> = ({
+const GamesListItem: React.FC<GamesListItemProps> = ({
     game,
     onClick,
     secondaryAction,
@@ -93,4 +93,4 @@ const GameRow: React.FC<GameRowProps> = ({
     );
 };
 
-export default GameRow;
+export default GamesListItem;

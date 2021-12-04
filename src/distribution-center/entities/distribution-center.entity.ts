@@ -1,5 +1,4 @@
 import { Games } from 'src/games/entities/games.entity';
-import { Users } from 'src/users/users.entity';
 import {
     Entity,
     Column,

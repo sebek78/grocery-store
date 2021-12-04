@@ -17,15 +17,33 @@ export class DistributionCenterService {
         const newCenter =
             this.distributionCenterRepository.create(distributionCenter);
         await this.distributionCenterRepository.save(newCenter);
-        return newCenter;
+
+        return {
+            centerId: newCenter.center_id,
+            gameId: newCenter.game_id,
+            costs: newCenter.costs,
+        };
+    }
+
+    async findOne(gameId: number) {
+        const center = await this.distributionCenterRepository.findOne({
+            loadRelationIds: true,
+            where: {
+                game_id: gameId,
+            },
+        });
+        if (!center) return null;
+
+        return {
+            centerId: center.center_id,
+            gameId: center.game_id,
+            // TODO: costs parsing
+            costs: center.costs,
+        };
     }
 
     /*findAll() {
         return `This action returns all distributionCenter`;
-    }
-
-    findOne(id: number) {
-        return `This action returns a #${id} distributionCenter`;
     }
 
     update(

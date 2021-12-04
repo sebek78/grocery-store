@@ -39,7 +39,7 @@ const GameView = () => {
                     <Route path="/game/new">
                         <NewGameForm />
                     </Route>
-                    <Route path="/game/store/:storeId">
+                    <Route path="/game/:gameId">
                         <Store />
                     </Route>
                     <Route path="/game">

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NewGameDTO, Game } from '@sharedTypes';
+import { NewGameDTO, Game, Store, DistributionCenter } from '@sharedTypes';
 
 interface GameState {
     isRequesting: boolean;
@@ -7,8 +7,8 @@ interface GameState {
     error: string;
     gameListError: string;
     games: Game[];
-    stores: any[]; // TODO Store type
-    distributionCenters: any[]; //TODO center type
+    stores: Store[];
+    distributionCenters: DistributionCenter[];
 }
 
 const initialState: GameState = {
@@ -57,6 +57,17 @@ export const gameSlice = createSlice({
             state.error = action.payload;
             // TODO: notification or error message
         },
+        getGameDataRequest: (state, action: PayloadAction<number>) => {
+            state.isRequesting = true;
+            state.error = '';
+        },
+        getGameDataSuccess: (state, action: PayloadAction<any>) => {
+            state.isRequesting = false;
+            state.stores.push(action.payload.store);
+            state.distributionCenters.push(action.payload.distributionCenter);
+            state.error = '';
+        },
+        // TODO: getGameDataFailed
     },
 });
 
@@ -66,6 +77,8 @@ export const {
     getGamesList,
     getGamesSuccess,
     getGamesFailed,
+    getGameDataRequest,
+    getGameDataSuccess,
 } = gameSlice.actions;
 
 export default gameSlice.reducer;

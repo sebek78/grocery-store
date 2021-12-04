@@ -30,12 +30,13 @@ export class GamesController {
     findAllByUserId(@Req() req: RequestWithTokenPayload) {
         return this.gamesService.findAllByUserId(req.user.userId);
     }
-    /*
+
     @Get(':id')
     findOne(@Param('id') id: string) {
-        return this.gameService.findOne(+id);
+        return this.gamesService.getGameData(Number.parseInt(id, 10));
     }
 
+    /*
     @Patch(':id')
     update(@Param('id') id: string, @Body() updateGamesDto: UpdateGamesDto) {
         return this.gameService.update(+id, updateGamesDto);

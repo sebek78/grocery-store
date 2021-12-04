@@ -1,19 +1,37 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { api } from '@utils';
-import { getGamesSuccess, newGameSuccess } from '../slices/gameSlice';
-import { Game, ApiError } from '@sharedTypes';
+import {
+    getGamesSuccess,
+    newGameSuccess,
+    getGameDataSuccess,
+} from '../slices/gameSlice';
+import { Game, ApiError, DistributionCenter, Store } from '@sharedTypes';
 import { apiErrorSaga } from './apiErrorSaga';
 import { history } from '../../components/App/App';
 
 interface NewGameResponse extends ApiError {
     game: Game;
-    store: any; // TODO types
-    distributionCenter: any; // TODO type
+    store: {
+        storeId: number;
+        gameId: number;
+        store: string;
+        stockRoom: string;
+    };
+    distributionCenter: {
+        centerId: number;
+        gameId: number;
+        costs: string;
+    };
 }
 
 interface GamesResponse extends ApiError {
     games: Game[];
+}
+
+interface GameDataResponse extends ApiError {
+    store: Store;
+    distributionCenter: DistributionCenter;
 }
 
 function* newGameSaga(action: PayloadAction) {
@@ -25,24 +43,14 @@ function* newGameSaga(action: PayloadAction) {
     if (data.statusCode >= 400) {
         if (data.statusCode >= 400) yield call(apiErrorSaga, data);
     } else {
-        // TODO: move logic to helpers
-        const parsedStore = {
-            ...data.store,
-            store: JSON.parse(data.store.store),
-            stockRoom: JSON.parse(data.store.stockRoom),
-        };
-        const parsedCenter = {
-            ...data.distributionCenter,
-            costs: data.distributionCenter.costs.split(','),
-        };
         yield put(
             newGameSuccess({
                 game: data.game,
-                store: parsedStore,
-                distributionCenter: parsedCenter,
+                store: data.store,
+                distributionCenter: data.distributionCenter,
             })
         );
-        yield call(history.push, `/game/store/${parsedStore.storeId}`);
+        yield call(history.push, `/game/${data.game.gameId}`);
     }
 }
 
@@ -54,10 +62,24 @@ function* getGamesSaga() {
     // yield put(getGamesFailed(data.message));
 }
 
+function* getGameDataSaga(action: PayloadAction) {
+    const data: GameDataResponse = yield call(
+        api.get,
+        `/games/${action.payload}`
+    );
+
+    if (data.statusCode >= 400) yield call(apiErrorSaga, data);
+    if (data.store && data.distributionCenter) {
+        yield put(getGameDataSuccess(data));
+    }
+    // TODO: getGameDataFailed
+}
+
 function* gameSaga() {
     yield all([
         takeLatest('game/newGameRequest', newGameSaga),
         takeLatest('game/getGamesList', getGamesSaga),
+        takeLatest('game/getGameDataRequest', getGameDataSaga),
     ]);
 }
 

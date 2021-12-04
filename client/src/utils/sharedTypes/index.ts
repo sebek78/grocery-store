@@ -58,3 +58,34 @@ export interface Game extends NewGame {
     phase: number;
     turn: number;
 }
+
+/*  Store */
+
+export enum ProductType {
+    Produce = 'Warzywa i owoce',
+    Bakery = 'Pieczywo',
+    Dairy = 'Nabiał',
+    DryGoods = 'Produkty suche',
+    Frozen = 'Mrożonki',
+}
+
+export interface Product {
+    id: number;
+    productType: ProductType;
+    isOnSale: boolean;
+    price: number;
+    onSalePrice: number;
+    expirationDate: number;
+}
+
+export interface Store {
+    storeId: number;
+    gameId: number;
+    store: Product[];
+}
+
+export interface DistributionCenter {
+    centerId: number;
+    gameId: number;
+    costs: number[];
+}

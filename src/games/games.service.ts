@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateGamesDto } from './dto/create-games.dto';
 import { Game } from './content/game';
 import { Games } from './entities/games.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { snakeToCamel } from '@shared/functions';
+import { keysToCamelCase } from '@shared/functions';
 import { DistributionCenterService } from 'src/distribution-center/distribution-center.service';
 import { UsersService } from 'src/users/users.service';
 import { StoresService } from 'src/stores/stores.service';
@@ -23,30 +23,29 @@ export class GamesService {
         const { username, storeName, difficulty } = createGamesDto;
         const { user_id } = await this.usersService.findOne(username);
 
-        const game = new Game(user_id, storeName, difficulty);
-        const newGame = this.gamesRepository.create(game);
+        const gameObject = new Game(user_id, storeName, difficulty);
+        const newGame = this.gamesRepository.create(gameObject);
         await this.gamesRepository.save(newGame);
 
-        const { game_id } = await this.gamesRepository.findOne({
+        const gameRaw = await this.gamesRepository.findOne({
             where: [{ player_id: user_id }],
             order: { game_id: 'DESC' },
         });
-        const center = await this.createDistributionCenter(game_id);
-        const store = await this.createStore(game_id);
 
-        return { game: newGame, distributionCenter: center, store };
+        const game = keysToCamelCase(gameRaw);
+        const distributionCenter = await this.createDistributionCenter(
+            gameRaw.game_id,
+        );
+        const store = await this.createStore(gameRaw.game_id);
+
+        return { game, distributionCenter, store };
     }
 
     async createDistributionCenter(game_id: number) {
         const distributionCenter = await this.distributionCenterService.create(
             game_id,
         );
-        const center = {
-            centerId: distributionCenter.center_id,
-            costs: distributionCenter.costs[0],
-            gameId: distributionCenter.game_id,
-        };
-        return center;
+        return distributionCenter;
     }
 
     async createStore(game_id: number) {
@@ -61,23 +60,29 @@ export class GamesService {
             },
         });
 
-        const res = games
-            .map((game) => ({ ...game, player_id: undefined }))
-            .map((game) => {
-                const parsed = {};
-                for (const property in game) {
-                    parsed[snakeToCamel(property)] = game[property];
-                }
-                return parsed;
-            });
-        return { games: res };
+        return { games: games.map((game) => keysToCamelCase(game)) };
+    }
+
+    async getGameData(gameId: number) {
+        const store = await this.storesService.findOne(gameId);
+        const distributionCenter = await this.distributionCenterService.findOne(
+            gameId,
+        );
+
+        if (store && distributionCenter) {
+            return {
+                store,
+                distributionCenter,
+            };
+        } else {
+            throw new HttpException(
+                `Nie znaleziono danych gry o id:${gameId}`,
+                HttpStatus.NOT_FOUND,
+            );
+        }
     }
 
     /*
-    findOne(id: number) {
-        return `This action returns a #${id} game`;
-    }
-
     update(id: number, updateGamesDto: UpdateGamesDto) {
         return `This action updates a #${id} game`;
     }
