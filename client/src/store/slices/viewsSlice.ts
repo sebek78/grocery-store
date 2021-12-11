@@ -13,6 +13,9 @@ interface ViewState {
         autoHideDuration: number | null;
     };
     snackbarMessage: SnackbarData;
+    confirmDialog: {
+        open: boolean;
+    };
 }
 
 const initialState: ViewState = {
@@ -28,6 +31,9 @@ const initialState: ViewState = {
     snackbarMessage: {
         message: '',
         severity: 'error',
+    },
+    confirmDialog: {
+        open: false,
     },
 };
 
@@ -71,6 +77,9 @@ export const viewsSlice = createSlice({
                     ? action.payload.autoHideDuration
                     : AUTO_HIDE_DURATION;
         },
+        openConfirmDialog: (state, action: PayloadAction<boolean>) => {
+            state.confirmDialog.open = action.payload;
+        },
     },
 });
 
@@ -81,5 +90,6 @@ export const {
     closeDialog,
     closeSnackbar,
     showSnackbar,
+    openConfirmDialog,
 } = viewsSlice.actions;
 export default viewsSlice.reducer;

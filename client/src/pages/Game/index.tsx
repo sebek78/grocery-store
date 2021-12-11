@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { ColorButton, Loader, StyledLink } from '@components';
+import { ColorButton, ConfirmDialog, Loader, StyledLink } from '@components';
 import { getGamesList } from '@gameSlice';
+import { openConfirmDialog } from '@viewsSlice';
 import { useAppDispatch, useAppSelector } from '@store';
 import { Divider, List } from '@mui/material';
 import { Game } from '@sharedTypes';
@@ -10,8 +11,8 @@ import { Box } from '@mui/system';
 
 const generate = (
     games: Game[],
-    onClick: Function,
-    secondaryAction: Function
+    onClick: (gameId: number) => void,
+    secondaryAction: (id: number) => void
 ) =>
     games.map((game) =>
         React.cloneElement(
@@ -32,6 +33,10 @@ const Game = () => {
     const games = useAppSelector(({ game }) => game.games);
     const isGettingGames = useAppSelector(({ game }) => game.isGettingGames);
     const gameListError = useAppSelector(({ game }) => game.gameListError);
+    const isOpenDeleteDialog = useAppSelector(
+        ({ views }) => views.confirmDialog.open
+    );
+    const [gameIDtoDelete, setGameIdToDelete] = useState(-1);
 
     useEffect(() => {
         dispatch(getGamesList());
@@ -41,8 +46,13 @@ const Game = () => {
         history.push(`/game/${gameId}`);
     };
 
-    const handleDelete = (id: number) => {
-        console.log('Delete', id);
+    const handleClickDelete = (id: number) => {
+        setGameIdToDelete(id);
+        dispatch(openConfirmDialog(true));
+    };
+
+    const deleteGame = () => {
+        console.log('Delete', gameIDtoDelete);
     };
 
     return (
@@ -56,7 +66,7 @@ const Game = () => {
             {isGettingGames && <Loader color="info" />}
             {!isGettingGames && (
                 <List dense={true}>
-                    {generate(games, handlePlay, handleDelete)}
+                    {generate(games, handlePlay, handleClickDelete)}
                 </List>
             )}
             {!isGettingGames && games.length === 0 && (
@@ -64,6 +74,14 @@ const Game = () => {
                     {gameListError ? gameListError : 'Lista gier jest pusta.'}
                 </Box>
             )}
+            <ConfirmDialog
+                open={isOpenDeleteDialog}
+                title="Usunięcie gry"
+                text="Potwierdź usunięcie gry."
+                actionName="Usuń"
+                severity="error"
+                action={deleteGame}
+            />
         </>
     );
 };

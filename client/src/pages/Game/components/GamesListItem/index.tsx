@@ -3,23 +3,19 @@ import {
     Accordion,
     AccordionDetails,
     AccordionSummary,
-    IconButton,
     ListItem,
     ListItemAvatar,
     ListItemText,
 } from '@mui/material';
-import {
-    Delete,
-    ExpandMore,
-    PlayArrow,
-    NotInterested,
-} from '@mui/icons-material';
+import { ExpandMore } from '@mui/icons-material';
 import { Game } from '@sharedTypes';
+import { DeleteButton } from '@components';
+import ContinueGameButton from '../ContinueGameButton';
 
 interface GamesListItemProps {
     game: Game;
-    onClick: Function;
-    secondaryAction: Function;
+    onClick: (gameId: number) => void;
+    secondaryAction: (id: number) => void;
 }
 
 const GamesListItem: React.FC<GamesListItemProps> = ({
@@ -41,25 +37,11 @@ const GamesListItem: React.FC<GamesListItemProps> = ({
             >
                 <ListItem>
                     <ListItemAvatar>
-                        <IconButton
-                            color="primary"
-                            size="large"
-                            disabled={game.turn === 7}
-                            onClick={(e) => handlePlay(e, game.gameId)}
-                            sx={{ marginRight: 4 }}
-                            edge="end"
-                        >
-                            {game.turn !== 7 ? (
-                                <>
-                                    <ListItemText primary={'Kontynuuj'} />
-                                    <PlayArrow />
-                                </>
-                            ) : (
-                                <NotInterested />
-                            )}
-                        </IconButton>
+                        <ContinueGameButton
+                            game={game}
+                            handlePlay={handlePlay}
+                        />
                     </ListItemAvatar>
-
                     <ListItemText
                         primary={game.storeName}
                         secondary={
@@ -73,14 +55,10 @@ const GamesListItem: React.FC<GamesListItemProps> = ({
             <AccordionDetails>
                 <ListItem
                     secondaryAction={
-                        <IconButton
-                            edge="end"
-                            aria-label="delete"
-                            color="warning"
-                            onClick={() => secondaryAction(game.gameId)}
-                        >
-                            <Delete />
-                        </IconButton>
+                        <DeleteButton
+                            action={secondaryAction}
+                            actionId={game.gameId}
+                        />
                     }
                 >
                     <ListItemText
