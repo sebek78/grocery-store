@@ -56,10 +56,10 @@ function* registerUserSaga(action: PayloadAction) {
         yield put(registerUserFailed(data.message));
     } else {
         yield put(closeDialog('register'));
-        yield put(registerUserSuccess(data));
+        yield put(registerUserSuccess(/*data*/));
         yield put(
             showSnackbar({
-                severity: 'success',
+                severity: 'info',
                 message: 'Zarejestrowane. Możesz zalogować się.',
             })
         );

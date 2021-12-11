@@ -10,6 +10,7 @@ const Store = () => {
     const store = useAppSelector(({ game }) =>
         game.stores.find((store) => store.gameId === gameId)
     );
+    const gameDataError = useAppSelector(({ game }) => game.gameDataError);
 
     useEffect(() => {
         if (!store) {
@@ -19,7 +20,7 @@ const Store = () => {
         }
     }, [store]);
 
-    return <div>Store {gameId}</div>;
+    return <div>{gameDataError ? gameDataError : `Store ${gameId}`}</div>;
 };
 
 export default Store;

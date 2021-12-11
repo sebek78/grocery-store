@@ -6,6 +6,7 @@ interface GameState {
     isGettingGames: boolean;
     error: string;
     gameListError: string;
+    gameDataError: string;
     games: Game[];
     stores: Store[];
     distributionCenters: DistributionCenter[];
@@ -16,6 +17,7 @@ const initialState: GameState = {
     isGettingGames: false,
     error: '',
     gameListError: '',
+    gameDataError: '',
     games: [],
     stores: [],
     distributionCenters: [],
@@ -53,9 +55,9 @@ export const gameSlice = createSlice({
             state.games = action.payload;
         },
         getGamesFailed: (state, action: PayloadAction<string>) => {
+            console.log(action.payload);
             state.isGettingGames = false;
-            state.error = action.payload;
-            // TODO: notification or error message
+            state.gameListError = action.payload;
         },
         getGameDataRequest: (state, action: PayloadAction<number>) => {
             state.isRequesting = true;
@@ -67,7 +69,11 @@ export const gameSlice = createSlice({
             state.distributionCenters.push(action.payload.distributionCenter);
             state.error = '';
         },
-        // TODO: getGameDataFailed
+        getGamesDataFailed: (state, action: PayloadAction<string>) => {
+            console.log(action.payload);
+            state.isGettingGames = false;
+            state.gameDataError = action.payload;
+        },
     },
 });
 
@@ -79,6 +85,7 @@ export const {
     getGamesFailed,
     getGameDataRequest,
     getGameDataSuccess,
+    getGamesDataFailed,
 } = gameSlice.actions;
 
 export default gameSlice.reducer;

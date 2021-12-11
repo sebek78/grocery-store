@@ -31,6 +31,7 @@ const Game = () => {
     let history = useHistory();
     const games = useAppSelector(({ game }) => game.games);
     const isGettingGames = useAppSelector(({ game }) => game.isGettingGames);
+    const gameListError = useAppSelector(({ game }) => game.gameListError);
 
     useEffect(() => {
         dispatch(getGamesList());
@@ -59,7 +60,9 @@ const Game = () => {
                 </List>
             )}
             {!isGettingGames && games.length === 0 && (
-                <Box sx={{ padding: 1 }}>Lista gier jest pusta.</Box>
+                <Box sx={{ padding: 1 }}>
+                    {gameListError ? gameListError : 'Lista gier jest pusta.'}
+                </Box>
             )}
         </>
     );

@@ -84,10 +84,9 @@ export const userSlice = createSlice({
             state.error = '';
         },
         registerUserSuccess: (
-            state,
-            action: PayloadAction<UserAuthSuccess>
+            state
+            // action: PayloadAction<UserAuthSuccess>
         ) => {
-            // TODO: notification, action.payload.username
             state.isRequesting = false;
             state.error = '';
         },

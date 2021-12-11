@@ -2,13 +2,16 @@ import { all, call, put, takeLatest } from 'redux-saga/effects';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { api } from '@utils';
 import {
-    getGamesSuccess,
     newGameSuccess,
+    getGamesSuccess,
+    getGamesFailed,
     getGameDataSuccess,
+    getGamesDataFailed,
 } from '../slices/gameSlice';
 import { Game, ApiError, DistributionCenter, Store } from '@sharedTypes';
 import { apiErrorSaga } from './apiErrorSaga';
 import { history } from '../../components/App/App';
+import { showSnackbar } from '@viewsSlice';
 
 interface NewGameResponse extends ApiError {
     game: Game;
@@ -58,8 +61,17 @@ function* getGamesSaga() {
     const data: GamesResponse = yield call(api.get, '/games');
 
     if (data.statusCode >= 400) yield call(apiErrorSaga, data);
-    if (data.games) yield put(getGamesSuccess(data.games));
-    // yield put(getGamesFailed(data.message));
+    if (data.games) {
+        yield put(getGamesSuccess(data.games));
+    } else {
+        yield put(getGamesFailed('Błąd pobierania listy gier.'));
+        yield put(
+            showSnackbar({
+                severity: 'error',
+                message: 'Błąd pobierania listy gier.',
+            })
+        );
+    }
 }
 
 function* getGameDataSaga(action: PayloadAction) {
@@ -71,8 +83,15 @@ function* getGameDataSaga(action: PayloadAction) {
     if (data.statusCode >= 400) yield call(apiErrorSaga, data);
     if (data.store && data.distributionCenter) {
         yield put(getGameDataSuccess(data));
+    } else {
+        yield put(getGamesDataFailed('Błąd pobierania danych sklepu.'));
+        yield put(
+            showSnackbar({
+                severity: 'error',
+                message: 'Błąd pobierania danych sklepu.',
+            })
+        );
     }
-    // TODO: getGameDataFailed
 }
 
 function* gameSaga() {

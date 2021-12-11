@@ -85,7 +85,7 @@ const RegisterDialog = () => {
                 </DialogContent>
                 <DialogSubmitButton
                     isRequesting={isRequesting}
-                    label="string"
+                    label="Zarejestruj"
                 />
             </form>
         </Dialog>
