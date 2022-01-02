@@ -9,6 +9,10 @@ export interface ApiError {
     message: string;
 }
 
+export interface SuccessResponse extends ApiError {
+    success: boolean;
+}
+
 /* Snackbar */
 
 export type SnackbarSeverity = 'error' | 'warning' | 'info' | 'success';

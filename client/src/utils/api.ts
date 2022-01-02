@@ -6,7 +6,7 @@ const baseUrl =
         ? '/api'
         : 'http://localhost:3000/api';
 
-type Methods = 'GET' | 'POST';
+type Methods = 'GET' | 'POST' | 'DELETE';
 
 const fetchData = async <T>(
     method: Methods,
@@ -40,10 +40,12 @@ const fetchData = async <T>(
 
 const get = (url: string) => fetchData('GET', url);
 const post = <T>(url: string, data: T) => fetchData('POST', url, data);
+const deleteOne = <T>(url: string) => fetchData('DELETE', url);
 
 const api = {
     get,
     post,
+    deleteOne,
 };
 
 export default api;

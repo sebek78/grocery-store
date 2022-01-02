@@ -41,6 +41,14 @@ export class StoresService {
             stockRoom: JSON.parse(storeRaw.stock_room),
         };
     }
+
+    async getStoreIdByGameId(game_id: number) {
+        const storeRaw = await this.storesRepository.findOne({
+            where: [{ game_id }],
+        });
+        return storeRaw?.store_id;
+    }
+
     /*
     findAll() {
         return `This action returns all stores`;
@@ -48,9 +56,9 @@ export class StoresService {
 
     update(id: number, updateStoreDto: UpdateStoreDto) {
         return `This action updates a #${id} store`;
-    }
-
-    remove(id: number) {
-        return `This action removes a #${id} store`;
     }*/
+
+    async delete(storeId: number) {
+        await this.storesRepository.delete(storeId);
+    }
 }

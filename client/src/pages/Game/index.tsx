@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ColorButton, ConfirmDialog, Loader, StyledLink } from '@components';
-import { getGamesList } from '@gameSlice';
+import { getGamesList, deleteGame } from '@gameSlice';
 import { openConfirmDialog } from '@viewsSlice';
 import { useAppDispatch, useAppSelector } from '@store';
 import { Divider, List } from '@mui/material';
@@ -46,13 +46,15 @@ const Game = () => {
         history.push(`/game/${gameId}`);
     };
 
-    const handleClickDelete = (id: number) => {
+    const handleClickDeleteIcon = (id: number) => {
         setGameIdToDelete(id);
         dispatch(openConfirmDialog(true));
     };
 
-    const deleteGame = () => {
-        console.log('Delete', gameIDtoDelete);
+    const handleDeleteGame = () => {
+        dispatch(openConfirmDialog(false));
+        dispatch(deleteGame(gameIDtoDelete));
+        setGameIdToDelete(-1);
     };
 
     return (
@@ -66,7 +68,7 @@ const Game = () => {
             {isGettingGames && <Loader color="info" />}
             {!isGettingGames && (
                 <List dense={true}>
-                    {generate(games, handlePlay, handleClickDelete)}
+                    {generate(games, handlePlay, handleClickDeleteIcon)}
                 </List>
             )}
             {!isGettingGames && games.length === 0 && (
@@ -80,7 +82,7 @@ const Game = () => {
                 text="Potwierdź usunięcie gry."
                 actionName="Usuń"
                 severity="error"
-                action={deleteGame}
+                action={handleDeleteGame}
             />
         </>
     );

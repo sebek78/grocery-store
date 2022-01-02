@@ -7,8 +7,16 @@ import {
     getGamesFailed,
     getGameDataSuccess,
     getGamesDataFailed,
+    deleteGameSuccess,
+    deleteGameFailed,
 } from '../slices/gameSlice';
-import { Game, ApiError, DistributionCenter, Store } from '@sharedTypes';
+import {
+    Game,
+    ApiError,
+    DistributionCenter,
+    Store,
+    SuccessResponse,
+} from '@sharedTypes';
 import { apiErrorSaga } from './apiErrorSaga';
 import { history } from '../../components/App/App';
 import { showSnackbar } from '@viewsSlice';
@@ -94,11 +102,31 @@ function* getGameDataSaga(action: PayloadAction) {
     }
 }
 
+function* deleteGameSaga(action: PayloadAction<number>) {
+    const data: SuccessResponse = yield call(
+        api.deleteOne,
+        `/games/${action.payload}`
+    );
+    if (data.statusCode >= 400) yield call(apiErrorSaga, data);
+    if (data.success) {
+        yield put(deleteGameSuccess(action.payload));
+    } else {
+        yield put(deleteGameFailed());
+        yield put(
+            showSnackbar({
+                severity: 'error',
+                message: 'Błąd usuwania gry.',
+            })
+        );
+    }
+}
+
 function* gameSaga() {
     yield all([
         takeLatest('game/newGameRequest', newGameSaga),
         takeLatest('game/getGamesList', getGamesSaga),
         takeLatest('game/getGameDataRequest', getGameDataSaga),
+        takeLatest('game/deleteGame', deleteGameSaga),
     ]);
 }
 

@@ -4,6 +4,7 @@ import { NewGameDTO, Game, Store, DistributionCenter } from '@sharedTypes';
 interface GameState {
     isRequesting: boolean;
     isGettingGames: boolean;
+    deletingGameId: number;
     error: string;
     gameListError: string;
     gameDataError: string;
@@ -15,6 +16,7 @@ interface GameState {
 const initialState: GameState = {
     isRequesting: false,
     isGettingGames: false,
+    deletingGameId: 0,
     error: '',
     gameListError: '',
     gameDataError: '',
@@ -70,9 +72,20 @@ export const gameSlice = createSlice({
             state.error = '';
         },
         getGamesDataFailed: (state, action: PayloadAction<string>) => {
-            console.log(action.payload);
             state.isGettingGames = false;
             state.gameDataError = action.payload;
+        },
+        deleteGame: (state, action: PayloadAction<number>) => {
+            state.deletingGameId = action.payload;
+        },
+        deleteGameSuccess: (state, action: PayloadAction<number>) => {
+            state.deletingGameId = 0;
+            state.games = state.games.filter(
+                (game) => game.gameId !== action.payload
+            );
+        },
+        deleteGameFailed: (state) => {
+            state.deletingGameId = 0;
         },
     },
 });
@@ -86,6 +99,9 @@ export const {
     getGameDataRequest,
     getGameDataSuccess,
     getGamesDataFailed,
+    deleteGame,
+    deleteGameSuccess,
+    deleteGameFailed,
 } = gameSlice.actions;
 
 export default gameSlice.reducer;

@@ -42,6 +42,13 @@ export class DistributionCenterService {
         };
     }
 
+    async getCenterIdByGameId(game_id: number) {
+        const centerRaw = await this.distributionCenterRepository.findOne({
+            where: [{ game_id }],
+        });
+        return centerRaw?.center_id;
+    }
+
     /*findAll() {
         return `This action returns all distributionCenter`;
     }
@@ -51,9 +58,9 @@ export class DistributionCenterService {
         updateDistributionCenterDto: UpdateDistributionCenterDto,
     ) {
         return `This action updates a #${id} distributionCenter`;
-    }
-
-    remove(id: number) {
-        return `This action removes a #${id} distributionCenter`;
     }*/
+
+    async delete(centerId: number) {
+        await this.distributionCenterRepository.delete(centerId);
+    }
 }

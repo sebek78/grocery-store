@@ -8,6 +8,7 @@ import { keysToCamelCase } from '@shared/functions';
 import { DistributionCenterService } from 'src/distribution-center/distribution-center.service';
 import { UsersService } from 'src/users/users.service';
 import { StoresService } from 'src/stores/stores.service';
+import { Response } from 'express';
 // import { UpdateGamesDto } from './dto/update-games.dto';
 
 @Injectable()
@@ -85,9 +86,41 @@ export class GamesService {
     /*
     update(id: number, updateGamesDto: UpdateGamesDto) {
         return `This action updates a #${id} game`;
-    }
-
-    remove(id: number) {
-        return `This action removes a #${id} game`;
     }*/
+
+    async deleteGame(id: string, response: Response) {
+        const deletingGameId = Number.parseInt(id, 10);
+        if (!deletingGameId) {
+            throw new HttpException(
+                `Nieprawidłowe id:${id}`,
+                HttpStatus.BAD_REQUEST,
+            );
+        }
+        const gameRaw = await this.gamesRepository.findOne(deletingGameId);
+        const gameId = gameRaw?.game_id;
+        if (!gameId) {
+            throw new HttpException(
+                `Nie znaleziono gry o id:${id}`,
+                HttpStatus.NOT_FOUND,
+            );
+        }
+        const storeId = await this.storesService.getStoreIdByGameId(
+            deletingGameId,
+        );
+        const centerId =
+            await this.distributionCenterService.getCenterIdByGameId(
+                deletingGameId,
+            );
+        if (!gameId || !storeId || !centerId) {
+            throw new HttpException(
+                `Błąd usuwania gry o id:${id}`,
+                HttpStatus.SERVICE_UNAVAILABLE,
+            );
+        }
+        await this.distributionCenterService.delete(centerId);
+        await this.storesService.delete(storeId);
+        await this.gamesRepository.delete(gameId);
+        response.status(HttpStatus.OK);
+        response.send({ success: true });
+    }
 }

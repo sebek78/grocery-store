@@ -1,4 +1,5 @@
 import React, { SyntheticEvent } from 'react';
+import { useAppSelector } from '@store';
 import {
     Accordion,
     AccordionDetails,
@@ -9,7 +10,7 @@ import {
 } from '@mui/material';
 import { ExpandMore } from '@mui/icons-material';
 import { Game } from '@sharedTypes';
-import { DeleteButton } from '@components';
+import { DeleteButton, Loader } from '@components';
 import ContinueGameButton from '../ContinueGameButton';
 
 interface GamesListItemProps {
@@ -23,6 +24,8 @@ const GamesListItem: React.FC<GamesListItemProps> = ({
     onClick,
     secondaryAction,
 }) => {
+    const deletingGameId = useAppSelector(({ game }) => game.deletingGameId);
+
     const handlePlay = (e: SyntheticEvent, gameId: number) => {
         e.stopPropagation();
         onClick(gameId);
@@ -55,10 +58,14 @@ const GamesListItem: React.FC<GamesListItemProps> = ({
             <AccordionDetails>
                 <ListItem
                     secondaryAction={
-                        <DeleteButton
-                            action={secondaryAction}
-                            actionId={game.gameId}
-                        />
+                        deletingGameId === game.gameId ? (
+                            <Loader color="error" />
+                        ) : (
+                            <DeleteButton
+                                action={secondaryAction}
+                                actionId={game.gameId}
+                            />
+                        )
                     }
                 >
                     <ListItemText

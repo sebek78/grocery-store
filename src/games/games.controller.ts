@@ -3,12 +3,14 @@ import {
     Get,
     Post,
     Body,
-    Patch,
+    // Patch,
     Param,
     Delete,
     UseGuards,
     Req,
+    Res,
 } from '@nestjs/common';
+import { Response } from 'express';
 import { GamesService } from './games.service';
 import { CreateGamesDto } from './dto/create-games.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
@@ -40,10 +42,11 @@ export class GamesController {
     @Patch(':id')
     update(@Param('id') id: string, @Body() updateGamesDto: UpdateGamesDto) {
         return this.gameService.update(+id, updateGamesDto);
-    }
-
-    @Delete(':id')
-    remove(@Param('id') id: string) {
-        return this.gameService.remove(+id);
     }*/
+
+    @UseGuards(JwtAuthGuard)
+    @Delete(':id')
+    async deleteGame(@Param('id') id: string, @Res() response: Response) {
+        await this.gamesService.deleteGame(id, response);
+    }
 }
