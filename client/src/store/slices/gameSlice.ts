@@ -83,6 +83,12 @@ export const gameSlice = createSlice({
             state.games = state.games.filter(
                 (game) => game.gameId !== action.payload
             );
+            state.stores = state.stores.filter(
+                (store) => store.gameId !== action.payload
+            );
+            state.distributionCenters = state.distributionCenters.filter(
+                (center) => center.gameId !== action.payload
+            );
         },
         deleteGameFailed: (state) => {
             state.deletingGameId = 0;
