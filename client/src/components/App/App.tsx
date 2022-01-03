@@ -1,12 +1,15 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Router, Switch, Route } from 'react-router-dom';
 import { GameView, Homepage } from '@pages';
-import { CssBaseline } from '@material-ui/core';
-import { ThemeProvider } from '@material-ui/core/styles';
+import { CssBaseline } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
 import { theme } from '@utils';
 import { store } from '../../store/store';
 import { Provider } from 'react-redux';
 import { AuthenticatedRoute, Header, SnackbarProvider } from '@components';
+import { createBrowserHistory } from 'history';
+
+export const history = createBrowserHistory();
 
 const App = () => {
     return (
@@ -16,7 +19,7 @@ const App = () => {
                 <ThemeProvider theme={theme}>
                     <SnackbarProvider />
                     <Header />
-                    <Router>
+                    <Router history={history}>
                         <Switch>
                             <AuthenticatedRoute path="/game">
                                 <GameView />

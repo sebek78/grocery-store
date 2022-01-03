@@ -1,15 +1,18 @@
+import { ApiError } from '@sharedTypes';
+import { resourceUsage } from 'process';
+
 const baseUrl =
     process.env.NODE_ENV === 'production'
         ? '/api'
         : 'http://localhost:3000/api';
 
-type Methods = 'GET' | 'POST';
+type Methods = 'GET' | 'POST' | 'DELETE';
 
 const fetchData = async <T>(
     method: Methods,
     url: string,
     data?: T
-): Promise<T> => {
+): Promise<T | ApiError> => {
     const dataUrl = baseUrl + url;
     const options: RequestInit = {
         method,
@@ -22,18 +25,27 @@ const fetchData = async <T>(
         };
         if (data) options.body = JSON.stringify(data);
     }
-
-    const response = await fetch(dataUrl, options);
-    const body = await response.json();
-    return body;
+    try {
+        const response = await fetch(dataUrl, options);
+        const body = await response.json();
+        return body;
+    } catch (error: unknown) {
+        return Promise.resolve({
+            statusCode: 500,
+            message:
+                error instanceof TypeError ? error.message : 'Unknown error',
+        });
+    }
 };
 
 const get = (url: string) => fetchData('GET', url);
 const post = <T>(url: string, data: T) => fetchData('POST', url, data);
+const deleteOne = <T>(url: string) => fetchData('DELETE', url);
 
 const api = {
     get,
     post,
+    deleteOne,
 };
 
 export default api;

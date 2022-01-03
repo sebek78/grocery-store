@@ -1,3 +1,4 @@
+import { AUTO_HIDE_DURATION } from '@constants';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SnackbarData } from '@sharedTypes';
 
@@ -9,8 +10,12 @@ interface ViewState {
     };
     snackbar: {
         open: boolean;
+        autoHideDuration: number | null;
     };
     snackbarMessage: SnackbarData;
+    confirmDialog: {
+        open: boolean;
+    };
 }
 
 const initialState: ViewState = {
@@ -21,10 +26,14 @@ const initialState: ViewState = {
     },
     snackbar: {
         open: false,
+        autoHideDuration: AUTO_HIDE_DURATION,
     },
     snackbarMessage: {
         message: '',
         severity: 'error',
+    },
+    confirmDialog: {
+        open: false,
     },
 };
 
@@ -63,6 +72,13 @@ export const viewsSlice = createSlice({
             state.snackbar.open = true;
             state.snackbarMessage.message = action.payload.message;
             state.snackbarMessage.severity = action.payload.severity;
+            state.snackbar.autoHideDuration =
+                action.payload.autoHideDuration !== undefined
+                    ? action.payload.autoHideDuration
+                    : AUTO_HIDE_DURATION;
+        },
+        openConfirmDialog: (state, action: PayloadAction<boolean>) => {
+            state.confirmDialog.open = action.payload;
         },
     },
 });
@@ -74,5 +90,6 @@ export const {
     closeDialog,
     closeSnackbar,
     showSnackbar,
+    openConfirmDialog,
 } = viewsSlice.actions;
 export default viewsSlice.reducer;

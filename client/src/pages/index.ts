@@ -5,5 +5,6 @@ import GameView from './GameView';
 import Home from './Home/Home';
 import Homepage from './Homepage/Homepage';
 import Manual from './Manual/Manual';
+import NewGameForm from './NewGameForm';
 
-export { About, Account, Game, GameView, Home, Homepage, Manual };
+export { About, Account, Game, GameView, Home, Homepage, Manual, NewGameForm };

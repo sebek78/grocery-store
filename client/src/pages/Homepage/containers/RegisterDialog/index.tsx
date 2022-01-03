@@ -3,14 +3,13 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useAppSelector, useAppDispatch } from '@store';
 import { Dialog, DialogTitle, DialogContent, Grid } from '@material-ui/core';
-import { CloseIconButton } from '@components';
+import { CloseIconButton, TextInput } from '@components';
 import { closeDialog } from '@viewsSlice';
 import { RegisterUserDto } from '@sharedTypes';
 import { registerUserRequest } from '@userSlice';
 import DialogSubmitButton from '../LoginDialog/components/DialogSubmitButton';
 import { registerSchema } from './registerSchema';
 import ErrorWrapper from './components/ErrorWrapper';
-import TextInput from './components/TextInput';
 
 const RegisterDialog = () => {
     const dispatch = useAppDispatch();
@@ -67,21 +66,27 @@ const RegisterDialog = () => {
                         label="Login"
                         name="username"
                         control={control}
+                        defaultValue=""
                     />
                     <TextInput
                         label="Hasło"
                         name="password"
                         type="password"
                         control={control}
+                        defaultValue=""
                     />
                     <TextInput
                         label="Powtórz hasło"
                         name="password2"
                         type="password"
                         control={control}
+                        defaultValue=""
                     />
                 </DialogContent>
-                <DialogSubmitButton isRequesting={isRequesting} />
+                <DialogSubmitButton
+                    isRequesting={isRequesting}
+                    label="Zarejestruj"
+                />
             </form>
         </Dialog>
     );

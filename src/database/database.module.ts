@@ -2,6 +2,9 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Users } from 'src/users/users.entity';
+import { Games } from 'src/games/entities/games.entity';
+import { DistributionCenter } from 'src/distribution-center/entities/distribution-center.entity';
+import { Stores } from 'src/stores/entities/store.entity';
 
 @Module({
     imports: [
@@ -17,7 +20,7 @@ import { Users } from 'src/users/users.entity';
                         username: configService.get('DB_USERNAME'),
                         password: configService.get('DB_PASSWORD'),
                         database: configService.get('DB_DATABASE'),
-                        entities: [Users],
+                        entities: [Users, Games, DistributionCenter, Stores],
                     };
                 } else {
                     const credentials: string[] =
@@ -29,7 +32,7 @@ import { Users } from 'src/users/users.entity';
                         host: credentials[2].split('@')[1],
                         port: Number.parseInt(credentials[3].split('/')[0]),
                         database: credentials[3].split('/')[1],
-                        entities: [Users],
+                        entities: [Users, Games, DistributionCenter, Stores],
                         ssl: {
                             rejectUnauthorized: false,
                         },
