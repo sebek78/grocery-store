@@ -27,7 +27,7 @@ const generate = (
         )
     );
 
-const Game = () => {
+const GameBoard = () => {
     const dispatch = useAppDispatch();
     let history = useHistory();
     const games = useAppSelector(({ game }) => game.games);
@@ -88,4 +88,4 @@ const Game = () => {
     );
 };
 
-export default Game;
+export default GameBoard;

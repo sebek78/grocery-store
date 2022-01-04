@@ -4,10 +4,10 @@ import { Box } from '@material-ui/core';
 import { REFRESH_TOKEN_TIME, useContentAreaStyles } from '@constants';
 import { Menu } from '@components';
 import { gameViewMenuLinks } from './constants';
-import { Account, Game, Manual, NewGameForm } from '@pages';
+import { Account, GameBoard, Manual, NewGameForm } from '@pages';
 import { useAppDispatch, useAppSelector } from '@store';
 import { requestRefreshToken } from '@userSlice';
-import Store from '../Game/components/Store';
+import Store from '../GameBoard/components/Store';
 
 const GameView = () => {
     const classes = useContentAreaStyles();
@@ -43,7 +43,7 @@ const GameView = () => {
                         <Store />
                     </Route>
                     <Route path="/game">
-                        <Game />
+                        <GameBoard />
                     </Route>
                 </Switch>
             </Box>
