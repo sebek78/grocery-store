@@ -12,7 +12,7 @@ import ColorButton from '../ColorButton/ColorButton';
 import { theme } from '@utils';
 import { SnackbarSeverity } from '@sharedTypes';
 
-interface ConfirmDialogProps {
+export interface ConfirmDialogProps {
     open: boolean;
     title: string;
     text: string;

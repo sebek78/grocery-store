@@ -74,7 +74,11 @@ export default {
     moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx', 'json', 'node'],
 
     // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
-    // moduleNameMapper: {},
+    moduleNameMapper: {
+        '^@store$': '<rootDir>\\src\\store',
+        '@utils': '<rootDir>\\src\\utils',
+        '@viewsSlice': '<rootDir>\\src\\store\\slices\\viewsSlice.ts',
+    },
 
     // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
     // modulePathIgnorePatterns: [],
