@@ -1,5 +1,17 @@
-import { Price, ProductType, Product, PricesType } from '@sharedTypes';
 import React from 'react';
+import { Price, Product, ProductType } from '@sharedTypes';
+import { setProductColor } from '../../helpers';
+import {
+    StyledRack,
+    RackLabel,
+    ProductName,
+    PriceBox,
+    OnSaleLabel,
+    PriceLabel,
+    OnSalePriceLabel,
+    ProductList,
+} from '../Styled';
+
 import ProductPackage from '../ProductPackage';
 
 interface RackProps {
@@ -10,28 +22,27 @@ interface RackProps {
 
 const Rack = ({ productName, price, products }: RackProps) => {
     return (
-        <li>
-            <div>{productName}</div>
-            {price.isOnSale ? (
-                <>
-                    <div>Wyprzedaż: {price.isOnSale.toString()}</div>
-                    <div>
-                        {`Cena: `}
-                        <span style={{ textDecoration: 'line-through' }}>
-                            {price.price}
-                        </span>
-                        <span>{` ${price.onSalePrice}`}</span>
-                    </div>
-                </>
-            ) : (
-                <div>Cena: {price.price}</div>
-            )}
-            <ul>
+        <StyledRack>
+            <RackLabel color={setProductColor(productName as ProductType)}>
+                <ProductName>{productName}</ProductName>
+                <PriceBox>
+                    {price.isOnSale && <OnSaleLabel>Wyprzedaż</OnSaleLabel>}
+                    <PriceLabel>{`Cena:`}</PriceLabel>
+                    {!price.isOnSale && <PriceLabel>{price.price}</PriceLabel>}
+                    {price.isOnSale && (
+                        <OnSalePriceLabel>{price.price}</OnSalePriceLabel>
+                    )}
+                    {price.isOnSale && (
+                        <PriceLabel>{price.onSalePrice}</PriceLabel>
+                    )}
+                </PriceBox>
+            </RackLabel>
+            <ProductList color={setProductColor(productName as ProductType)}>
                 {products.map((product) => (
                     <ProductPackage key={product.id} product={product} />
                 ))}
-            </ul>
-        </li>
+            </ProductList>
+        </StyledRack>
     );
 };
 
