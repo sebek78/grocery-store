@@ -76,9 +76,6 @@ export enum ProductType {
 export interface Product {
     id: number;
     productType: ProductType;
-    isOnSale: boolean;
-    price: number;
-    onSalePrice: number;
     expirationDate: number;
 }
 
