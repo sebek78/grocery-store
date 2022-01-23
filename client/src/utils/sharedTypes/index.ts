@@ -82,10 +82,21 @@ export interface Product {
     expirationDate: number;
 }
 
+export interface Price {
+    isOnSale: boolean;
+    onSalePrice: number;
+    price: number;
+}
+
+export type PricesType = {
+    [key in ProductType]: Price;
+};
+
 export interface Store {
     storeId: number;
     gameId: number;
     store: Product[];
+    prices: PricesType;
 }
 
 export interface DistributionCenter {
