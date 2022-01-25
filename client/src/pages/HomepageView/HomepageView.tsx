@@ -1,15 +1,20 @@
 import React, { useEffect } from 'react';
 import { Switch, Route, useHistory } from 'react-router-dom';
 import { useAppSelector } from '@store';
-import LoginDialog from './containers/LoginDialog';
-import RegisterDialog from './containers/RegisterDialog';
-import { Menu } from '@components';
+import { LoginDialog, RegisterDialog } from '@features';
+import { Menu } from '@features';
 import { About, Home, Manual } from '@pages';
 import { Box } from '@material-ui/core';
-import { homepageMenuLinks } from './constants';
 import { useContentAreaStyles } from '@constants';
+import { IMenuLink } from '@sharedTypes';
 
-const Homepage = () => {
+export const homepageMenuLinks: IMenuLink[] = [
+    { to: '/', label: 'Strona główna' },
+    { to: '/manual', label: 'Podręcznik' },
+    { to: '/about', label: 'O projekcie' },
+];
+
+const HomepageView = () => {
     const classes = useContentAreaStyles();
     const authenticated = useAppSelector(({ user }) => user.authenticated);
     let history = useHistory();
@@ -40,4 +45,4 @@ const Homepage = () => {
     );
 };
 
-export default Homepage;
+export default HomepageView;

@@ -10,7 +10,7 @@ import StyledForm from './components/StyledForm';
 import DifficultyLevel from './components/DifficultyLevel';
 import { GameDifficulty } from '@sharedTypes';
 
-const NewGameForm = () => {
+const NewGame = () => {
     const dispatch = useAppDispatch();
     const username = useAppSelector(({ user }) => user.username);
     const isRequesting = useAppSelector(({ game }) => game.isRequesting);
@@ -59,4 +59,4 @@ const NewGameForm = () => {
     );
 };
 
-export default NewGameForm;
+export default NewGame;

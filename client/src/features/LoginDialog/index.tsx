@@ -7,7 +7,7 @@ import { Dialog, DialogTitle, DialogContent, Grid } from '@material-ui/core';
 import { CloseIconButton, TextInput } from '@components';
 import { UserLoginDto } from '@sharedTypes';
 import { loginSchema } from './loginSchema';
-import DialogSubmitButton from '../LoginDialog/components/DialogSubmitButton';
+import DialogSubmitButton from './components/DialogSubmitButton';
 import { closeDialog } from '@viewsSlice';
 import ErrorWrapper from './components/ErrorWrapper';
 

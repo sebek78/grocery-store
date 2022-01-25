@@ -1,33 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { ColorButton, ConfirmDialog, Loader, StyledLink } from '@components';
+import { ColorButton, Loader, StyledLink } from '@components';
 import { getGamesList, deleteGame } from '@gameSlice';
 import { openConfirmDialog } from '@viewsSlice';
 import { useAppDispatch, useAppSelector } from '@store';
 import { Divider, List } from '@mui/material';
-import { Game } from '@sharedTypes';
-import GamesListItem from './components/GamesListItem';
 import { Box } from '@mui/system';
+import { ConfirmDialog, GamesList } from '@features';
 
-const generate = (
-    games: Game[],
-    onClick: (gameId: number) => void,
-    secondaryAction: (id: number) => void
-) =>
-    games.map((game) =>
-        React.cloneElement(
-            <GamesListItem
-                game={game}
-                onClick={onClick}
-                secondaryAction={secondaryAction}
-            />,
-            {
-                key: game.gameId,
-            }
-        )
-    );
-
-const GameBoard = () => {
+const Games = () => {
     const dispatch = useAppDispatch();
     let history = useHistory();
     const games = useAppSelector(({ game }) => game.games);
@@ -67,9 +48,11 @@ const GameBoard = () => {
             <Divider />
             {isGettingGames && <Loader color="info" />}
             {!isGettingGames && (
-                <List dense={true}>
-                    {generate(games, handlePlay, handleClickDeleteIcon)}
-                </List>
+                <GamesList
+                    games={games}
+                    handlePlay={handlePlay}
+                    handleClickDeleteIcon={handleClickDeleteIcon}
+                />
             )}
             {!isGettingGames && games.length === 0 && (
                 <Box sx={{ padding: 1 }}>
@@ -88,4 +71,4 @@ const GameBoard = () => {
     );
 };
 
-export default GameBoard;
+export default Games;

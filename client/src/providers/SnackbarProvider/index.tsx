@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAppSelector } from '@store';
-import Snackbar from '../Snackbar';
+import { Snackbar } from '@components';
 
 const SnackbarProvider = () => {
     const { open, autoHideDuration } = useAppSelector(

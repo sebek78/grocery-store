@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import { useAppDispatch } from '@store';
 import { openConfirmDialog } from '@viewsSlice';
-import ColorButton from '../ColorButton/ColorButton';
+import { ColorButton } from '@components';
 import { theme } from '@utils';
 import { SnackbarSeverity } from '@sharedTypes';
 

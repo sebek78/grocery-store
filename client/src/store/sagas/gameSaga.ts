@@ -18,7 +18,7 @@ import {
     SuccessResponse,
 } from '@sharedTypes';
 import { apiErrorSaga } from './apiErrorSaga';
-import { history } from '../../components/App/App';
+import { history } from '@pages';
 import { showSnackbar } from '@viewsSlice';
 
 interface NewGameResponse extends ApiError {
