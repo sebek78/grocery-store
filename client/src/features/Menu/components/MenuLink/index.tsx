@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Button, Divider } from '@material-ui/core';
@@ -13,9 +13,12 @@ type MenuLinkProps = {
 const MenuLink = ({ label, to, action }: MenuLinkProps) => {
     const dispatch = useDispatch();
 
-    const handleClick = () => {
+    const handleClick = (e: MouseEvent) => {
+        if (action) {
+            e.preventDefault();
+            dispatch(action());
+        }
         dispatch(closeMenu());
-        if (action) dispatch(action());
     };
 
     return (
@@ -23,7 +26,7 @@ const MenuLink = ({ label, to, action }: MenuLinkProps) => {
             <Button
                 color="primary"
                 component={Link}
-                to={to || ''}
+                to={to ? to : '#'}
                 onClick={handleClick}
             >
                 {label}
