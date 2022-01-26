@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Manual = () => {
+const ManualPage = () => {
     return <div>Podręcznik</div>;
 };
 
-export default Manual;
+export default ManualPage;

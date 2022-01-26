@@ -6,7 +6,7 @@ import GameView from './GameView';
 import { history } from './App/App';
 import Home from './Home/Home';
 import HomepageView from './HomepageView/HomepageView';
-import Manual from './Manual/Manual';
+import ManualPage from './ManualPage';
 import NewGame from './NewGame';
 import Store from './Store';
 
@@ -19,7 +19,7 @@ export {
     history,
     Home,
     HomepageView,
-    Manual,
+    ManualPage,
     NewGame,
     Store,
 };

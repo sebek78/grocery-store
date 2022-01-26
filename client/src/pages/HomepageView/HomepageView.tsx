@@ -3,7 +3,7 @@ import { Switch, Route, useHistory } from 'react-router-dom';
 import { useAppSelector } from '@store';
 import { LoginDialog, RegisterDialog } from '@features';
 import { Menu } from '@features';
-import { About, Home, Manual } from '@pages';
+import { About, Home, ManualPage } from '@pages';
 import { Box } from '@material-ui/core';
 import { useContentAreaStyles } from '@constants';
 import { IMenuLink } from '@sharedTypes';
@@ -28,7 +28,7 @@ const HomepageView = () => {
             <Box className={classes.contentArea}>
                 <Switch>
                     <Route path="/manual">
-                        <Manual />
+                        <ManualPage />
                     </Route>
                     <Route path="/about">
                         <About />

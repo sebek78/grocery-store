@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import { Box } from '@material-ui/core';
 import { REFRESH_TOKEN_TIME, useContentAreaStyles } from '@constants';
 import { Menu } from '@features';
-import { Account, Games, Manual, NewGame } from '@pages';
+import { Account, Games, ManualPage, NewGame } from '@pages';
 import { useAppDispatch, useAppSelector } from '@store';
 import { requestRefreshToken, userLogoutRequest } from '@userSlice';
 import { Store } from '@pages';
@@ -44,7 +44,7 @@ const GameView = () => {
                         <Account />
                     </Route>
                     <Route path="/game/manual">
-                        <Manual />
+                        <ManualPage />
                     </Route>
                     <Route path="/game/new">
                         <NewGame />
