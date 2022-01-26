@@ -1,11 +1,8 @@
 import React from 'react';
-import { useAppSelector } from '@store';
 import { Grid } from '@mui/material';
 import { Introduction } from '@features';
-import { APP_BAR_HEIGHT } from '@constants';
 
 const Home = () => {
-    const username = useAppSelector(({ user }) => user.username);
     return (
         <Grid
             container

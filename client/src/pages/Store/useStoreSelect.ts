@@ -1,4 +1,4 @@
-import { getGameDataRequest } from '@gameSlice';
+import { getGameDataRequest, getGamesList } from '@gameSlice';
 import { useAppSelector, useAppDispatch } from '@store';
 import { Price, ProductType } from '@sharedTypes';
 import { useEffect } from 'react';
@@ -23,15 +23,28 @@ function getPrice(store: Store | undefined, productTypeForPrice: ProductType) {
 
 const useStoreSelect = (gameId: number) => {
     const dispatch = useAppDispatch();
+
+    const game = useAppSelector(({ game }) => {
+        return game.games.find((gameData) => gameData.gameId === gameId);
+    });
     const store = useAppSelector(({ game }) =>
         game.stores.find((store) => store.gameId === gameId)
     );
+    const gameDataError = useAppSelector(({ game }) => game.gameDataError);
+
+    useEffect(() => {
+        if (!game) {
+            dispatch(getGamesList());
+        } else {
+            console.log(game); // TODO: remove it
+        }
+    }, [game]);
 
     useEffect(() => {
         if (!store) {
             dispatch(getGameDataRequest(gameId));
         } else {
-            console.log(store);
+            console.log(store); // TODO: remove it
         }
     }, [store]);
 
@@ -85,6 +98,8 @@ const useStoreSelect = (gameId: number) => {
 
     return {
         salesArea,
+        game,
+        gameDataError,
     };
 };
 

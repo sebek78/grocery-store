@@ -7,13 +7,7 @@ import useStoreSelect from './useStoreSelect';
 const Store = () => {
     let { gameId: gameIdParam } = useParams<{ gameId: string }>();
     let gameId = Number.parseInt(gameIdParam, 10);
-
-    const game = useAppSelector(({ game }) =>
-        game.games.find((gameData) => gameData.gameId === gameId)
-    );
-    const gameDataError = useAppSelector(({ game }) => game.gameDataError);
-
-    const { salesArea } = useStoreSelect(gameId);
+    const { salesArea, game, gameDataError } = useStoreSelect(gameId);
 
     if (gameDataError) return <div>{gameDataError}</div>;
 
