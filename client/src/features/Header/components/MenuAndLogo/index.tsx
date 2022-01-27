@@ -1,7 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { theme } from '@utils';
-import { Grid, Hidden, IconButton } from '@material-ui/core';
+import { Grid, IconButton } from '@material-ui/core';
+import { Hidden } from '@mui/material';
 import MenuIcon from '@material-ui/icons/menu';
 import Logo from '../Logo';
 

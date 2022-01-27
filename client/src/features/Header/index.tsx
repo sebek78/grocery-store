@@ -21,7 +21,7 @@ const Header = () => {
     const handleMenuIconClick = () => dispatch(openMenu());
 
     return (
-        <AppBar position="static" className={classes.root}>
+        <AppBar position="sticky" className={classes.root}>
             <Toolbar>
                 <Grid
                     container

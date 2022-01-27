@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Divider, Drawer, Grid, Hidden, IconButton } from '@material-ui/core';
+import { Divider, Drawer, Grid, IconButton } from '@material-ui/core';
+import { Hidden } from '@mui/material';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuLinks from './components/MenuLinks';
@@ -55,7 +56,7 @@ const Menu = ({ links }: MenuProps) => {
                     <MenuLinks links={links} />
                 </Drawer>
             </Hidden>
-            <Hidden mdDown>
+            <Hidden lgDown>
                 <StyledDrawer anchor="left" open variant="permanent">
                     <Divider />
                     <MenuLinks links={links} />
