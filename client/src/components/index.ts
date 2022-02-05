@@ -7,6 +7,7 @@ import ProgressButton from './ProgressButton';
 import Snackbar from './Snackbar';
 import StyledLink from './StyledLink';
 import TextInput from './TextInput';
+import TextLink from './Textlink';
 
 export {
     AuthenticatedRoute,
@@ -18,4 +19,5 @@ export {
     Snackbar,
     StyledLink,
     TextInput,
+    TextLink,
 };
