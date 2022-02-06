@@ -47,6 +47,10 @@ export const gameSlice = createSlice({
             state.distributionCenters.push(action.payload.distributionCenter);
             state.error = '';
         },
+        newGameFailed: (state, action: PayloadAction<string>) => {
+            state.isRequesting = false;
+            state.error = action.payload;
+        },
         getGamesList: (state) => {
             state.isGettingGames = true;
             state.gameListError = '';
@@ -99,6 +103,7 @@ export const gameSlice = createSlice({
 export const {
     newGameRequest,
     newGameSuccess,
+    newGameFailed,
     getGamesList,
     getGamesSuccess,
     getGamesFailed,

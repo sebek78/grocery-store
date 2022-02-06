@@ -9,6 +9,7 @@ import {
     getGamesDataFailed,
     deleteGameSuccess,
     deleteGameFailed,
+    newGameFailed,
 } from '../slices/gameSlice';
 import {
     Game,
@@ -53,6 +54,13 @@ function* newGameSaga(action: PayloadAction) {
     );
     if (data.statusCode >= 400) {
         if (data.statusCode >= 400) yield call(apiErrorSaga, data);
+        yield put(newGameFailed(data.message));
+        yield put(
+            showSnackbar({
+                severity: 'error',
+                message: data.message,
+            })
+        );
     } else {
         yield put(
             newGameSuccess({

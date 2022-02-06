@@ -22,8 +22,14 @@ export class GamesService {
     ) {}
     async create(createGamesDto: CreateGamesDto) {
         const { username, storeName, difficulty } = createGamesDto;
-        const { user_id } = await this.usersService.findOne(username);
-
+        const userData = await this.usersService.findOne(username);
+        if (!userData) {
+            throw new HttpException(
+                `Nieprawidłowa nazwa użytkownika`,
+                HttpStatus.BAD_REQUEST,
+            );
+        }
+        const { user_id } = userData;
         const gameObject = new Game(user_id, storeName, difficulty);
         const newGame = this.gamesRepository.create(gameObject);
         await this.gamesRepository.save(newGame);
@@ -33,11 +39,25 @@ export class GamesService {
             order: { game_id: 'DESC' },
         });
 
+        if (!gameRaw) {
+            throw new HttpException(
+                `Nie utworzono nowej gry`,
+                HttpStatus.SERVICE_UNAVAILABLE,
+            );
+        }
+
         const game = keysToCamelCase(gameRaw);
         const distributionCenter = await this.createDistributionCenter(
             gameRaw.game_id,
         );
         const store = await this.createStore(gameRaw.game_id);
+
+        if (!store || !distributionCenter) {
+            throw new HttpException(
+                `Nie utworzono danych nowej gry`,
+                HttpStatus.SERVICE_UNAVAILABLE,
+            );
+        }
 
         return { game, distributionCenter, store };
     }
