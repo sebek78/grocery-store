@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import { theme } from '@utils';
 
 const StyledH3 = styled.h3`
-    font-size: 20px;
-    line-height: 25px;
+    font-size: ${theme.typography.h3.fontSize};
+    line-height: ${theme.typography.h3.lineHeight};
+    font-weight: ${theme.typography.h3.fontWeight};
     margin: 16px 0 8px;
-    font-weight: bold;
     text-align: left;
     width: 100%;
 `;

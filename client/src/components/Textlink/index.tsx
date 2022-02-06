@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { theme } from '@utils';
 
 const StyledA = styled.a`
+    font-size: ${theme.typography.body1.fontSize};
+    line-height: ${theme.typography.body1.lineHeight};
     font-weight: bold;
     color: ${theme.palette.primary.main};
     text-decoration: none;
