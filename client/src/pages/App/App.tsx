@@ -20,8 +20,9 @@ const App = () => {
                 <CssBaseline />
                 <ThemeProvider theme={theme}>
                     <SnackbarProvider />
-                    <Header />
                     <Router history={history}>
+                        <Header />
+
                         <Switch>
                             <AuthenticatedRoute path="/game">
                                 <GameView />

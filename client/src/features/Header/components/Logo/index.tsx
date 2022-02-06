@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { Grid } from '@material-ui/core';
 import { theme } from '@utils';
 import { APP_BAR_HEIGHT } from '@constants';
+import { useAppSelector } from '@store';
+import { StyledLink } from '@components';
 
 const LogoBackground = styled(Grid)`
     background-color: ${theme.palette.success.main};
@@ -31,16 +33,20 @@ const LogoText = styled.div`
 `;
 
 const Logo = () => {
+    const isAuthenticated = useAppSelector(({ user }) => user.authenticated);
+
     return (
-        <LogoBackground
-            container
-            justifyContent="center"
-            alignItems="center"
-            direction="column"
-        >
-            <InnerLogo>Skelpikarz</InnerLogo>
-            <LogoText>Gra edukacyjna</LogoText>
-        </LogoBackground>
+        <StyledLink to={isAuthenticated ? '/game' : '/'}>
+            <LogoBackground
+                container
+                justifyContent="center"
+                alignItems="center"
+                direction="column"
+            >
+                <InnerLogo>Skelpikarz</InnerLogo>
+                <LogoText>Gra edukacyjna</LogoText>
+            </LogoBackground>
+        </StyledLink>
     );
 };
 
