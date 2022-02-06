@@ -55,6 +55,9 @@ const GameView = () => {
                     <Route path="/game">
                         <Games />
                     </Route>
+                    <Route path="*">
+                        <Games />
+                    </Route>
                 </Switch>
             </Box>
             <Menu links={gameViewMenuLinks} />

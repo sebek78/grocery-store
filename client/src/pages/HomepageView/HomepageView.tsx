@@ -36,6 +36,9 @@ const HomepageView = () => {
                     <Route path="/">
                         <Home />
                     </Route>
+                    <Route path="*">
+                        <Home />
+                    </Route>
                 </Switch>
             </Box>
             <Menu links={homepageMenuLinks} />
