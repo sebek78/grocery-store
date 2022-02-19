@@ -1,5 +1,5 @@
 import React from 'react';
-import { DialogContentText } from '@material-ui/core';
+import { DialogContentText } from '@mui/material';
 import { RegisterUserDto } from '@sharedTypes';
 import { DeepMap, FieldError } from 'react-hook-form';
 
@@ -15,16 +15,22 @@ const ErrorWrapper = ({ errors, apiError }: ErrorWrapperProps) => {
                 <DialogContentText>Rejestracja do serwisu.</DialogContentText>
             )}
             {apiError.length > 0 && (
-                <DialogContentText>{apiError}</DialogContentText>
+                <DialogContentText sx={{ color: 'error.main' }}>
+                    {apiError}
+                </DialogContentText>
             )}
             {errors.username && (
-                <DialogContentText>{errors.username.message}</DialogContentText>
+                <DialogContentText sx={{ color: 'error.main' }}>
+                    {errors.username.message}
+                </DialogContentText>
             )}
             {errors.password && (
-                <DialogContentText>{errors.password.message}</DialogContentText>
+                <DialogContentText sx={{ color: 'error.main' }}>
+                    {errors.password.message}
+                </DialogContentText>
             )}
             {errors.password2 && (
-                <DialogContentText>
+                <DialogContentText sx={{ color: 'error.main' }}>
                     {errors.password2.message}
                 </DialogContentText>
             )}

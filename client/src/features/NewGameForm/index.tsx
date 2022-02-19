@@ -1,14 +1,20 @@
 import React from 'react';
 import { useAppSelector, useAppDispatch } from '@store';
-import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { newGameRequest } from '@gameSlice';
-import { ProgressButton, TextInput } from '@components';
+import { CloseIconButton, ProgressButton, TextInput } from '@components';
 import { NewGame, NewGameDTO } from '@sharedTypes';
 import { newGameSchema } from './newGame.schema';
 import StyledForm from './components/StyledForm';
 import DifficultyLevel from './components/DifficultyLevel';
 import { GameDifficulty } from '@sharedTypes';
+import styled from 'styled-components';
+import { DialogTitle, Grid } from '@mui/material';
+
+const ErrorDiv = styled.div`
+    color: red;
+`;
 
 const NewGame = () => {
     const dispatch = useAppDispatch();
@@ -34,10 +40,27 @@ const NewGame = () => {
         );
     };
 
+    const closeForm = () => {
+        history.back();
+    };
+
     return (
         <StyledForm onSubmit={handleSubmit(onSubmit)}>
-            {errors.storeName && <div>{errors.storeName.message}</div>}
-            {apiError && <div>{apiError}</div>}
+            <DialogTitle id="form-dialog-title" sx={{ p: 0, width: 1 }}>
+                <Grid
+                    container
+                    justifyContent="space-between"
+                    alignItems="center"
+                    sx={{ width: 1 }}
+                >
+                    <Grid item>Podaj nazwę sklepu</Grid>
+                    <CloseIconButton handleClose={closeForm} />
+                </Grid>
+            </DialogTitle>
+            {errors.storeName && (
+                <ErrorDiv>{errors.storeName.message}</ErrorDiv>
+            )}
+            {apiError && <ErrorDiv>{apiError}</ErrorDiv>}
             <TextInput
                 label="Nazwa sklepu"
                 name="storeName"

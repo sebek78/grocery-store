@@ -33,7 +33,7 @@ const GamesList = ({
     handleClickDeleteIcon,
 }: GamesListProps) => {
     return (
-        <List dense={true}>
+        <List dense={true} sx={{ maxWidth: 600, mx: 'auto' }}>
             {generate(games, handlePlay, handleClickDeleteIcon)}
         </List>
     );
