@@ -1,11 +1,12 @@
 import styled from 'styled-components';
+import { theme } from '@utils';
 
-export const StyledProduct = styled.li`
+export const ProductCard = styled.li`
     list-style-type: none;
     border: 2px solid ${(props) => props.color};
-    border-radius: 15px;
-    width: 100px;
-    height: 100px;
+    border-radius: 16px;
+    width: 60px;
+    height: 60px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -14,31 +15,34 @@ export const StyledProduct = styled.li`
     background-color: white;
 `;
 
-export const StyledImg = styled.img`
-    width: 80%;
+export const ProductImg = styled.img`
+    width: 40px;
     height: auto;
 `;
 
-export const StyledDate = styled.div`
+export const ProductDate = styled.div`
     border: 2px solid ${(props) => props.color};
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
     text-align: center;
     position: absolute;
-    bottom: -2px;
+    top: -2px;
     right: -2px;
     background-color: white;
     font-weight: bold;
+    font-size: 16px;
 `;
 
 export const StyledRack = styled.li`
     list-style-type: none;
-    min-width: 320px;
-    max-width: 640px;
-    margin-bottom: 16px;
+    max-width: 100%;
+    margin-bottom: 8px;
     background-color: azure;
+    ${theme.breakpoints.up('sm')} {
+        max-width: 480px;
+    }
 `;
 
 export const RackLabel = styled.div`
@@ -50,7 +54,7 @@ export const RackLabel = styled.div`
     flex-wrap: wrap;
     width: 100%;
     border-bottom: 0;
-    padding: 16px;
+    padding: 4px 8px;
     @media (min-width: 480px) {
         justify-content: space-between;
         flex-wrap: nowrap;
@@ -64,7 +68,7 @@ export const ProductList = styled.ul`
     justify-content: space-evenly;
     align-items: center;
     border: 4px solid ${(props) => props.color};
-    padding: 16px;
+    padding: 8px;
 `;
 
 export const ProductName = styled.div`

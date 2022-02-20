@@ -6,7 +6,7 @@ import dryGoods from '@assets/dry-goods.png';
 import frozen from '@assets/frozen.png';
 import produce from '@assets/produce.png';
 import { setProductColor } from '../../helpers';
-import { StyledProduct, StyledImg, StyledDate } from '../Styled';
+import { ProductCard, ProductImg, ProductDate } from '../Styled';
 
 interface ProductProps {
     product: Product;
@@ -29,17 +29,17 @@ function getProductImage(productType: ProductType) {
 
 const ProductPackage = ({ product }: ProductProps) => {
     return (
-        <StyledProduct
+        <ProductCard
             key={product.id}
             color={setProductColor(product.productType)}
         >
-            <StyledImg src={getProductImage(product.productType)} alt="" />
+            <ProductImg src={getProductImage(product.productType)} alt="" />
             {product.expirationDate > 0 && (
-                <StyledDate color={setProductColor(product.productType)}>
+                <ProductDate color={setProductColor(product.productType)}>
                     {product.expirationDate}
-                </StyledDate>
+                </ProductDate>
             )}
-        </StyledProduct>
+        </ProductCard>
     );
 };
 

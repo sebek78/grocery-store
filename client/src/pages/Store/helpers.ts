@@ -5,7 +5,7 @@ export function setProductColor(productType: ProductType) {
         case ProductType.Bakery:
             return 'sandybrown';
         case ProductType.Dairy:
-            return 'powderblue';
+            return 'cyan';
         case ProductType.DryGoods:
             return 'slategray';
         case ProductType.Frozen:
