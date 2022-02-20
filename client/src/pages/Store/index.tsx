@@ -6,6 +6,9 @@ import StoreHeader from './components/StoreHeader';
 import StoreLayout from './components/StoreLayout';
 import SalesArea from './components/SalesArea';
 import Racks from './components/Racks';
+import Customers from './components/Customers';
+import { Grid } from '@mui/material';
+import StoreRoom from './components/StoreRoom';
 
 const Store = () => {
     let { gameId: gameIdParam } = useParams<{ gameId: string }>();
@@ -17,19 +20,27 @@ const Store = () => {
     return (
         <StoreLayout>
             <StoreHeader game={game} />
-            <SalesArea salesArea={salesArea}>
-                <Racks>
-                    {salesArea.map((rack) => (
-                        <Rack
-                            key={rack.productName}
-                            productName={rack.productName}
-                            price={rack.price}
-                            products={rack.products}
-                        />
-                    ))}
-                </Racks>
-            </SalesArea>
-            <div className="storeRoom"></div>
+            <Grid
+                container
+                direction="row"
+                justifyContent="center"
+                alignItems="center"
+            >
+                <Customers />
+                <SalesArea salesArea={salesArea}>
+                    <Racks>
+                        {salesArea.map((rack) => (
+                            <Rack
+                                key={rack.productName}
+                                productName={rack.productName}
+                                price={rack.price}
+                                products={rack.products}
+                            />
+                        ))}
+                    </Racks>
+                </SalesArea>
+                <StoreRoom />
+            </Grid>
         </StoreLayout>
     );
 };

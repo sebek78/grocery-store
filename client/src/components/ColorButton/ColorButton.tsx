@@ -13,6 +13,7 @@ const ColorButton = styled(({ btnColor, ...rest }) => (
         color: ${(props) => getTextColor(props.btnColor)};
         margin: ${theme.spacing(1)}px;
         &:hover {
+            background-color: ${(props) => getColor(props.btnColor)};
             opacity: 0.7;
         }
     }

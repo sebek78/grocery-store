@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { theme } from '@utils';
 import { Grid } from '@mui/material';
+import StoreMenu from '../StoreMenu';
 
 interface StoreHeaderProps {
     game?: Game;
@@ -38,6 +39,7 @@ function StoreHeader({ game }: StoreHeaderProps) {
             <StoreLabel>
                 Dzień:{game?.turn}/6 {phaseName[game?.phase ?? 5]}
             </StoreLabel>
+            <StoreMenu phase={game?.phase ?? 5} />
         </Grid>
     );
 }

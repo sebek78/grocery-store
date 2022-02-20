@@ -1,7 +1,7 @@
 import { Product, ProductType } from '@sharedTypes';
 import { theme } from '@utils';
 import React from 'react';
-import styled from 'styled-components';
+import { SectionLabel, StoreSection } from '../Styled';
 
 type RackData = {
     productName: ProductType;
@@ -18,24 +18,6 @@ interface SalesAreaProps {
     children?: React.ReactNode;
 }
 
-const StyledDiv = styled.div`
-    border: 2px solid ${theme.palette.primary.dark};
-    border-radius: 16px;
-    padding: 8px 16px 8px;
-    ${theme.breakpoints.up('sm')} {
-        max-width: max-content;
-        margin: 0 auto;
-    }
-`;
-
-export const SalesAreaLabel = styled.div`
-    font-size: ${theme.typography.h4.fontSize};
-    padding-bottom: 8px;
-    text-align: center;
-    color: ${(props) =>
-        props.color ? props.color : theme.palette.text.primary};
-`;
-
 function countProducts(salesArea: RackData[]) {
     return salesArea.reduce(
         (sum: number, rackData: RackData): number =>
@@ -46,12 +28,12 @@ function countProducts(salesArea: RackData[]) {
 
 function SalesArea(props: SalesAreaProps) {
     return (
-        <StyledDiv>
-            <SalesAreaLabel color={theme.palette.text.secondary}>
+        <StoreSection>
+            <SectionLabel color={theme.palette.text.secondary}>
                 Pojemność {countProducts(props.salesArea)}/15
-            </SalesAreaLabel>
+            </SectionLabel>
             {props.children}
-        </StyledDiv>
+        </StoreSection>
     );
 }
 

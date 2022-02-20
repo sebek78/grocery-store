@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { theme } from '@utils';
 
+/* Product */
+
 export const ProductCard = styled.li`
     list-style-type: none;
     border: 2px solid ${(props) => props.color};
@@ -34,6 +36,8 @@ export const ProductDate = styled.div`
     font-weight: bold;
     font-size: 16px;
 `;
+
+/* Rack */
 
 export const StyledRack = styled.li`
     list-style-type: none;
@@ -130,4 +134,24 @@ export const OnSalePriceLabel = styled.span`
         right: 50%;
         transform: rotate(-30deg);
     }
+`;
+
+/* Section */
+
+export const StoreSection = styled.div`
+    border: 2px solid ${theme.palette.primary.dark};
+    border-radius: 16px;
+    padding: 8px 16px 8px;
+    margin: 16px;
+    ${theme.breakpoints.up('sm')} {
+        max-width: max-content;
+    }
+`;
+
+export const SectionLabel = styled.div`
+    font-size: ${theme.typography.h4.fontSize};
+    padding-bottom: 8px;
+    text-align: center;
+    color: ${(props) =>
+        props.color ? props.color : theme.palette.text.primary};
 `;
