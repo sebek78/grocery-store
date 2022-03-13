@@ -5,6 +5,7 @@ import { Users } from 'src/users/users.entity';
 import { Games } from 'src/games/entities/games.entity';
 import { DistributionCenter } from 'src/distribution-center/entities/distribution-center.entity';
 import { Stores } from 'src/stores/entities/store.entity';
+import { Customers } from 'src/customers/entities/customers.entity';
 
 @Module({
     imports: [
@@ -20,7 +21,13 @@ import { Stores } from 'src/stores/entities/store.entity';
                         username: configService.get('DB_USERNAME'),
                         password: configService.get('DB_PASSWORD'),
                         database: configService.get('DB_DATABASE'),
-                        entities: [Users, Games, DistributionCenter, Stores],
+                        entities: [
+                            Users,
+                            Games,
+                            DistributionCenter,
+                            Stores,
+                            Customers,
+                        ],
                     };
                 } else {
                     const credentials: string[] =
@@ -32,7 +39,13 @@ import { Stores } from 'src/stores/entities/store.entity';
                         host: credentials[2].split('@')[1],
                         port: Number.parseInt(credentials[3].split('/')[0]),
                         database: credentials[3].split('/')[1],
-                        entities: [Users, Games, DistributionCenter, Stores],
+                        entities: [
+                            Users,
+                            Games,
+                            DistributionCenter,
+                            Stores,
+                            Customers,
+                        ],
                         ssl: {
                             rejectUnauthorized: false,
                         },

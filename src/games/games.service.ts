@@ -10,6 +10,7 @@ import { UsersService } from 'src/users/users.service';
 import { StoresService } from 'src/stores/stores.service';
 import { Response } from 'express';
 // import { UpdateGamesDto } from './dto/update-games.dto';
+import { CustomersService } from 'src/customers/customers.service';
 
 @Injectable()
 export class GamesService {
@@ -19,6 +20,7 @@ export class GamesService {
         private distributionCenterService: DistributionCenterService,
         private usersService: UsersService,
         private storesService: StoresService,
+        private customersService: CustomersService,
     ) {}
     async create(createGamesDto: CreateGamesDto) {
         const { username, storeName, difficulty } = createGamesDto;
@@ -51,15 +53,15 @@ export class GamesService {
             gameRaw.game_id,
         );
         const store = await this.createStore(gameRaw.game_id);
-
-        if (!store || !distributionCenter) {
+        const customers = await this.createCustomers(gameRaw.game_id);
+        if (!store || !distributionCenter || !customers) {
             throw new HttpException(
                 `Nie utworzono danych nowej gry`,
                 HttpStatus.SERVICE_UNAVAILABLE,
             );
         }
 
-        return { game, distributionCenter, store };
+        return { game, distributionCenter, store, customers };
     }
 
     async createDistributionCenter(game_id: number) {
@@ -72,6 +74,11 @@ export class GamesService {
     async createStore(game_id: number) {
         const store = await this.storesService.create(game_id);
         return store;
+    }
+
+    async createCustomers(game_id: number) {
+        const customers = await this.customersService.create(game_id);
+        return customers;
     }
 
     async findAllByUserId(user_id: number) {

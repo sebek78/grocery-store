@@ -6,6 +6,7 @@ import { Games } from './entities/games.entity';
 import { DistributionCenterModule } from 'src/distribution-center/distribution-center.module';
 import { UsersModule } from 'src/users/users.module';
 import { StoresModule } from 'src/stores/stores.module';
+import { CustomersModule } from 'src/customers/customers.module';
 
 @Module({
     controllers: [GamesController],
@@ -15,6 +16,7 @@ import { StoresModule } from 'src/stores/stores.module';
         DistributionCenterModule,
         UsersModule,
         StoresModule,
+        CustomersModule,
     ],
 })
 export class GamesModule {}

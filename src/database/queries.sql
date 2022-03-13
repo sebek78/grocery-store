@@ -46,3 +46,10 @@ create TABLE stores (
 		foreign key (game_id)
 			references games(game_id)
 );
+
+CREATE TABLE public.customers (
+	customers_id serial4 NOT NULL,
+	game_id int4 NOT NULL,
+	customers_data _varchar NOT NULL
+);
+ALTER TABLE public.customers ADD CONSTRAINT customers_fk FOREIGN KEY (game_id) REFERENCES public.games(game_id);
