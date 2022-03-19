@@ -96,11 +96,13 @@ export class GamesService {
         const distributionCenter = await this.distributionCenterService.findOne(
             gameId,
         );
+        const customers = await this.customersService.findOne(gameId);
 
-        if (store && distributionCenter) {
+        if (store && distributionCenter && customers) {
             return {
                 store,
                 distributionCenter,
+                customers,
             };
         } else {
             throw new HttpException(

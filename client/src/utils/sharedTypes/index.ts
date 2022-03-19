@@ -101,3 +101,17 @@ export interface DistributionCenter {
     gameId: number;
     costs: number[];
 }
+
+export interface Customer {
+    name: string;
+    completed: number;
+    penalty: number;
+    needs: (keyof ProductType)[];
+    hidden?: boolean;
+}
+
+export interface CustomersData {
+    customersId: number;
+    customersData: string[];
+    gameId: number;
+}

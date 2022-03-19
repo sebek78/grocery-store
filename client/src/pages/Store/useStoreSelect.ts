@@ -1,6 +1,6 @@
 import { getGameDataRequest, getGamesList } from '@gameSlice';
 import { useAppSelector, useAppDispatch } from '@store';
-import { Price, ProductType } from '@sharedTypes';
+import { Customer, Price, ProductType } from '@sharedTypes';
 import { useEffect } from 'react';
 import { Store } from '@sharedTypes';
 
@@ -21,15 +21,37 @@ function getPrice(store: Store | undefined, productTypeForPrice: ProductType) {
     return store.prices[key as ProductType];
 }
 
+function parseCustomersData(customersData: string[]): Customer[] {
+    return customersData.map((rawData: string) => {
+        const customersArray = JSON.parse(rawData);
+
+        // game rule: show only first two clients at day beginning
+        const customers = customersArray.map(
+            (customer: Customer, index: number) => {
+                customer.hidden = !(index === 0 || index === 1);
+                return customer;
+            }
+        );
+
+        return customers;
+    });
+}
+
 const useStoreSelect = (gameId: number) => {
     const dispatch = useAppDispatch();
 
     const game = useAppSelector(({ game }) => {
         return game.games.find((gameData) => gameData.gameId === gameId);
     });
+
     const store = useAppSelector(({ game }) =>
         game.stores.find((store) => store.gameId === gameId)
     );
+
+    const customersData = useAppSelector(({ game }) => {
+        return game.customers.find((customers) => customers.gameId === gameId);
+    });
+
     const gameDataError = useAppSelector(({ game }) => game.gameDataError);
 
     useEffect(() => {
@@ -96,7 +118,12 @@ const useStoreSelect = (gameId: number) => {
         products: frozen,
     });
 
+    const customers = customersData?.customersData
+        ? parseCustomersData(customersData.customersData)
+        : [];
+
     return {
+        customers,
         salesArea,
         game,
         gameDataError,

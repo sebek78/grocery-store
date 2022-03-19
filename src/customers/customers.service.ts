@@ -24,13 +24,26 @@ export class CustomersService {
             costs: newCustomers.customers_data,
         };
     }
+
+    async findOne(gameId: number) {
+        const customers = await this.customersRepository.findOne({
+            loadRelationIds: true,
+            where: {
+                game_id: gameId,
+            },
+        });
+        if (!customers) return null;
+
+        return {
+            customersId: customers.customers_id,
+            customersData: customers.customers_data,
+            gameId,
+        };
+    }
+
     /*
     findAll() {
         return `This action returns all customers`;
-    }
-
-    findOne(id: number) {
-        return `This action returns a #${id} customer`;
     }
 
     update(id: number, updateCustomerDto: UpdateCustomerDto) {

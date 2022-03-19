@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router';
 import Rack from './components/Rack';
 import useStoreSelect from './useStoreSelect';
@@ -13,7 +13,8 @@ import StoreRoom from './components/StoreRoom';
 const Store = () => {
     let { gameId: gameIdParam } = useParams<{ gameId: string }>();
     let gameId = Number.parseInt(gameIdParam, 10);
-    const { salesArea, game, gameDataError } = useStoreSelect(gameId);
+    const { customers, salesArea, game, gameDataError } =
+        useStoreSelect(gameId);
 
     if (gameDataError) return <div>{gameDataError}</div>;
 
@@ -26,7 +27,7 @@ const Store = () => {
                 justifyContent="center"
                 alignItems="center"
             >
-                <Customers />
+                <Customers customers={customers} />
                 <SalesArea salesArea={salesArea}>
                     <Racks>
                         {salesArea.map((rack) => (

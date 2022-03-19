@@ -1,5 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NewGameDTO, Game, Store, DistributionCenter } from '@sharedTypes';
+import {
+    NewGameDTO,
+    Game,
+    Store,
+    DistributionCenter,
+    CustomersData,
+} from '@sharedTypes';
+import { act } from 'react-dom/test-utils';
 
 interface GameState {
     isRequesting: boolean;
@@ -8,6 +15,7 @@ interface GameState {
     error: string;
     gameListError: string;
     gameDataError: string;
+    customers: CustomersData[];
     games: Game[];
     stores: Store[];
     distributionCenters: DistributionCenter[];
@@ -20,6 +28,7 @@ const initialState: GameState = {
     error: '',
     gameListError: '',
     gameDataError: '',
+    customers: [],
     games: [],
     stores: [],
     distributionCenters: [],
@@ -37,14 +46,15 @@ export const gameSlice = createSlice({
             state,
             action: PayloadAction<{
                 game: Game;
-                store: any;
-                distributionCenter: any;
+                store: any; // TODO: type
+                distributionCenter: any; //TODO: type
             }>
         ) => {
             state.isRequesting = false;
             state.games.push(action.payload.game);
             state.stores.push(action.payload.store);
             state.distributionCenters.push(action.payload.distributionCenter);
+            // TODO: customers
             state.error = '';
         },
         newGameFailed: (state, action: PayloadAction<string>) => {
@@ -69,10 +79,12 @@ export const gameSlice = createSlice({
             state.isRequesting = true;
             state.error = '';
         },
+        // TODO: remove any type
         getGameDataSuccess: (state, action: PayloadAction<any>) => {
             state.isRequesting = false;
             state.stores.push(action.payload.store);
             state.distributionCenters.push(action.payload.distributionCenter);
+            state.customers.push(action.payload.customers);
             state.error = '';
         },
         getGamesDataFailed: (state, action: PayloadAction<string>) => {
@@ -93,6 +105,7 @@ export const gameSlice = createSlice({
             state.distributionCenters = state.distributionCenters.filter(
                 (center) => center.gameId !== action.payload
             );
+            // TODO: delete customers
         },
         deleteGameFailed: (state) => {
             state.deletingGameId = 0;
