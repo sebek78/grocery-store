@@ -17,6 +17,7 @@ import {
     DistributionCenter,
     Store,
     SuccessResponse,
+    CustomersDTO,
 } from '@sharedTypes';
 import { apiErrorSaga } from './apiErrorSaga';
 import { history } from '@pages';
@@ -24,17 +25,9 @@ import { showSnackbar } from '@viewsSlice';
 
 interface NewGameResponse extends ApiError {
     game: Game;
-    store: {
-        storeId: number;
-        gameId: number;
-        store: string;
-        stockRoom: string;
-    };
-    distributionCenter: {
-        centerId: number;
-        gameId: number;
-        costs: string;
-    };
+    store: Store;
+    distributionCenter: DistributionCenter;
+    customers: CustomersDTO;
 }
 
 interface GamesResponse extends ApiError {
@@ -44,6 +37,7 @@ interface GamesResponse extends ApiError {
 interface GameDataResponse extends ApiError {
     store: Store;
     distributionCenter: DistributionCenter;
+    customers: CustomersDTO;
 }
 
 function* newGameSaga(action: PayloadAction) {
@@ -67,6 +61,7 @@ function* newGameSaga(action: PayloadAction) {
                 game: data.game,
                 store: data.store,
                 distributionCenter: data.distributionCenter,
+                customers: data.customers,
             })
         );
         yield call(history.push, `/game/${data.game.gameId}`);

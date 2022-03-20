@@ -140,7 +140,11 @@ export class GamesService {
             await this.distributionCenterService.getCenterIdByGameId(
                 deletingGameId,
             );
-        if (!gameId || !storeId || !centerId) {
+        const customersId = await this.customersService.getCustomersIdByGameId(
+            deletingGameId,
+        );
+
+        if (!gameId || !storeId || !centerId || !customersId) {
             throw new HttpException(
                 `Błąd usuwania gry o id:${id}`,
                 HttpStatus.SERVICE_UNAVAILABLE,
@@ -148,6 +152,7 @@ export class GamesService {
         }
         await this.distributionCenterService.delete(centerId);
         await this.storesService.delete(storeId);
+        await this.customersService.delete(customersId);
         await this.gamesRepository.delete(gameId);
         response.status(HttpStatus.OK);
         response.send({ success: true });

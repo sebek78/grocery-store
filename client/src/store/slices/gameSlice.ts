@@ -4,9 +4,10 @@ import {
     Game,
     Store,
     DistributionCenter,
-    CustomersData,
+    CustomersDTO,
+    GameDataDTO,
+    NewGameDataDTO,
 } from '@sharedTypes';
-import { act } from 'react-dom/test-utils';
 
 interface GameState {
     isRequesting: boolean;
@@ -15,7 +16,7 @@ interface GameState {
     error: string;
     gameListError: string;
     gameDataError: string;
-    customers: CustomersData[];
+    customers: CustomersDTO[];
     games: Game[];
     stores: Store[];
     distributionCenters: DistributionCenter[];
@@ -42,19 +43,12 @@ export const gameSlice = createSlice({
             state.isRequesting = true;
             state.error = '';
         },
-        newGameSuccess: (
-            state,
-            action: PayloadAction<{
-                game: Game;
-                store: any; // TODO: type
-                distributionCenter: any; //TODO: type
-            }>
-        ) => {
+        newGameSuccess: (state, action: PayloadAction<NewGameDataDTO>) => {
             state.isRequesting = false;
             state.games.push(action.payload.game);
             state.stores.push(action.payload.store);
             state.distributionCenters.push(action.payload.distributionCenter);
-            // TODO: customers
+            state.customers.push(action.payload.customers);
             state.error = '';
         },
         newGameFailed: (state, action: PayloadAction<string>) => {
@@ -79,8 +73,7 @@ export const gameSlice = createSlice({
             state.isRequesting = true;
             state.error = '';
         },
-        // TODO: remove any type
-        getGameDataSuccess: (state, action: PayloadAction<any>) => {
+        getGameDataSuccess: (state, action: PayloadAction<GameDataDTO>) => {
             state.isRequesting = false;
             state.stores.push(action.payload.store);
             state.distributionCenters.push(action.payload.distributionCenter);
@@ -105,7 +98,9 @@ export const gameSlice = createSlice({
             state.distributionCenters = state.distributionCenters.filter(
                 (center) => center.gameId !== action.payload
             );
-            // TODO: delete customers
+            state.customers = state.customers.filter(
+                (customers) => customers.gameId !== action.payload
+            );
         },
         deleteGameFailed: (state) => {
             state.deletingGameId = 0;

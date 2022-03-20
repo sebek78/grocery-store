@@ -63,6 +63,16 @@ export interface Game extends NewGame {
     turn: number;
 }
 
+export interface GameDataDTO {
+    store: Store;
+    distributionCenter: DistributionCenter;
+    customers: CustomersDTO;
+}
+
+export interface NewGameDataDTO extends GameDataDTO {
+    game: Game;
+}
+
 /*  Store */
 
 export enum ProductType {
@@ -94,12 +104,13 @@ export interface Store {
     gameId: number;
     store: Product[];
     prices: PricesType;
+    stockRooom: Product[];
 }
 
 export interface DistributionCenter {
     centerId: number;
     gameId: number;
-    costs: number[];
+    costs: string;
 }
 
 export interface Customer {
@@ -110,8 +121,8 @@ export interface Customer {
     hidden?: boolean;
 }
 
-export interface CustomersData {
+export interface CustomersDTO {
     customersId: number;
-    customersData: string[];
+    customersData: string;
     gameId: number;
 }

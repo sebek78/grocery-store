@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DistributionCenter } from './entities/distribution-center.entity';
 import { DistributionCenterFactory } from './content/distribution-center-factory';
-// import { CreateDistributionCenterDto } from './dto/create-distribution-center.dto';
 import { Repository } from 'typeorm';
 // import { UpdateDistributionCenterDto } from './dto/update-distribution-center.dto';
 
@@ -38,7 +37,7 @@ export class DistributionCenterService {
             centerId: center.center_id,
             gameId: center.game_id,
             // TODO: costs parsing
-            costs: center.costs,
+            costs: center.costs[0],
         };
     }
 

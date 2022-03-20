@@ -36,9 +36,20 @@ export class CustomersService {
 
         return {
             customersId: customers.customers_id,
-            customersData: customers.customers_data,
+            customersData: customers.customers_data[0],
             gameId,
         };
+    }
+
+    async getCustomersIdByGameId(game_id: number) {
+        const customers = await this.customersRepository.findOne({
+            where: [{ game_id }],
+        });
+        return customers?.customers_id;
+    }
+
+    async delete(customersId: number) {
+        await this.customersRepository.delete(customersId);
     }
 
     /*
@@ -48,9 +59,5 @@ export class CustomersService {
 
     update(id: number, updateCustomerDto: UpdateCustomerDto) {
         return `This action updates a #${id} customer`;
-    }
-
-    remove(id: number) {
-        return `This action removes a #${id} customer`;
     }*/
 }
