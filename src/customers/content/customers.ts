@@ -39,6 +39,7 @@ interface ICustomer {
     name: string;
     completed: number;
     penalty: number;
+    coupons: number;
     needs: (keyof ProductType)[];
 }
 
@@ -63,7 +64,8 @@ export class CustomersFactory {
             }
             return {
                 name: data[0],
-                completed: Number.parseInt(data[2], 10),
+                completed: Number.parseInt(data[1], 10),
+                coupons: Number.parseInt(data[2], 10),
                 penalty: Number.parseInt(data[3], 10),
                 needs,
             };

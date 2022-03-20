@@ -113,8 +113,9 @@ export interface DistributionCenter {
     costs: string;
 }
 
-export interface Customer {
+export interface ICustomer {
     name: string;
+    coupons: number;
     completed: number;
     penalty: number;
     needs: (keyof ProductType)[];

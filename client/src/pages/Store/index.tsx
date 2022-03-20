@@ -25,7 +25,7 @@ const Store = () => {
                 container
                 direction="row"
                 justifyContent="center"
-                alignItems="center"
+                alignItems="stretch"
             >
                 <Customers customers={customers} />
                 <SalesArea salesArea={salesArea}>

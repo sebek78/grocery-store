@@ -1,16 +1,21 @@
-import { Customer } from '@sharedTypes';
+import { ICustomer } from '@sharedTypes';
 import React from 'react';
+import { Customer } from '@features';
 import { SectionLabel, StoreSection } from '../Styled';
 
 interface CustomersProps {
-    customers?: Customer[];
+    customers?: ICustomer[];
 }
 
 function Customers({ customers }: CustomersProps) {
-    console.log(customers);
+    if (!customers) return null;
+
     return (
         <StoreSection>
-            <SectionLabel>Klienci ?/5</SectionLabel>
+            <SectionLabel>{`Klienci ${customers.length}/5`}</SectionLabel>
+            {customers.map((customer: ICustomer) => (
+                <Customer key={customer.name} customer={customer} />
+            ))}
         </StoreSection>
     );
 }

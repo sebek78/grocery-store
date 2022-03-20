@@ -1,4 +1,5 @@
 import ConfirmDialog from './ConfirmDialog';
+import Customer from './Customer';
 import GamesList from './GamesList';
 import Header from './Header';
 import Introduction from './Introduction';
@@ -10,6 +11,7 @@ import RegisterDialog from './RegisterDialog';
 
 export {
     ConfirmDialog,
+    Customer,
     GamesList,
     Header,
     Introduction,
