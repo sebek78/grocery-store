@@ -11,6 +11,7 @@ import { UsersModule } from './users/users.module';
 import { GamesModule } from './games/games.module';
 import { DistributionCenterModule } from './distribution-center/distribution-center.module';
 import { StoresModule } from './stores/stores.module';
+import { CustomersModule } from './customers/customers.module';
 
 @Module({
     imports: [
@@ -25,6 +26,7 @@ import { StoresModule } from './stores/stores.module';
         GamesModule,
         DistributionCenterModule,
         StoresModule,
+        CustomersModule,
     ],
     controllers: [AppController],
     providers: [AppService],

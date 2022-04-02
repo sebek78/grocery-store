@@ -63,6 +63,16 @@ export interface Game extends NewGame {
     turn: number;
 }
 
+export interface GameDataDTO {
+    store: Store;
+    distributionCenter: DistributionCenter;
+    customers: CustomersDTO;
+}
+
+export interface NewGameDataDTO extends GameDataDTO {
+    game: Game;
+}
+
 /*  Store */
 
 export enum ProductType {
@@ -76,20 +86,44 @@ export enum ProductType {
 export interface Product {
     id: number;
     productType: ProductType;
-    isOnSale: boolean;
-    price: number;
-    onSalePrice: number;
     expirationDate: number;
 }
+
+export interface Price {
+    isOnSale: boolean;
+    onSalePrice: number;
+    price: number;
+}
+
+export type PricesType = {
+    [key in ProductType]: Price;
+};
 
 export interface Store {
     storeId: number;
     gameId: number;
     store: Product[];
+    prices: PricesType;
+    stockRooom: Product[];
 }
 
 export interface DistributionCenter {
     centerId: number;
     gameId: number;
-    costs: number[];
+    costs: string;
+}
+
+export interface ICustomer {
+    name: string;
+    coupons: number;
+    completed: number;
+    penalty: number;
+    needs: (keyof ProductType)[];
+    hidden?: boolean;
+}
+
+export interface CustomersDTO {
+    customersId: number;
+    customersData: string;
+    gameId: number;
 }

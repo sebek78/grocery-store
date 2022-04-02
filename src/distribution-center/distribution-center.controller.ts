@@ -1,15 +1,6 @@
-import {
-    Controller,
-    Get,
-    Post,
-    Body,
-    Patch,
-    Param,
-    Delete,
-} from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { DistributionCenterService } from './distribution-center.service';
-import { CreateDistributionCenterDto } from './dto/create-distribution-center.dto';
-import { UpdateDistributionCenterDto } from './dto/update-distribution-center.dto';
+// import { UpdateDistributionCenterDto } from './dto/update-distribution-center.dto';
 
 @Controller('distribution-center')
 export class DistributionCenterController {

@@ -1,5 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NewGameDTO, Game, Store, DistributionCenter } from '@sharedTypes';
+import {
+    NewGameDTO,
+    Game,
+    Store,
+    DistributionCenter,
+    CustomersDTO,
+    GameDataDTO,
+    NewGameDataDTO,
+} from '@sharedTypes';
 
 interface GameState {
     isRequesting: boolean;
@@ -8,6 +16,7 @@ interface GameState {
     error: string;
     gameListError: string;
     gameDataError: string;
+    customers: CustomersDTO[];
     games: Game[];
     stores: Store[];
     distributionCenters: DistributionCenter[];
@@ -20,6 +29,7 @@ const initialState: GameState = {
     error: '',
     gameListError: '',
     gameDataError: '',
+    customers: [],
     games: [],
     stores: [],
     distributionCenters: [],
@@ -33,19 +43,17 @@ export const gameSlice = createSlice({
             state.isRequesting = true;
             state.error = '';
         },
-        newGameSuccess: (
-            state,
-            action: PayloadAction<{
-                game: Game;
-                store: any;
-                distributionCenter: any;
-            }>
-        ) => {
+        newGameSuccess: (state, action: PayloadAction<NewGameDataDTO>) => {
             state.isRequesting = false;
             state.games.push(action.payload.game);
             state.stores.push(action.payload.store);
             state.distributionCenters.push(action.payload.distributionCenter);
+            state.customers.push(action.payload.customers);
             state.error = '';
+        },
+        newGameFailed: (state, action: PayloadAction<string>) => {
+            state.isRequesting = false;
+            state.error = action.payload;
         },
         getGamesList: (state) => {
             state.isGettingGames = true;
@@ -65,10 +73,11 @@ export const gameSlice = createSlice({
             state.isRequesting = true;
             state.error = '';
         },
-        getGameDataSuccess: (state, action: PayloadAction<any>) => {
+        getGameDataSuccess: (state, action: PayloadAction<GameDataDTO>) => {
             state.isRequesting = false;
             state.stores.push(action.payload.store);
             state.distributionCenters.push(action.payload.distributionCenter);
+            state.customers.push(action.payload.customers);
             state.error = '';
         },
         getGamesDataFailed: (state, action: PayloadAction<string>) => {
@@ -89,6 +98,9 @@ export const gameSlice = createSlice({
             state.distributionCenters = state.distributionCenters.filter(
                 (center) => center.gameId !== action.payload
             );
+            state.customers = state.customers.filter(
+                (customers) => customers.gameId !== action.payload
+            );
         },
         deleteGameFailed: (state) => {
             state.deletingGameId = 0;
@@ -99,6 +111,7 @@ export const gameSlice = createSlice({
 export const {
     newGameRequest,
     newGameSuccess,
+    newGameFailed,
     getGamesList,
     getGamesSuccess,
     getGamesFailed,

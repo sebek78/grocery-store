@@ -2,12 +2,22 @@ import React, { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { Box } from '@material-ui/core';
 import { REFRESH_TOKEN_TIME, useContentAreaStyles } from '@constants';
-import { Menu } from '@components';
-import { gameViewMenuLinks } from './constants';
-import { Account, Game, Manual, NewGameForm } from '@pages';
+import { Menu } from '@features';
+import { Account, Games, ManualPage, NewGame } from '@pages';
 import { useAppDispatch, useAppSelector } from '@store';
-import { requestRefreshToken } from '@userSlice';
-import Store from '../Game/components/Store';
+import { requestRefreshToken, userLogoutRequest } from '@userSlice';
+import { Store } from '@pages';
+import { IMenuLink } from '@sharedTypes';
+
+export const gameViewMenuLinks: IMenuLink[] = [
+    { to: '/game', label: 'Gra' },
+    { to: '/game/manual', label: 'Podręcznik' },
+    { to: '/game/account', label: 'Konto' },
+    {
+        label: 'Wyloguj',
+        action: userLogoutRequest,
+    },
+];
 
 const GameView = () => {
     const classes = useContentAreaStyles();
@@ -34,16 +44,19 @@ const GameView = () => {
                         <Account />
                     </Route>
                     <Route path="/game/manual">
-                        <Manual />
+                        <ManualPage />
                     </Route>
                     <Route path="/game/new">
-                        <NewGameForm />
+                        <NewGame />
                     </Route>
                     <Route path="/game/:gameId">
                         <Store />
                     </Route>
                     <Route path="/game">
-                        <Game />
+                        <Games />
+                    </Route>
+                    <Route path="*">
+                        <Games />
                     </Route>
                 </Switch>
             </Box>

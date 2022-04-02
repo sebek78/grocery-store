@@ -9,6 +9,7 @@ import {
     getGamesDataFailed,
     deleteGameSuccess,
     deleteGameFailed,
+    newGameFailed,
 } from '../slices/gameSlice';
 import {
     Game,
@@ -16,24 +17,17 @@ import {
     DistributionCenter,
     Store,
     SuccessResponse,
+    CustomersDTO,
 } from '@sharedTypes';
 import { apiErrorSaga } from './apiErrorSaga';
-import { history } from '../../components/App/App';
+import { history } from '@pages';
 import { showSnackbar } from '@viewsSlice';
 
 interface NewGameResponse extends ApiError {
     game: Game;
-    store: {
-        storeId: number;
-        gameId: number;
-        store: string;
-        stockRoom: string;
-    };
-    distributionCenter: {
-        centerId: number;
-        gameId: number;
-        costs: string;
-    };
+    store: Store;
+    distributionCenter: DistributionCenter;
+    customers: CustomersDTO;
 }
 
 interface GamesResponse extends ApiError {
@@ -43,6 +37,7 @@ interface GamesResponse extends ApiError {
 interface GameDataResponse extends ApiError {
     store: Store;
     distributionCenter: DistributionCenter;
+    customers: CustomersDTO;
 }
 
 function* newGameSaga(action: PayloadAction) {
@@ -53,12 +48,20 @@ function* newGameSaga(action: PayloadAction) {
     );
     if (data.statusCode >= 400) {
         if (data.statusCode >= 400) yield call(apiErrorSaga, data);
+        yield put(newGameFailed(data.message));
+        yield put(
+            showSnackbar({
+                severity: 'error',
+                message: data.message,
+            })
+        );
     } else {
         yield put(
             newGameSuccess({
                 game: data.game,
                 store: data.store,
                 distributionCenter: data.distributionCenter,
+                customers: data.customers,
             })
         );
         yield call(history.push, `/game/${data.game.gameId}`);

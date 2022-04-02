@@ -1,10 +1,25 @@
 import About from './About/About';
 import Account from './Account';
-import Game from './Game';
+import App from './App/App';
+import Games from './Games';
 import GameView from './GameView';
+import { history } from './App/App';
 import Home from './Home/Home';
-import Homepage from './Homepage/Homepage';
-import Manual from './Manual/Manual';
-import NewGameForm from './NewGameForm';
+import HomepageView from './HomepageView/HomepageView';
+import ManualPage from './ManualPage';
+import NewGame from './NewGame';
+import Store from './Store';
 
-export { About, Account, Game, GameView, Home, Homepage, Manual, NewGameForm };
+export {
+    App,
+    About,
+    Account,
+    Games,
+    GameView,
+    history,
+    Home,
+    HomepageView,
+    ManualPage,
+    NewGame,
+    Store,
+};

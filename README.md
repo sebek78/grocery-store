@@ -25,4 +25,7 @@ The content language is Polish.
 
 ## Project status
 
-**In progress.** My educational goal for this project is to learn to build some back-end with a real database for React app. So I chose a NodejS framework called NestJS for this project.
+**In progress.** My educational goal for this project is to learn to build some
+back-end with a real database for React app. So I chose a NodejS framework
+called NestJS for this project. Also used technologies: MUI
+(Material UI library), Redux Toolkit, and Saga.

@@ -10,6 +10,7 @@ import { UsersService } from 'src/users/users.service';
 import { StoresService } from 'src/stores/stores.service';
 import { Response } from 'express';
 // import { UpdateGamesDto } from './dto/update-games.dto';
+import { CustomersService } from 'src/customers/customers.service';
 
 @Injectable()
 export class GamesService {
@@ -19,11 +20,18 @@ export class GamesService {
         private distributionCenterService: DistributionCenterService,
         private usersService: UsersService,
         private storesService: StoresService,
+        private customersService: CustomersService,
     ) {}
     async create(createGamesDto: CreateGamesDto) {
         const { username, storeName, difficulty } = createGamesDto;
-        const { user_id } = await this.usersService.findOne(username);
-
+        const userData = await this.usersService.findOne(username);
+        if (!userData) {
+            throw new HttpException(
+                `Nieprawidłowa nazwa użytkownika`,
+                HttpStatus.BAD_REQUEST,
+            );
+        }
+        const { user_id } = userData;
         const gameObject = new Game(user_id, storeName, difficulty);
         const newGame = this.gamesRepository.create(gameObject);
         await this.gamesRepository.save(newGame);
@@ -33,13 +41,27 @@ export class GamesService {
             order: { game_id: 'DESC' },
         });
 
+        if (!gameRaw) {
+            throw new HttpException(
+                `Nie utworzono nowej gry`,
+                HttpStatus.SERVICE_UNAVAILABLE,
+            );
+        }
+
         const game = keysToCamelCase(gameRaw);
         const distributionCenter = await this.createDistributionCenter(
             gameRaw.game_id,
         );
         const store = await this.createStore(gameRaw.game_id);
+        const customers = await this.createCustomers(gameRaw.game_id);
+        if (!store || !distributionCenter || !customers) {
+            throw new HttpException(
+                `Nie utworzono danych nowej gry`,
+                HttpStatus.SERVICE_UNAVAILABLE,
+            );
+        }
 
-        return { game, distributionCenter, store };
+        return { game, distributionCenter, store, customers };
     }
 
     async createDistributionCenter(game_id: number) {
@@ -52,6 +74,11 @@ export class GamesService {
     async createStore(game_id: number) {
         const store = await this.storesService.create(game_id);
         return store;
+    }
+
+    async createCustomers(game_id: number) {
+        const customers = await this.customersService.create(game_id);
+        return customers;
     }
 
     async findAllByUserId(user_id: number) {
@@ -69,11 +96,13 @@ export class GamesService {
         const distributionCenter = await this.distributionCenterService.findOne(
             gameId,
         );
+        const customers = await this.customersService.findOne(gameId);
 
-        if (store && distributionCenter) {
+        if (store && distributionCenter && customers) {
             return {
                 store,
                 distributionCenter,
+                customers,
             };
         } else {
             throw new HttpException(
@@ -111,7 +140,11 @@ export class GamesService {
             await this.distributionCenterService.getCenterIdByGameId(
                 deletingGameId,
             );
-        if (!gameId || !storeId || !centerId) {
+        const customersId = await this.customersService.getCustomersIdByGameId(
+            deletingGameId,
+        );
+
+        if (!gameId || !storeId || !centerId || !customersId) {
             throw new HttpException(
                 `Błąd usuwania gry o id:${id}`,
                 HttpStatus.SERVICE_UNAVAILABLE,
@@ -119,6 +152,7 @@ export class GamesService {
         }
         await this.distributionCenterService.delete(centerId);
         await this.storesService.delete(storeId);
+        await this.customersService.delete(customersId);
         await this.gamesRepository.delete(gameId);
         response.status(HttpStatus.OK);
         response.send({ success: true });

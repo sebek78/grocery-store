@@ -58,6 +58,38 @@ export const theme = createTheme({
             contrastText: '#000',
         },
     },
+    typography: {
+        h1: {
+            fontSize: '48px',
+            lineHeight: '72px',
+            fontWeight: 'bold',
+        },
+        h2: {
+            fontSize: '32px',
+            lineHeight: '48px',
+            fontWeight: 'bold',
+        },
+        h3: {
+            fontSize: '24px',
+            lineHeight: '36px',
+            fontWeight: 'bold',
+        },
+        h4: {
+            fontSize: '20px',
+            lineHeight: '30px',
+            fontWeight: 'bold',
+        },
+        body1: {
+            fontSize: '16px',
+            lineHeight: '24px',
+            fontWeight: 'normal',
+        },
+        button: {
+            fontSize: '16px',
+            lineHeight: '24px',
+            fontWeight: 'bold',
+        },
+    },
 });
 
 export const getColor = (key: ColorKeys): string => theme.palette[key].main;

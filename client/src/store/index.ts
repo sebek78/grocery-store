@@ -1,3 +1,3 @@
-import { useAppDispatch, useAppSelector } from './store';
+import { store, useAppDispatch, useAppSelector } from './store';
 
-export { useAppDispatch, useAppSelector };
+export { store, useAppDispatch, useAppSelector };
