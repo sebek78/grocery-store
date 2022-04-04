@@ -1,5 +1,4 @@
 import { ApiError } from '@sharedTypes';
-import { resourceUsage } from 'process';
 
 const baseUrl =
     process.env.NODE_ENV === 'production'
@@ -7,6 +6,14 @@ const baseUrl =
         : 'http://localhost:3000/api';
 
 type Methods = 'GET' | 'POST' | 'DELETE';
+
+const TIMEOUT = 10000; // 10 seconds
+function isAbortError(error: any): error is DOMException {
+    if (error && error.name === 'AbortError') {
+        return true;
+    }
+    return false;
+}
 
 const fetchData = async <T>(
     method: Methods,
@@ -26,14 +33,26 @@ const fetchData = async <T>(
         if (data) options.body = JSON.stringify(data);
     }
     try {
-        const response = await fetch(dataUrl, options);
+        const controller = new AbortController();
+        const id = setTimeout(() => controller.abort(), TIMEOUT);
+
+        const response = await fetch(dataUrl, {
+            ...options,
+            signal: controller.signal,
+        });
+
+        clearTimeout(id);
         const body = await response.json();
         return body;
     } catch (error: unknown) {
+        let message = 'Unknown error';
+
+        if (error instanceof TypeError) message = error.message;
+        if (isAbortError(error)) message = 'Timeout';
+
         return Promise.resolve({
             statusCode: 500,
-            message:
-                error instanceof TypeError ? error.message : 'Unknown error',
+            message,
         });
     }
 };
