@@ -27,7 +27,7 @@ const Store = () => {
                 justifyContent="center"
                 alignItems="stretch"
             >
-                <Customers customers={customers} />
+                <Customers customers={customers[0]} />
                 <SalesArea salesArea={salesArea}>
                     <Racks>
                         {salesArea.map((rack) => (

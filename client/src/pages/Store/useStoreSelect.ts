@@ -21,16 +21,18 @@ function getPrice(store: Store | undefined, productTypeForPrice: ProductType) {
     return store.prices[key as ProductType];
 }
 
-function parseCustomersData(customersData: string): ICustomer[] {
-    const customersArray = JSON.parse(customersData);
+function parseCustomersData(customersData: string[]): ICustomer[][] {
+    const customersArray: ICustomer[][] = customersData.map(
+        (dailyCustomers: string) => JSON.parse(dailyCustomers)
+    );
 
     // game rule: show only first two clients at day beginning
-    const customers = customersArray.map(
-        (customer: ICustomer, index: number) => {
+    const customers = customersArray.map((dailyCustomers: ICustomer[]) => {
+        return dailyCustomers.map((customer: ICustomer, index: number) => {
             customer.hidden = !(index === 0 || index === 1);
             return customer;
-        }
-    );
+        });
+    });
 
     return customers;
 }
@@ -116,7 +118,7 @@ const useStoreSelect = (gameId: number) => {
         products: frozen,
     });
 
-    const customers = customersData?.customersData
+    const customers = customersData
         ? parseCustomersData(customersData.customersData)
         : [];
 

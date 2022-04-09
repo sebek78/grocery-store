@@ -8,6 +8,7 @@ const Discount = styled.div`
     height: 24px;
     font-size: 16px;
     line-height: 24px;
+    margin-right: 8px;
     text-align: center;
     border-radius: 4px;
     color: ${theme.palette.success.contrastText};
@@ -30,8 +31,8 @@ function CustomerCoupons({ coupons = 0 }: CustomerCouponsProps) {
 
     return (
         <Grid container flexDirection="row">
-            {discoutsCards.map(() => (
-                <DiscountCard />
+            {discoutsCards.map((_, index) => (
+                <DiscountCard key={index} />
             ))}
         </Grid>
     );

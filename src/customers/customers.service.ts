@@ -21,7 +21,7 @@ export class CustomersService {
         return {
             customersId: newCustomers.customers_id,
             gameId: newCustomers.game_id,
-            costs: newCustomers.customers_data,
+            customersData: newCustomers.customers_data,
         };
     }
 

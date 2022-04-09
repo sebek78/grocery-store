@@ -32,8 +32,8 @@ function Customer({ customer }: CustomerProps) {
                     <CustomerLabel>{customer.name}</CustomerLabel>
                     <CustomerCoupons coupons={customer.coupons} />
                     <ShoppingList>
-                        {customer.needs.map((productType) => (
-                            <li>
+                        {customer.needs.map((productType, index) => (
+                            <li key={index}>
                                 {
                                     ProductType[
                                         productType as keyof typeof ProductType
