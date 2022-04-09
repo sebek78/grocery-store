@@ -18,7 +18,7 @@ import {
     Store,
     SuccessResponse,
     CustomersDTO,
-} from '@sharedTypes';
+} from 'src/sharedTypes';
 import { apiErrorSaga } from './apiErrorSaga';
 import { history } from '@pages';
 import { showSnackbar } from '@viewsSlice';

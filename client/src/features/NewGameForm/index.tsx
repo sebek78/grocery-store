@@ -4,11 +4,10 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { newGameRequest } from '@gameSlice';
 import { CloseIconButton, ProgressButton, TextInput } from '@components';
-import { NewGame, NewGameDTO } from '@sharedTypes';
+import { NewGame, NewGameDTO, GameDifficulty } from '@sharedTypes';
 import { newGameSchema } from './newGame.schema';
 import StyledForm from './components/StyledForm';
 import DifficultyLevel from './components/DifficultyLevel';
-import { GameDifficulty } from '@sharedTypes';
 import styled from 'styled-components';
 import { DialogTitle, Grid } from '@mui/material';
 

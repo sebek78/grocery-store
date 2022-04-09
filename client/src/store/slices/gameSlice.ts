@@ -7,7 +7,7 @@ import {
     CustomersDTO,
     GameDataDTO,
     NewGameDataDTO,
-} from '@sharedTypes';
+} from 'src/sharedTypes';
 
 interface GameState {
     isRequesting: boolean;

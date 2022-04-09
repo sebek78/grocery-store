@@ -1,4 +1,4 @@
-import { Game } from '@sharedTypes';
+import { Game } from 'src/sharedTypes';
 import React from 'react';
 import styled from 'styled-components';
 import { theme } from '@utils';

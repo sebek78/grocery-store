@@ -1,7 +1,7 @@
 import { IconButton, ListItemText } from '@mui/material';
 import { PlayArrow, NotInterested } from '@mui/icons-material';
 import React, { SyntheticEvent } from 'react';
-import { Game } from '@sharedTypes';
+import { Game } from 'src/sharedTypes';
 
 interface ContinueGameButtonProps {
     game: Game;

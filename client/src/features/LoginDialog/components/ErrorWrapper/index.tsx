@@ -1,6 +1,6 @@
 import React from 'react';
 import { DialogContentText } from '@mui/material';
-import { UserLoginDto } from '@sharedTypes';
+import { UserLoginDto } from 'src/sharedTypes';
 import { DeepMap, FieldError } from 'react-hook-form';
 
 type ErrorWrapperProps = {

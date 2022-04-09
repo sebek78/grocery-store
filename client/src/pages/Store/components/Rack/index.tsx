@@ -1,5 +1,5 @@
 import React from 'react';
-import { Price, Product, ProductType } from '@sharedTypes';
+import { Price, Product, ProductType } from 'src/sharedTypes';
 import { setProductColor } from '../../helpers';
 import {
     StyledRack,

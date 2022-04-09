@@ -1,4 +1,4 @@
-import { ApiError } from '@sharedTypes';
+import { ApiError } from 'src/sharedTypes';
 
 const baseUrl =
     process.env.NODE_ENV === 'production'

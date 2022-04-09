@@ -10,7 +10,7 @@ import { useAppDispatch } from '@store';
 import { openConfirmDialog } from '@viewsSlice';
 import { ColorButton } from '@components';
 import { theme } from '@utils';
-import { SnackbarSeverity } from '@sharedTypes';
+import { SnackbarSeverity } from 'src/sharedTypes';
 
 export interface ConfirmDialogProps {
     open: boolean;

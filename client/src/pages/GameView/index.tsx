@@ -7,7 +7,7 @@ import { Account, Games, ManualPage, NewGame } from '@pages';
 import { useAppDispatch, useAppSelector } from '@store';
 import { requestRefreshToken, userLogoutRequest } from '@userSlice';
 import { Store } from '@pages';
-import { IMenuLink } from '@sharedTypes';
+import { IMenuLink } from 'src/sharedTypes';
 
 export const gameViewMenuLinks: IMenuLink[] = [
     { to: '/game', label: 'Gra' },

@@ -7,7 +7,7 @@ import {
     ErrorOutline as ErrorOutlineIcon,
 } from '@mui/icons-material';
 import { closeSnackbar } from '@viewsSlice';
-import { SnackbarSeverity } from '@sharedTypes';
+import { SnackbarSeverity } from 'src/sharedTypes';
 import { APP_BAR_HEIGHT } from '@constants';
 
 type ToastProps = {

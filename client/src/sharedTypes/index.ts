@@ -124,6 +124,6 @@ export interface ICustomer {
 
 export interface CustomersDTO {
     customersId: number;
-    customersData: string[];
+    customersData: string;
     gameId: number;
 }

@@ -1,8 +1,7 @@
 import { getGameDataRequest, getGamesList } from '@gameSlice';
 import { useAppSelector, useAppDispatch } from '@store';
-import { ICustomer, Price, ProductType } from '@sharedTypes';
+import { ICustomer, Price, ProductType, Store } from '@sharedTypes';
 import { useEffect } from 'react';
-import { Store } from '@sharedTypes';
 
 const initialPrice: Price = {
     price: 0,
@@ -21,18 +20,16 @@ function getPrice(store: Store | undefined, productTypeForPrice: ProductType) {
     return store.prices[key as ProductType];
 }
 
-function parseCustomersData(customersData: string[]): ICustomer[][] {
-    const customersArray: ICustomer[][] = customersData.map(
-        (dailyCustomers: string) => JSON.parse(dailyCustomers)
-    );
+function parseCustomersData(customersData: string): ICustomer[] {
+    const customersArray: ICustomer[] = JSON.parse(customersData);
 
     // game rule: show only first two clients at day beginning
-    const customers = customersArray.map((dailyCustomers: ICustomer[]) => {
-        return dailyCustomers.map((customer: ICustomer, index: number) => {
+    const customers = customersArray.map(
+        (customer: ICustomer, index: number) => {
             customer.hidden = !(index === 0 || index === 1);
             return customer;
-        });
-    });
+        }
+    );
 
     return customers;
 }

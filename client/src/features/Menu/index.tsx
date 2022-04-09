@@ -8,7 +8,7 @@ import MenuLinks from './components/MenuLinks';
 import { useAppSelector, useAppDispatch } from '@store';
 import { APP_BAR_HEIGHT, DRAWER_WIDTH } from '@constants';
 import { closeMenu } from '@viewsSlice';
-import { IMenuLink } from '@sharedTypes';
+import { IMenuLink } from 'src/sharedTypes';
 
 type MenuProps = {
     links: IMenuLink[];

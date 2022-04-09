@@ -54,7 +54,7 @@
       "@gameSlice": ["src/store/slices/gameSlice.ts"],
       "@userSlice": ["src/store/slices/userSlice.ts"],
       "@viewsSlice": ["src/store/slices/viewsSlice.ts"],
-      "@sharedTypes": ["src/utils/sharedTypes/index.ts"],
+      "@sharedTypes": ["src/sharedTypes/index.ts"],
       "@constants": ["src/utils/constants/index.ts"],
     }, // {}                                  /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
     // "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */

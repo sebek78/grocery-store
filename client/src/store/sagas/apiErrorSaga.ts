@@ -1,4 +1,4 @@
-import { ApiError } from '@sharedTypes';
+import { ApiError } from 'src/sharedTypes';
 import { put } from 'redux-saga/effects';
 import { showSnackbar } from '@viewsSlice';
 import { unauthorized } from '@userSlice';

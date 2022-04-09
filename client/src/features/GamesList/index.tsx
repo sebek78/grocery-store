@@ -1,6 +1,6 @@
 import React from 'react';
 import { List } from '@mui/material';
-import { Game } from '@sharedTypes';
+import { Game } from 'src/sharedTypes';
 import GamesListItem from './components/GameListItem';
 
 interface GamesListProps {

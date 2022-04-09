@@ -1,4 +1,4 @@
-import { ICustomer } from '@sharedTypes';
+import { ICustomer } from 'src/sharedTypes';
 import React from 'react';
 import { Customer } from '@features';
 import { SectionLabel, StoreSection } from '../Styled';

@@ -6,7 +6,7 @@ import { Menu } from '@features';
 import { About, Home, ManualPage } from '@pages';
 import { Box } from '@material-ui/core';
 import { useContentAreaStyles } from '@constants';
-import { IMenuLink } from '@sharedTypes';
+import { IMenuLink } from 'src/sharedTypes';
 
 export const homepageMenuLinks: IMenuLink[] = [
     { to: '/', label: 'Strona główna' },

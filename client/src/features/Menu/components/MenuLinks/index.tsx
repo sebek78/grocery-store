@@ -1,6 +1,6 @@
 import React from 'react';
 import MenuLink from '../MenuLink';
-import { IMenuLink } from '@sharedTypes';
+import { IMenuLink } from 'src/sharedTypes';
 
 type MenuLinksProps = {
     links: IMenuLink[];

@@ -1,6 +1,6 @@
 import { AUTO_HIDE_DURATION } from '@constants';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { SnackbarData } from '@sharedTypes';
+import { SnackbarData } from 'src/sharedTypes';
 
 interface ViewState {
     menuOpen: boolean;

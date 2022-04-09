@@ -9,7 +9,7 @@ import {
     ListItemText,
 } from '@mui/material';
 import { ExpandMore } from '@mui/icons-material';
-import { Game } from '@sharedTypes';
+import { Game } from 'src/sharedTypes';
 import { DeleteButton, Loader } from '@components';
 import ContinueGameButton from '../ContinueGameButton';
 

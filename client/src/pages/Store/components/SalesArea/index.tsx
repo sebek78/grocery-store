@@ -1,4 +1,4 @@
-import { Product, ProductType } from '@sharedTypes';
+import { Product, ProductType } from 'src/sharedTypes';
 import { theme } from '@utils';
 import React from 'react';
 import { SectionLabel, StoreSection } from '../Styled';
