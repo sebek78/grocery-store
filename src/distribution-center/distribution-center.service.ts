@@ -20,7 +20,7 @@ export class DistributionCenterService {
         return {
             centerId: newCenter.center_id,
             gameId: newCenter.game_id,
-            costs: newCenter.costs,
+            costs: newCenter.costs[0],
         };
     }
 
