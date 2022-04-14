@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Button } from '@material-ui/core';
-import { ColorKeys, getColor, getTextColor, theme } from '@utils';
+import { ColorKeys, getColor, getTextColor, theme } from '../../utils/theme';
 
 const ColorButton = styled(({ btnColor, ...rest }) => (
     <Button variant="contained" {...rest} />

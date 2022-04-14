@@ -1,8 +1,8 @@
 import React from 'react';
 import { ColorButton } from '@components';
-import { CircularProgress } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { theme } from '@utils';
+import { Theme } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
+import styled from 'styled-components';
 
 interface ProgressButtonProps {
     isRequesting: boolean;
@@ -11,47 +11,43 @@ interface ProgressButtonProps {
     type?: 'submit' | 'button';
 }
 
-const useStyles = makeStyles({
-    wrapper: {
-        width: 'max-content',
-        position: 'relative',
-    },
-    buttonProgress: {
-        color: theme.palette.warning.main,
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        marginTop: -16,
-        marginLeft: -16,
-    },
-});
+const StyledWrapper = styled.div`
+    width: max-content;
+    position: relative;
+`;
+
+const StyledProgress = styled(({ theme, ...props }) => (
+    <CircularProgress
+        {...props}
+        sx={{
+            color: (theme: Theme) => theme.palette.warning.main,
+        }}
+    />
+))`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -16px;
+    margin-left: -16px;
+`;
 
 const ProgressButton = ({
     onClick,
     isRequesting,
     label,
     type = 'button',
-}: ProgressButtonProps) => {
-    const classes = useStyles();
-
-    return (
-        <div className={classes.wrapper}>
-            <ColorButton
-                type={type}
-                btnColor="primary"
-                disabled={isRequesting}
-                onClick={onClick}
-            >
-                {label}{' '}
-            </ColorButton>
-            {isRequesting && (
-                <CircularProgress
-                    size={32}
-                    className={classes.buttonProgress}
-                />
-            )}
-        </div>
-    );
-};
+}: ProgressButtonProps) => (
+    <StyledWrapper>
+        <ColorButton
+            type={type}
+            btnColor="primary"
+            disabled={isRequesting}
+            onClick={onClick}
+        >
+            {label}{' '}
+        </ColorButton>
+        {isRequesting && <StyledProgress size={32} />}
+    </StyledWrapper>
+);
 
 export default ProgressButton;

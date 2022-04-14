@@ -2,19 +2,18 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ConfirmDialog, { ConfirmDialogProps } from './index';
+import { ThemeWrapper } from '@utils';
 
+// TODO: use ThemeWrapper, needs components refactoring
 jest.mock('@utils', () => ({
     api: jest.fn(),
     theme: {
-        spacing: (value: number) => 8 * value,
-        palette: {
-            error: {
-                light: 'tomato',
+        breakpoints: {
+            up(key: string): string {
+                return '1200';
             },
         },
     },
-    getColor: (props: any) => props.btnColor,
-    getTextColor: (props: any) => props.btnColor,
 }));
 
 const mockDispatch = jest.fn();
@@ -39,7 +38,9 @@ describe('ConfirmDialog component', () => {
     };
 
     it('should be open, have text and correct buttons', () => {
-        render(<ConfirmDialog {...props} />);
+        render(<ConfirmDialog {...props} />, {
+            wrapper: ThemeWrapper,
+        });
 
         const title = document.querySelector('h2');
         expect(title?.textContent).toBe(props.title);
@@ -51,14 +52,18 @@ describe('ConfirmDialog component', () => {
     });
 
     it('should be closed when open=false', () => {
-        render(<ConfirmDialog {...props} open={false} />);
+        render(<ConfirmDialog {...props} open={false} />, {
+            wrapper: ThemeWrapper,
+        });
 
         const title = document.querySelector('h2');
         expect(title).toBe(null);
     });
 
     it('should be closed after cancel button click', () => {
-        render(<ConfirmDialog {...props} />);
+        render(<ConfirmDialog {...props} />, {
+            wrapper: ThemeWrapper,
+        });
 
         const title = document.querySelector('h2');
         expect(title?.textContent).toBe(props.title);
@@ -70,7 +75,9 @@ describe('ConfirmDialog component', () => {
     });
 
     it('should be run action after confirm button click', () => {
-        render(<ConfirmDialog {...props} />);
+        render(<ConfirmDialog {...props} />, {
+            wrapper: ThemeWrapper,
+        });
 
         const [, confirmButton] = document.querySelectorAll('button');
         userEvent.click(confirmButton);

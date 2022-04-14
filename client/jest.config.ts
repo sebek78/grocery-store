@@ -75,6 +75,8 @@ export default {
 
     // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
     moduleNameMapper: {
+        '@components': '<rootDir>\\src\\components',
+        '@constants': '<rootDir>\\src\\utils\\constants',
         '^@store$': '<rootDir>\\src\\store',
         '@utils': '<rootDir>\\src\\utils',
         '@viewsSlice': '<rootDir>\\src\\store\\slices\\viewsSlice.ts',

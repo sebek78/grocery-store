@@ -5,11 +5,11 @@ import {
     DialogContent,
     DialogTitle,
     Grid,
+    Theme,
 } from '@mui/material';
 import { useAppDispatch } from '@store';
 import { openConfirmDialog } from '@viewsSlice';
 import { ColorButton } from '@components';
-import { theme } from '@utils';
 import { SnackbarSeverity } from 'src/sharedTypes';
 
 export interface ConfirmDialogProps {
@@ -39,8 +39,10 @@ const ConfirmDialog = ({
         <Dialog open={open}>
             <DialogTitle
                 sx={{
-                    backgroundColor: theme.palette[severity].light,
-                    color: theme.palette[severity].contrastText,
+                    backgroundColor: (theme: Theme) =>
+                        theme.palette[severity].light,
+                    color: (theme: Theme) =>
+                        theme.palette[severity].contrastText,
                 }}
             >
                 {title}

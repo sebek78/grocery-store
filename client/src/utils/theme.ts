@@ -92,6 +92,7 @@ export const theme = createTheme({
     },
 });
 
-export const getColor = (key: ColorKeys): string => theme.palette[key].main;
+export const getColor = (key: ColorKeys): string =>
+    theme.palette[key]?.main ?? 'red';
 export const getTextColor = (key: ColorKeys): string =>
-    theme.palette[key].contrastText || '#000';
+    theme.palette[key]?.contrastText || '#000';
