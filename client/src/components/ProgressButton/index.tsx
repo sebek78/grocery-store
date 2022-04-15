@@ -1,5 +1,5 @@
 import React from 'react';
-import { ColorButton } from '@components';
+import ColorButton from '../ColorButton/ColorButton';
 import { Theme } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import styled from 'styled-components';

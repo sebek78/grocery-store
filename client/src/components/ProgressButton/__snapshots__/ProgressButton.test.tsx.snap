@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProgressButton component should match to snapshot 1`] = `
+<div>
+  <div
+    class="sc-gtsrHT kCbuPT"
+  >
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained sc-bdnxRM dojyiF"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        test-label
+         
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
+  </div>
+</div>
+`;
+
+exports[`ProgressButton component should match to snapshot when property "isRequesting" is true 1`] = `
+<div>
+  <div
+    class="sc-gtsrHT kCbuPT"
+  >
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained sc-bdnxRM dojyiF Mui-disabled Mui-disabled"
+      disabled=""
+      tabindex="-1"
+      type="button"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        test-label
+         
+      </span>
+    </button>
+    <span
+      class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorPrimary sc-dlnjwi fQXiwl css-z6jc2e-MuiCircularProgress-root"
+      role="progressbar"
+      style="width: 32px; height: 32px;"
+    >
+      <svg
+        class="MuiCircularProgress-svg css-1idz92c-MuiCircularProgress-svg"
+        viewBox="22 22 44 44"
+      >
+        <circle
+          class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-176wh8e-MuiCircularProgress-circle"
+          cx="44"
+          cy="44"
+          fill="none"
+          r="20.2"
+          stroke-width="3.6"
+        />
+      </svg>
+    </span>
+  </div>
+</div>
+`;
