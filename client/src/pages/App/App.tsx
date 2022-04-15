@@ -10,13 +10,14 @@ import { AuthenticatedRoute } from '@components';
 import { Header } from '@features';
 import { createBrowserHistory } from 'history';
 import SnackbarProvider from '../../providers/SnackbarProvider';
+import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 
 export const history = createBrowserHistory();
 
 const App = () => {
     return (
-        <>
-            <Provider store={store}>
+        <Provider store={store}>
+            <StyledThemeProvider theme={theme}>
                 <CssBaseline />
                 <ThemeProvider theme={theme}>
                     <SnackbarProvider />
@@ -33,8 +34,8 @@ const App = () => {
                         </Switch>
                     </Router>
                 </ThemeProvider>
-            </Provider>
-        </>
+            </StyledThemeProvider>
+        </Provider>
     );
 };
 

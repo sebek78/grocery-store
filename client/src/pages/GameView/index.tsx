@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { Box } from '@material-ui/core';
-import { REFRESH_TOKEN_TIME, useContentAreaStyles } from '@constants';
+import { REFRESH_TOKEN_TIME } from '@constants';
 import { Menu } from '@features';
 import { Account, Games, ManualPage, NewGame } from '@pages';
 import { useAppDispatch, useAppSelector } from '@store';
 import { requestRefreshToken, userLogoutRequest } from '@userSlice';
 import { Store } from '@pages';
 import { IMenuLink } from 'src/sharedTypes';
+import { PageLayout } from '@components';
 
 export const gameViewMenuLinks: IMenuLink[] = [
     { to: '/game', label: 'Gra' },
@@ -20,7 +20,6 @@ export const gameViewMenuLinks: IMenuLink[] = [
 ];
 
 const GameView = () => {
-    const classes = useContentAreaStyles();
     const dispatch = useAppDispatch();
     const lastUpdateTime = useAppSelector(({ user }) => user.lastUpdateTime);
     const pageReloaded = useAppSelector(({ user }) => user.pageReloaded);
@@ -38,7 +37,7 @@ const GameView = () => {
 
     return (
         <>
-            <Box className={classes.contentArea}>
+            <PageLayout>
                 <Switch>
                     <Route path="/game/account">
                         <Account />
@@ -59,7 +58,7 @@ const GameView = () => {
                         <Games />
                     </Route>
                 </Switch>
-            </Box>
+            </PageLayout>
             <Menu links={gameViewMenuLinks} />
         </>
     );

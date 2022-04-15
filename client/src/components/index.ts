@@ -3,6 +3,7 @@ import CloseIconButton from './CloseIconButton';
 import ColorButton from './ColorButton/ColorButton';
 import DeleteButton from './DeleteButton';
 import Loader from './Loader';
+import PageLayout from './PageLayout';
 import ProgressButton from './ProgressButton';
 import Snackbar from './Snackbar';
 import StyledLink from './StyledLink';
@@ -15,6 +16,7 @@ export {
     ColorButton,
     DeleteButton,
     Loader,
+    PageLayout,
     ProgressButton,
     Snackbar,
     StyledLink,

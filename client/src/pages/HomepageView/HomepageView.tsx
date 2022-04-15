@@ -4,9 +4,8 @@ import { useAppSelector } from '@store';
 import { LoginDialog, RegisterDialog } from '@features';
 import { Menu } from '@features';
 import { About, Home, ManualPage } from '@pages';
-import { Box } from '@material-ui/core';
-import { useContentAreaStyles } from '@constants';
 import { IMenuLink } from 'src/sharedTypes';
+import { PageLayout } from '@components';
 
 export const homepageMenuLinks: IMenuLink[] = [
     { to: '/', label: 'Strona główna' },
@@ -15,7 +14,6 @@ export const homepageMenuLinks: IMenuLink[] = [
 ];
 
 const HomepageView = () => {
-    const classes = useContentAreaStyles();
     const authenticated = useAppSelector(({ user }) => user.authenticated);
     let history = useHistory();
 
@@ -25,7 +23,7 @@ const HomepageView = () => {
 
     return (
         <>
-            <Box className={classes.contentArea}>
+            <PageLayout>
                 <Switch>
                     <Route path="/manual">
                         <ManualPage />
@@ -40,7 +38,7 @@ const HomepageView = () => {
                         <Home />
                     </Route>
                 </Switch>
-            </Box>
+            </PageLayout>
             <Menu links={homepageMenuLinks} />
             <LoginDialog />
             <RegisterDialog />

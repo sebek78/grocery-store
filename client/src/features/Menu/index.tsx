@@ -14,6 +14,7 @@ type MenuProps = {
     links: IMenuLink[];
 };
 
+// TODO: replace DRAWER_WIDTH to theme.spacing(30)
 const StyledDrawer = styled(Drawer)`
     & .MuiDrawer-paper {
         top: ${APP_BAR_HEIGHT + 1}px;
@@ -21,6 +22,7 @@ const StyledDrawer = styled(Drawer)`
     }
 `;
 
+// TODO: use MUI sx
 const useStyles = makeStyles({
     drawer: {
         width: DRAWER_WIDTH,
